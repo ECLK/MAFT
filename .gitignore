@@ -1,84 +1,96 @@
-# Xcode
-!**/*.xcodeproj
-!**/*.pbxproj
-!**/*.xcworkspacedata
-!**/*.xcsettings
-!**/*.xcscheme
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
-*.hmap
-*.ipa
-*.xcuserstate
-project.xcworkspace
-
-# Gradle
-/build/
-/RNTester/android/app/build/
-/RNTester/android/app/gradle/
-/RNTester/android/app/gradlew
-/RNTester/android/app/gradlew.bat
-/ReactAndroid/build/
-
-# Buck
-.buckd
-buck-out
-/ReactAndroid/src/main/jni/prebuilt/lib/armeabi-v7a/
-/ReactAndroid/src/main/jni/prebuilt/lib/x86/
-/ReactAndroid/src/main/gen
-
-# Watchman
-.watchmanconfig
-
-# Android
-.idea
-.gradle
-local.properties
-*.iml
-/android/
-
-# Node
-node_modules
+# Miscellaneous
+*.class
+*.lock
 *.log
-.nvm
-/bots/node_modules/
-package-lock.json
-
-# OS X
+*.pyc
+*.swp
 .DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
 
-# Test generated files
-/ReactAndroid/src/androidTest/assets/AndroidTestBundle.js
-*.js.meta
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
 
-/coverage
-/third-party
+# Visual Studio Code related
+.vscode/
 
-# Root dir shouldn't have Xcode project
-/*.xcodeproj
+# Flutter repo-specific
+/bin/cache/
+/bin/mingit/
+/dev/benchmarks/mega_gallery/
+/dev/bots/.recipe_deps
+/dev/bots/android_tools/
+/dev/docs/doc/
+/dev/docs/flutter.docs.zip
+/dev/docs/lib/
+/dev/docs/pubspec.yaml
+/packages/flutter/coverage/
+version
 
-# ReactCommon subdir shouldn't have Xcode project
-/ReactCommon/**/*.xcodeproj
-RNTester/build
+# packages file containing multi-root paths
+.packages.generated
 
-# Libs that shouldn't have Xcode project
-/Libraries/FBLazyVector/**/*.xcodeproj
-/Libraries/FBReactNativeSpec/**/*.xcodeproj
-/Libraries/RCTRequired/**/*.xcodeproj
-/React/CoreModules/**/*.xcodeproj
-/packages/react-native-codegen/**/*.xcodeproj
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.packages
+.pub-cache/
+.pub/
+build/
+flutter_*.png
+linked_*.ds
+unlinked.ds
+unlinked_spec.ds
 
-# CocoaPods
-/template/ios/Pods/
-/template/ios/Podfile.lock
-RNTester/Pods/Local Podspecs
-RNTester/Pods/Target Support Files
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/key.properties
+*.jks
+
+# iOS/XCode related
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/**/profile
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# Coverage
+coverage/
+
+# Exceptions to above rules.
+!**/ios/**/default.mode1v3
+!**/ios/**/default.mode2v3
+!**/ios/**/default.pbxuser
+!**/ios/**/default.perspectivev3
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
