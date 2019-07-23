@@ -28,7 +28,7 @@ class Login extends StatelessWidget {
               child: new Text("Result Tabulation",
                 style: new TextStyle(
                     fontSize: 24.0,
-                    color: Colors.blue,
+                    color: Color.fromRGBO(72, 121, 209, 1),
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -37,11 +37,12 @@ class Login extends StatelessWidget {
               child: new TextField(
                 decoration: new InputDecoration(
                 border: new OutlineInputBorder(
-                borderSide: new BorderSide(color: Colors.blue)
+                            borderRadius:BorderRadius.circular(10.0),
+                borderSide: new BorderSide(color: Color.fromRGBO(72, 121, 209, 1))
                 ),
                 hintText: 'Username',
                 labelText: 'Username',
-                prefixIcon: const Icon(Icons.person, color: Colors.blue,),
+                prefixIcon: const Icon(Icons.person, color: Color.fromRGBO(72, 121, 209, 1),),
                 prefixText: ' ',
                 suffixText: ' ',
                 ),
@@ -56,10 +57,11 @@ class Login extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: 'Password',
                   border: new OutlineInputBorder(
-                  borderSide: new BorderSide(color: Colors.blue)
+                  borderRadius:BorderRadius.circular(10.0),
+                  borderSide: new BorderSide(color: Color.fromRGBO(72, 121, 209, 1))
                 ),
                 labelText: 'Password',
-                prefixIcon: const Icon(Icons.mail, color: Colors.blue,),
+                prefixIcon: const Icon(Icons.mail, color: Color.fromRGBO(72, 121, 209, 1),),
                   ),
 
                 obscureText: true,
@@ -72,6 +74,7 @@ class Login extends StatelessWidget {
                 height: 60.0,
                 child: new RaisedButton(
                   textColor: Colors.white,
+                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                   color: Color.fromRGBO(72, 121, 209, 1),
                   child: Text(
                     'Login',

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+
 import 'main.dart';
+import 'polling_stations.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -16,15 +18,15 @@ class Home extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             new Row(),
-            Padding(
-              padding: const EdgeInsets.only(top: 40.0, bottom: 30.0),
-              child: new Text("Main Features",
-                style: new TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 40.0, bottom: 30.0),
+            //   child: new Text("Options",
+            //     style: new TextStyle(
+            //         fontSize: 24.0,
+            //         color: Colors.black,
+            //         fontWeight: FontWeight.bold),
+            //   ),
+            // ),
             
             Padding(
              padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
@@ -33,6 +35,7 @@ class Home extends StatelessWidget {
                 height: 60.0,
                 child: new RaisedButton(
                   textColor: Colors.white,
+                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                   color: Color.fromRGBO(72, 121, 209, 1),
                   child: Text(
                     'Issuing Process',
@@ -47,13 +50,14 @@ class Home extends StatelessWidget {
               ),
             ),
 
-            Padding(
+            Padding( 
              padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
               child: new SizedBox(
                 width: 350,
                 height: 60.0,
                 child: new RaisedButton(
                   textColor: Colors.white,
+                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                   color: Color.fromRGBO(72, 121, 209, 1),
                   child: Text(
                     'Receiving Process',
@@ -75,6 +79,7 @@ class Home extends StatelessWidget {
                 height: 60.0,
                 child: new RaisedButton(
                   textColor: Colors.white,
+                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                   color: Color.fromRGBO(72, 121, 209, 1),
                   child: Text(
                     'Add Ballot Box',
@@ -82,7 +87,7 @@ class Home extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()),
+                      MaterialPageRoute(builder: (context) => PollingStations()),
                     );
                   },
                 ),
@@ -96,6 +101,7 @@ class Home extends StatelessWidget {
                 height: 60.0,
                 child: new RaisedButton(
                   textColor: Colors.white,
+                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                   color: Color.fromRGBO(72, 121, 209, 1),
                   child: Text(
                     'Counting Process',
