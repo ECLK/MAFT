@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabulation/add_box.dart';
-
-import 'main.dart';
+import 'package:tabulation/add_boxData.dart';
 
 class PollingStations extends StatelessWidget {
   @override
@@ -33,7 +32,7 @@ class PollingStations extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddBox()),
+                      MaterialPageRoute(builder: (context) => AddBoxData()),
                     );
                   },
                 ),
@@ -55,7 +54,7 @@ class PollingStations extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddBox()),
+                      MaterialPageRoute(builder: (context) => AddBoxData()),
                     );
                   },
                 ),
@@ -77,7 +76,7 @@ class PollingStations extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddBox()),
+                      MaterialPageRoute(builder: (context) => AddBoxData()),
                     );
                   },
                 ),
@@ -99,7 +98,7 @@ class PollingStations extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddBox()),
+                      MaterialPageRoute(builder: (context) => AddBoxData()),
                     );
                   },
                 ),
