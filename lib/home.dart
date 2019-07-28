@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tabulation/services.dart';
 
 
+import 'issuing.dart';
 import 'main.dart';
 import 'polling_stations.dart';
 
@@ -44,7 +44,7 @@ class Home extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(builder: (context) => Issuring()),
                     );
                   },
                 ),

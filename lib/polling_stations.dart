@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tabulation/add_box.dart';
 import 'package:tabulation/add_boxData.dart';
 
 class PollingStations extends StatelessWidget {
