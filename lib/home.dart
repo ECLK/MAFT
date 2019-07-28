@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabulation/services.dart';
 
 
 import 'main.dart';
@@ -43,7 +44,7 @@ class Home extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()),
+                      MaterialPageRoute(builder: (context) => HomePage()),
                     );
                   },
                 ),
