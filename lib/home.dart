@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-
-import 'issuing.dart';
 import 'main.dart';
+import 'new.dart';
 import 'polling_stations.dart';
+import 'package:tabulation/issuing_main.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -44,7 +44,7 @@ class Home extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Issuring()),
+                      MaterialPageRoute(builder: (context) => IssuingMain()),
                     );
                   },
                 ),
@@ -83,7 +83,7 @@ class Home extends StatelessWidget {
                   shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                   color: Color.fromRGBO(72, 121, 209, 1),
                   child: Text(
-                    'Add Ballot Box',
+                    'Counting Process',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
@@ -105,12 +105,12 @@ class Home extends StatelessWidget {
                   shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
                   color: Color.fromRGBO(72, 121, 209, 1),
                   child: Text(
-                    'Counting Process',
+                    'Approval Process',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()),
+                      MaterialPageRoute(builder: (context) => New()),
                     );
                   },
                 ),
@@ -122,4 +122,7 @@ class Home extends StatelessWidget {
       ),
     );
   }
+}
+
+class IssuringMain {
 }
