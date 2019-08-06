@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tabulation/receving_invoices.dart';
+import 'package:tabulation/services.dart';
 
 import 'main.dart';
 import 'new.dart';
@@ -66,7 +68,7 @@ class Home extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()),
+                      MaterialPageRoute(builder: (context) => RecevingInvoices()),
                     );
                   },
                 ),
