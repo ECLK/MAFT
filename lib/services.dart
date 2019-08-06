@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tabulation/main.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -34,15 +35,30 @@ class HomePageState extends State<HomePage> {
           title: new Text("Invoices"), backgroundColor:  Color.fromRGBO(72, 121, 209, 1)),
       body: 
       new ListView.builder(
-        itemCount: data == null ? 0 : data.length,
+        itemCount: data == null ? "Empty" : data.length,
         itemBuilder: (BuildContext context, int index) {
-          return new ListTile(
-            leading: Icon(Icons.arrow_right),
-            title: Text("Invoice ID : "+data[index]["issuedAt"]),
-            // child: new Text("Invoice ID : "+data[index]["issuedAt"],
-            // style: TextStyle(
-            // color: Colors.blue[800],
-            // fontSize: 20),),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: new ListTile(
+              leading: Icon(Icons.filter_list),
+              subtitle: Text("Issued Date : "+data[index]["issuedAt"].substring(0, 10)),
+              trailing: Icon(Icons.keyboard_arrow_right),
+              onTap: () {
+                print('Star');
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Login()),
+            );
+              },
+              title: Text("Invoice ID : " +  data[index]["invoiceId"].toString(), 
+              style: TextStyle(
+                color: Colors.blue[800],
+              ),)
+              // child: new Text("Invoice ID : "+data[index]["issuedAt"],
+              // style: TextStyle(
+              // color: Colors.blue[800],
+              // fontSize: 20),),
+            ),
           );
         },
       ),
