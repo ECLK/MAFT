@@ -1,101 +1,16 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:tabulation/routes.dart';
 
+void main() => runApp(new TabulationApp());
 
-void main() {
-  runApp(MaterialApp(
-    title: 'Navigation Basics',
-    home: Login(),
-  ));
-}
+class TabulationApp extends StatelessWidget {
 
-class Login extends StatelessWidget {
+  // This widget is the root of results tabulation application.
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(72, 121, 209, 1),
-        title: Text("Login"),
-      ),
-      body: Container(
-        width: double.infinity,
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            new Row(),
-            Padding(
-              padding: const EdgeInsets.only(top: 40.0, bottom: 30.0),
-              child: new Text("Result Tabulation",
-                style: new TextStyle(
-                    fontSize: 24.0,
-                    color: Color.fromRGBO(72, 121, 209, 1),
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 30.0, left: 30.0),
-              child: new TextField(
-                decoration: new InputDecoration(
-                border: new OutlineInputBorder(
-                            borderRadius:BorderRadius.circular(10.0),
-                borderSide: new BorderSide(color: Color.fromRGBO(72, 121, 209, 1))
-                ),
-                hintText: 'Username',
-                labelText: 'Username',
-                prefixIcon: const Icon(Icons.person, color: Color.fromRGBO(72, 121, 209, 1),),
-                prefixText: ' ',
-                suffixText: ' ',
-                ),
-              ),
-            ),
-            new SizedBox(
-              height: 15.0,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 30.0, left: 30.0),
-              child: new TextField(
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  border: new OutlineInputBorder(
-                  borderRadius:BorderRadius.circular(10.0),
-                  borderSide: new BorderSide(color: Color.fromRGBO(72, 121, 209, 1))
-                ),
-                labelText: 'Password',
-                prefixIcon: const Icon(Icons.mail, color: Color.fromRGBO(72, 121, 209, 1),),
-                  ),
-
-                obscureText: true,
-              ),
-            ),
-            Padding(
-             padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
-              child: new SizedBox(
-                width: 350,
-                height: 60.0,
-                child: new RaisedButton(
-                  textColor: Colors.white,
-                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
-                  color: Color.fromRGBO(72, 121, 209, 1),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                    );
-                  },
-                ),
-              ),
-            ),
-            
-          ],
-        ),
-      ),
+    return new MaterialApp(
+      title: 'Results Tabulation',
+      routes: routes,
     );
   }
 }
-
-
-
-

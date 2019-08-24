@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tabulation/home.dart';
+import 'package:tabulation/screens/home.dart';
 
 class IssuingOptions extends StatefulWidget {
   static String tag = 'login-page';

@@ -45,10 +45,11 @@ class HomePageState extends State<HomePage> {
               trailing: Icon(Icons.keyboard_arrow_right),
               onTap: () {
                 print('Star');
-                Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Login()),
-            );
+                Navigator.of(context).pushReplacementNamed("/login");
+            //     Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => Login()),
+            // );
               },
               title: Text("Invoice ID : " +  data[index]["invoiceId"].toString(), 
               style: TextStyle(

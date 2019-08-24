@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'issuing_options.dart';
+import '../issuing_options.dart';
 
 class IssuingMain extends StatefulWidget {
   static String tag = 'login-page';
@@ -13,9 +13,9 @@ class _LoginPageState extends State<IssuingMain> {
   @override
   Widget build(BuildContext context) {
     final welcome = Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(5.0),
       child: Text(
-        'Issuing Process',
+        'Step One',
         style: TextStyle(  fontWeight: FontWeight.bold,
         fontSize: 24.0 ,color: Color.fromRGBO(72, 121, 209, 1)),
       ),
@@ -24,7 +24,7 @@ class _LoginPageState extends State<IssuingMain> {
     final issuedFrom = TextFormField(
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
-      // initialValue: 'alucard@gmail.com',
+      initialValue: 'Pavan (Autofilled)',
       decoration: InputDecoration(
         hintText: 'Issued By',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
