@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tabulation/services.dart';
 
-class RecevingInvoices extends StatefulWidget {
+class ReceivingScreen extends StatefulWidget {
   static String tag = 'login-page';
   @override
-  _LoginPageState createState() => new _LoginPageState();
+  _ReceivingScreenState createState() => new _ReceivingScreenState();
 }
 
-class _LoginPageState extends State<RecevingInvoices> {
+class _ReceivingScreenState extends State<ReceivingScreen> {
   static String tag = 'home-page';
 
 List data;
@@ -30,7 +30,7 @@ List data;
 
   @override
   void initState() {
-    this.getData();
+    // this.getData();
   }
 
 

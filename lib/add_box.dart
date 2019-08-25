@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
 
 class AddBox extends StatelessWidget {
   @override
@@ -30,9 +29,9 @@ class AddBox extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
+                    // Navigator.push(context,
+                    //   MaterialPageRoute(builder: (context) => Login()),
+                    // );
                   },
                 ),
               ),
@@ -52,9 +51,9 @@ class AddBox extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
+                    // Navigator.push(context,
+                    //   MaterialPageRoute(builder: (context) => Login()),
+                    // );
                   },
                 ),
               ),
@@ -74,9 +73,9 @@ class AddBox extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
+                    // Navigator.push(context,
+                    //   MaterialPageRoute(builder: (context) => Login()),
+                    // );
                   },
                 ),
               ),
@@ -90,33 +89,3 @@ class AddBox extends StatelessWidget {
     );
   }
 }
-// import 'package:flutter/material.dart';
-
-
-// class PollingSations extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Color.fromRGBO(72, 121, 209, 1),
-//         title: Text("Polling Stations"),
-//       ),
-//       body: ListView(
-//           children: <Widget>[
-//             ListTile(
-//               leading: Icon(Icons.add_location,color: Color.fromRGBO(72, 121, 209, 1),),
-//               title: Text('Royal College'),
-//             ),
-//             ListTile(
-//                 leading: Icon(Icons.add_location,color: Color.fromRGBO(72, 121, 209, 1),),
-//               title: Text('St Thomas Collage'),
-//             ),
-//             ListTile(
-//                 leading: Icon(Icons.add_location,color: Color.fromRGBO(72, 121, 209, 1),),
-//               title: Text('Public Library Hall'),
-//             ),
-//           ],
-//         ),
-//     );
-//   }
-// }
