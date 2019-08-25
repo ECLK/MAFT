@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tabulation/receving_invoices.dart';
-import '../polling_stations.dart';
-import 'package:tabulation/screens/issuing.dart';
 
-class Home extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -28,97 +25,90 @@ class Home extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-             padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
+              padding:
+                  const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
               child: new SizedBox(
                 width: 350,
                 height: 60.0,
                 child: new RaisedButton(
                   textColor: Colors.white,
-                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0)),
                   color: Color.fromRGBO(72, 121, 209, 1),
                   child: Text(
                     'Issuing Process',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => IssuingMain()),
-                    );
+                    Navigator.of(context).pushNamed('/issuing-stepone');
                   },
                 ),
               ),
             ),
-
-            Padding( 
-             padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
               child: new SizedBox(
                 width: 350,
                 height: 60.0,
                 child: new RaisedButton(
                   textColor: Colors.white,
-                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0)),
                   color: Color.fromRGBO(72, 121, 209, 1),
                   child: Text(
                     'Receiving Process',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RecevingInvoices()),
-                    );
+                    Navigator.of(context).pushNamed('/receiving');
                   },
                 ),
               ),
             ),
-
             Padding(
-             padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
+              padding:
+                  const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
               child: new SizedBox(
                 width: 350,
                 height: 60.0,
                 child: new RaisedButton(
                   textColor: Colors.white,
-                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0)),
                   color: Color.fromRGBO(72, 121, 209, 1),
                   child: Text(
                     'Counting Process',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PollingStations()),
-                    );
+                    Navigator.of(context).pushNamed('/counting');
                   },
                 ),
               ),
             ),
-
             Padding(
-             padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
+              padding:
+                  const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
               child: new SizedBox(
                 width: 350,
                 height: 60.0,
                 child: new RaisedButton(
                   textColor: Colors.white,
-                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0)),
                   color: Color.fromRGBO(72, 121, 209, 1),
                   child: Text(
                     'Approval Process',
                     style: TextStyle(fontSize: 20),
                   ),
-                  onPressed: () {
-
-                  },
+                  onPressed: () {},
                 ),
               ),
             ),
-            
           ],
         ),
       ),
     );
   }
-}
-
-class IssuringMain {
 }

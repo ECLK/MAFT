@@ -7,14 +7,7 @@ class LoginForm extends StatefulWidget {
   }
 }
 
-// Define a corresponding State class.
-// This class holds data related to the form.
 class LoginFormState extends State<LoginForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a `GlobalKey<FormState>`,
-  // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -27,21 +20,25 @@ class LoginFormState extends State<LoginForm> {
           new Row(),
           Padding(
             padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-            child: new Text("Please login to continue",
+            child: new Text(
+              "Please login to continue",
               style: new TextStyle(
-                  fontSize: 20.0,
+                fontSize: 20.0,
               ),
             ),
           ),
           TextFormField(
             decoration: new InputDecoration(
               border: new OutlineInputBorder(
-                          borderRadius:BorderRadius.circular(10.0),
-              borderSide: new BorderSide(color: Color.fromRGBO(72, 121, 209, 1))
-              ),
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide:
+                      new BorderSide(color: Color.fromRGBO(72, 121, 209, 1))),
               hintText: 'Username',
               labelText: 'Username',
-              prefixIcon: const Icon(Icons.person, color: Color.fromRGBO(72, 121, 209, 1),),
+              prefixIcon: const Icon(
+                Icons.person,
+                color: Color.fromRGBO(72, 121, 209, 1),
+              ),
               prefixText: ' ',
               suffixText: ' ',
             ),
@@ -59,11 +56,14 @@ class LoginFormState extends State<LoginForm> {
               decoration: InputDecoration(
                 hintText: 'Password',
                 border: new OutlineInputBorder(
-                  borderRadius:BorderRadius.circular(10.0),
-                  borderSide: new BorderSide(color: Color.fromRGBO(72, 121, 209, 1))
-                ),
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide:
+                        new BorderSide(color: Color.fromRGBO(72, 121, 209, 1))),
                 labelText: 'Password',
-                prefixIcon: const Icon(Icons.mail, color: Color.fromRGBO(72, 121, 209, 1),),
+                prefixIcon: const Icon(
+                  Icons.mail,
+                  color: Color.fromRGBO(72, 121, 209, 1),
+                ),
               ),
               obscureText: true,
               validator: (value) {
@@ -82,7 +82,8 @@ class LoginFormState extends State<LoginForm> {
               height: 60.0,
               child: new RaisedButton(
                 textColor: Colors.white,
-                shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(10.0)),
                 color: Color.fromRGBO(72, 121, 209, 1),
                 child: Text(
                   'Login',
@@ -96,8 +97,7 @@ class LoginFormState extends State<LoginForm> {
                     // Scaffold
                     //     .of(context)
                     //     .showSnackBar(SnackBar(content: Text('Processing Data')));
-                  }
-                  else {
+                  } else {
                     Navigator.of(context).pushReplacementNamed("/home");
                   }
                 },
