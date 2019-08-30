@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class IssuingStepTwoForm extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class IssuingStepTwoForm extends StatefulWidget {
 
 class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
   final _formKey = GlobalKey<FormState>();
+  List<Widget> _ballotBooks = new List<Widget>();
 
   @override
   Widget build(BuildContext context) {
@@ -75,16 +77,21 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
             ),
           ),
         ),
-        new Flexible(
-          child: new SizedBox(
-            width: 100,
-            child: new Text(
-              '0',
-              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
+        StoreConnector<int, String>(
+            converter: (store) => store.state.toString(),
+            builder: (context, viewModel) {
+              new Flexible(
+                child: new SizedBox(
+                  width: 100,
+                  child: new Text(
+                    viewModel,
+                    style: new TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 20.0),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              );
+            }),
         new Flexible(
           child: IconButton(
             icon: Icon(Icons.close),
@@ -95,12 +102,15 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
       ],
     );
 
-    final tenderBallotBooksHeading = Row(
+    final tenderBallotBooksHeading = new Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         new Flexible(
           child: Padding(
-            padding: const EdgeInsets.only(top: 0.0, right: 0.0, left: 0.0),
+            padding: const EdgeInsets.only(
+                top: 0.0, right: 0.0, left: 0.0, bottom: 0.0),
             child: new SizedBox(
               width: 300,
               child: new Text(
