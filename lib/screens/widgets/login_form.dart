@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:tabulation/view_models/login_viewmodel.dart';
 
 class LoginForm extends StatefulWidget {
+  final LoginViewModel viewModel;
+
+  LoginForm(this.viewModel);
+
   @override
-  LoginFormState createState() {
-    return LoginFormState();
+  _LoginFormState createState() {
+    return _LoginFormState();
   }
 }
 
-class LoginFormState extends State<LoginForm> {
+class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _usernameController = new TextEditingController();
+  final TextEditingController _passwordController = new TextEditingController();
+
+  void onUsernameChange() {
+    widget.viewModel.validateUsername(_usernameController.text);
+  }
+
+  void onPasswordChange() {
+    widget.viewModel.validatePassword(_passwordController.text);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _usernameController.addListener(onUsernameChange);
+    _passwordController.addListener(onPasswordChange);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +72,7 @@ class LoginFormState extends State<LoginForm> {
               return null;
             },
             autofocus: true,
+            controller: _usernameController,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0, right: 0.0, left: 0.0),
@@ -73,6 +97,7 @@ class LoginFormState extends State<LoginForm> {
                 return null;
               },
               autofocus: true,
+              controller: _passwordController,
             ),
           ),
           Padding(
@@ -90,16 +115,10 @@ class LoginFormState extends State<LoginForm> {
                   style: TextStyle(fontSize: 20),
                 ),
                 onPressed: () {
+                  widget.viewModel.login(
+                      widget.viewModel.username, widget.viewModel.password);
                   if (!_formKey.currentState.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-
-                    // Scaffold
-                    //     .of(context)
-                    //     .showSnackBar(SnackBar(content: Text('Processing Data')));
-                  } else {
-                    Navigator.of(context).pushReplacementNamed("/home");
-                  }
+                  } else {}
                 },
               ),
             ),
