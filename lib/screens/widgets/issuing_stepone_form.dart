@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/view_models/home_viewmodel.dart';
+import 'package:tabulation/store/models/office_request.dart';
+import 'package:tabulation/view_models/issuing_viewmodel.dart';
 
 class IssuingStepOneForm extends StatefulWidget {
   @override
@@ -13,20 +14,35 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: new StoreConnector<AppState, HomeViewModel>(
-          converter: (store) => HomeViewModel.fromStore(store),
-          builder: (context, viewModel) {
-            return new Column(
-              children: getFormWidget(viewModel),
-            );
-          }),
+    return StoreConnector<AppState, IssuingViewModel>(
+      converter: (store) => IssuingViewModel.fromStore(store),
+      builder: (context, viewModel) {
+        return new Form(
+          key: _formKey,
+          child: new Column(
+            children: getFormWidget(viewModel),
+          ),
+        );
+      },
     );
   }
 
-  List<Widget> getFormWidget(HomeViewModel viewModel) {
+  List<Widget> getFormWidget(IssuingViewModel viewModel) {
     List<Widget> formWidgets = new List();
+    List<Office> countingCenters = new List();
+    List<Office> pollingStations = new List();
+
+    viewModel.offices.forEach((Office office) {
+      if (office.officeType == "CountingCentre") {
+        countingCenters.add(office);
+      }
+    });
+
+    viewModel.offices.forEach((Office office) {
+      if (office.officeType == "PollingStation") {
+        pollingStations.add(office);
+      }
+    });
 
     final issuedBy = new Row(
       children: <Widget>[
@@ -72,11 +88,11 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                   DropdownButton(
                     isExpanded: true,
                     items: [
-                      new DropdownMenuItem(child: new Text("Center A")),
-                      new DropdownMenuItem(child: new Text("Center B")),
+                      new DropdownMenuItem(child: new Text("User A")),
+                      new DropdownMenuItem(child: new Text("USer B")),
                     ],
                     hint: new Text("Select Counting Station"),
-                    onChanged: (_) {},
+                    onChanged: (value) {},
                   ),
                 ],
               ),
@@ -106,12 +122,11 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                 children: <Widget>[
                   DropdownButton(
                       isExpanded: true,
-                      items: viewModel.offices.map((ofice) {
-                        return new DropdownMenuItem(
-                            value: ofice.officeId,
-                            child: new Text(ofice.officeName));
-                      }).toList(),
-                      hint: new Text("Select Polling Station"),
+                      items: [
+                        new DropdownMenuItem(
+                            child: new Text("Counting Station"))
+                      ],
+                      hint: new Text("Select Station"),
                       onChanged: (value) {}),
                 ],
               ),
@@ -121,16 +136,17 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       ],
     );
 
-    final selectPollingStation = Padding(
+    final selectIssuingOffice = Padding(
       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: new DropdownButton(
         isExpanded: true,
-        items: [
-          new DropdownMenuItem(child: new Text("Abc")),
-          new DropdownMenuItem(child: new Text("Xyz")),
-        ],
-        hint: new Text("Select City"),
-        onChanged: (_) {},
+        items: countingCenters.map((office) {
+          return new DropdownMenuItem(
+              value: office.officeId, child: new Text(office.officeName));
+        }).toList(),
+        hint: new Text("Select station"),
+        onChanged: (value) => viewModel.updateIssuingOffice(value),
+        value: viewModel.invoice.issuingOfficeId,
       ),
     );
 
@@ -168,16 +184,17 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       ],
     );
 
-    final selectCountingCenter = Padding(
+    final selectReceivingOffice = Padding(
       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: new DropdownButton(
         isExpanded: true,
-        items: [
-          new DropdownMenuItem(child: new Text("Center A")),
-          new DropdownMenuItem(child: new Text("Center B")),
-        ],
-        hint: new Text("Select Counting Station"),
-        onChanged: (_) {},
+        items: pollingStations.map((office) {
+          return new DropdownMenuItem(
+              value: office.officeId, child: new Text(office.officeName));
+        }).toList(),
+        hint: new Text("Select station"),
+        onChanged: (value) => viewModel.updateReceivingOffice(value),
+        value: viewModel.invoice.receivingOfficeId,
       ),
     );
 
@@ -196,10 +213,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
             style: TextStyle(fontSize: 20),
           ),
           onPressed: () {
-            if (!_formKey.currentState.validate()) {
-            } else {
-              Navigator.of(context).pushNamed("/issuing-steptwo");
-            }
+            viewModel.createInvoice();
           },
         ),
       ),
@@ -208,9 +222,9 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     formWidgets.add(issuedBy);
     formWidgets.add(issuedTo);
     formWidgets.add(issuedFrom);
-    formWidgets.add(selectPollingStation);
+    formWidgets.add(selectIssuingOffice);
     formWidgets.add(issuedFor);
-    formWidgets.add(selectCountingCenter);
+    formWidgets.add(selectReceivingOffice);
     formWidgets.add(btnNext);
 
     return formWidgets;

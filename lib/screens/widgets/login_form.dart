@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabulation/view_models/login_viewmodel.dart';
+import 'package:tabulation/util/strings.dart';
 
 class LoginForm extends StatefulWidget {
   final LoginViewModel viewModel;
@@ -13,6 +14,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  String btnLoginText = button_login;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
@@ -111,14 +113,17 @@ class _LoginFormState extends State<LoginForm> {
                     borderRadius: new BorderRadius.circular(10.0)),
                 color: Color.fromRGBO(72, 121, 209, 1),
                 child: Text(
-                  'Login',
+                  btnLoginText,
                   style: TextStyle(fontSize: 20),
                 ),
                 onPressed: () {
+                  setState(() {
+                    btnLoginText = button_loading_text;
+                  });
                   widget.viewModel.login(
                       widget.viewModel.username, widget.viewModel.password);
-                  if (!_formKey.currentState.validate()) {
-                  } else {}
+                  // if (!_formKey.currentState.validate()) {
+                  // } else {}
                 },
               ),
             ),
