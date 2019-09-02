@@ -1,0 +1,3 @@
+enum ScreenState{
+  WELCOME,SINGIN
+}

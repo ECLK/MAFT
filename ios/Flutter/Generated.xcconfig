@@ -1,9 +1,9 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/pawangunaratne/Documents/tools/flutter
-FLUTTER_APPLICATION_PATH=/Users/pawangunaratne/FlutterProjects/tabulation
-FLUTTER_TARGET=lib/main.dart
+FLUTTER_ROOT=/Volumes/Files/flutter
+FLUTTER_APPLICATION_PATH=/Volumes/Files/Projects/eclk-maft
+FLUTTER_TARGET=/Volumes/Files/Projects/eclk-maft/lib/main.dart
 FLUTTER_BUILD_DIR=build
 SYMROOT=${SOURCE_ROOT}/../build/ios
-FLUTTER_FRAMEWORK_DIR=/Users/pawangunaratne/Documents/tools/flutter/bin/cache/artifacts/engine/ios
+FLUTTER_FRAMEWORK_DIR=/Volumes/Files/flutter/bin/cache/artifacts/engine/ios
 FLUTTER_BUILD_NAME=1.0.0
 FLUTTER_BUILD_NUMBER=1
