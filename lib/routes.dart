@@ -8,6 +8,7 @@ import 'package:tabulation/screens/login.dart';
 import 'package:tabulation/screens/counting.dart';
 import 'package:tabulation/screens/receiving.dart';
 import 'package:tabulation/screens/widgets/camera_view.dart';
+import 'package:tabulation/screens/check_messages.dart';
 
 final routes = {
   '/home': (BuildContext context) => new HomeScreen(),
@@ -20,4 +21,5 @@ final routes = {
   '/ballot-boxes': (BuildContext context) => new BallotBoxesScreen(),
   '/camera-view': (BuildContext context) => new CameraView(),
   '/add-ballot-box': (BuildContext context) => new AddBallotBoxScreen(),
+  '/check-messages':(BuildContext context)=> new CheckMessages()
 };

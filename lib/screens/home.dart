@@ -92,6 +92,27 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Padding(
+                  padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
+                  child: new SizedBox(
+                    width:350,
+                    height:60.0,
+                    child: new RaisedButton(
+                      textColor: Colors.white,
+                      shape:new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(10.0)
+                      ) ,
+                      color:Color.fromRGBO(72, 121, 209, 1),
+                      child:Text(
+                        'Check Messages',
+                        style:TextStyle(fontSize: 20)
+                      ),
+                      onPressed: (){
+                        Navigator.of(context).pushNamed("/check-messages");
+                      },
+                    )
+                  )
+                ),
+                Padding(
                   padding:
                       const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
                   child: new SizedBox(
