@@ -22,9 +22,7 @@ class InvoiceModel {
       this.issuingOfficeId,
       this.receivingOfficeId});
 
-  
-
-factory InvoiceModel.fromJson(Map<String, dynamic> json) {
+  factory InvoiceModel.fromJson(Map<String, dynamic> json) {
     return new InvoiceModel(
       confirmed: json['confirmed'],
       delete: json['delete'],
@@ -35,7 +33,6 @@ factory InvoiceModel.fromJson(Map<String, dynamic> json) {
       issuedTo: json['issuedTo'],
       issuingOfficeId: json['issuingOfficeId:'],
       receivingOfficeId: json['receivingOfficeId'],
-
     );
   }
 
@@ -50,8 +47,6 @@ factory InvoiceModel.fromJson(Map<String, dynamic> json) {
       issuedTo: state.issuedToId,
       issuingOfficeId: state.issuingOfficeId,
       receivingOfficeId: state.receivingOfficeId,
-
     );
   }
-
 }
