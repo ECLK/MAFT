@@ -11,6 +11,16 @@ class PostInvoiceAction {
       
 }
 
+class PostInvoiceReceivingAction {
+  int electionId;
+  int issuedToId;
+  int issuingOfficeId;
+  int receivingOfficeId;
+
+  PostInvoiceReceivingAction(this.electionId, this.issuedToId, this.issuingOfficeId,
+      this.receivingOfficeId);
+      
+}
 class InvoiceResponseAction{
   final InvoiceModel invoice;
 
@@ -28,3 +38,4 @@ class UpdateReceivingOffice{
 }
 
 class NavigateToIssuingStepTwoAction{}
+class NavigateToReceivingStepTwoAction{}

@@ -86,7 +86,7 @@ class _HomeState extends State<Home> {
                         style: TextStyle(fontSize: 20),
                       ),
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/receiving');
+                        Navigator.of(context).pushNamed('/receiving-stepone');
                       },
                     ),
                   ),

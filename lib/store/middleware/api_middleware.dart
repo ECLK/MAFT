@@ -20,6 +20,10 @@ class APIMiddleware extends MiddlewareClass<AppState> {
       postInvoice(next, action.electionId, action.issuedToId,
           action.issuingOfficeId, action.receivingOfficeId);
     }
+        if (action is PostInvoiceReceivingAction) {
+      postInvoiceReceiving(next, action.electionId, action.issuedToId,
+          action.issuingOfficeId, action.receivingOfficeId);
+    }
 
     next(action);
   }
@@ -60,4 +64,28 @@ class APIMiddleware extends MiddlewareClass<AppState> {
     next(new NavigateToIssuingStepTwoAction());
     next(new InvoiceResponseAction(invoice));
   }
+}
+
+void postInvoiceReceiving(NextDispatcher next, int electionId, int officeId,
+    int issuingOfficeId, int receivingOfficeId) async {
+  Map post = {
+    "electionId": electionId,
+    "issuedTo": officeId,
+    "issuingOfficeId": issuingOfficeId,
+    "receivingOfficeId": receivingOfficeId
+  };
+
+  var response = await http.post(
+      Uri.encodeFull("https://dev.tabulation.ecdev.opensource.lk/invoice"),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: utf8.encode(json.encode(post)));
+
+  final jsonResponse = json.decode(response.body);
+  InvoiceModel invoice = InvoiceModel.fromJson(jsonResponse);
+
+  next(new NavigateToReceivingStepTwoAction());
+  next(new InvoiceResponseAction(invoice));
 }
