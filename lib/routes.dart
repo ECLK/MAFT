@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabulation/screens/add_ballot_box.dart';
 import 'package:tabulation/screens/ballot_boxes.dart';
+import 'package:tabulation/screens/ballot_boxes_listview.dart';
 import 'package:tabulation/screens/home.dart';
 import 'package:tabulation/screens/issuing-stepone.dart';
 import 'package:tabulation/screens/issuing-steptwo.dart';
@@ -20,4 +21,6 @@ final routes = {
   '/ballot-boxes': (BuildContext context) => new BallotBoxesScreen(),
   '/camera-view': (BuildContext context) => new CameraView(),
   '/add-ballot-box': (BuildContext context) => new AddBallotBoxScreen(),
+  '/select-ballot-boxes': (BuildContext context) =>
+      new BallotBoxesListViewScreen(),
 };

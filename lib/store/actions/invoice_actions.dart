@@ -1,3 +1,4 @@
+import 'package:tabulation/store/models/ballot_book_response.dart';
 import 'package:tabulation/store/models/invoice_response.dart';
 
 class PostInvoiceAction {
@@ -8,23 +9,29 @@ class PostInvoiceAction {
 
   PostInvoiceAction(this.electionId, this.issuedToId, this.issuingOfficeId,
       this.receivingOfficeId);
-      
 }
 
-class InvoiceResponseAction{
+class InvoiceResponseAction {
   final InvoiceModel invoice;
 
   InvoiceResponseAction(this.invoice);
 }
 
-class UpdateIssuingOffice{
+class UpdateIssuingOffice {
   final int issuingOfficeId;
   UpdateIssuingOffice(this.issuingOfficeId);
 }
 
-class UpdateReceivingOffice{
+class UpdateReceivingOffice {
   final int receivingOfficeId;
   UpdateReceivingOffice(this.receivingOfficeId);
 }
 
-class NavigateToIssuingStepTwoAction{}
+// class PostInvoiceStationaryItemAction {
+//   int invoiceId;
+//   int stationaryItemId;
+
+//   PostInvoiceStationaryItemAction(this.invoiceId, this.stationaryItemId);
+// }
+
+class NavigateToIssuingStepTwoAction {}
