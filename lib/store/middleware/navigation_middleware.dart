@@ -14,6 +14,9 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
     if (action is NavigateToIssuingStepTwoAction) {
       Keys.navKey.currentState.pushNamed("/issuing-steptwo");
     }
+    if (action is NavigateToReceivingStepTwoAction) {
+      Keys.navKey.currentState.pushNamed("/receiving-steptwo");
+    }
 
     next(action);
   }
