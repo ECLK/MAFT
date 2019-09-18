@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:tabulation/screens/widgets/ballot_book.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/view_models/home_viewmodel.dart';
 import 'package:tabulation/view_models/issuingsteptwo_viewmodel.dart';
 
 class IssuingStepTwoForm extends StatefulWidget {
@@ -9,47 +9,49 @@ class IssuingStepTwoForm extends StatefulWidget {
   _IssuingStepTwoFormState createState() => new _IssuingStepTwoFormState();
 }
 
-
 // to do
 // POSt /ballot-book for from and to click on CHECK
 // and /invoice/{invoiceId}/stationary-item when click on SAVE
 // for ballot boxes get all using /ballot-box
 // then for each /ballot-box POST it to /invoice/{invoiceId}/stationary-item
 
-
-
 class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
   final _formKey = GlobalKey<FormState>();
-  List<Widget> _ballotBooks = new List<Widget>();
+  List<BallotBook> ballotBooks = new List<BallotBook>();
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: 
-      // new StoreConnector<AppState, IssuingStepTwoViewModel>(
-          // onInit: (store) {
-          //   print('2- oninit');
-          // },
-          // onWillChange: (viewModel) {
-          //   print('2- onWillChange');
-          // },
-          // onDidChange: (viewModel) {
-          //   print('2- onDidchange');
-          // },
-          // converter: (store) => IssuingStepTwoViewModel.fromStore(store),
-          // builder: (context, viewModel) {
-             new Column(
-              children: getFormWidget(),
-            ),
-          // }),
+      child: new StoreConnector<AppState, IssuingStepTwoViewModel>(
+          onDidChange: (viewModel) {
+            if (viewModel.activeBallotBook.statusCodeMessage != "" &&
+                viewModel.activeBallotBook.statusCode != 0 &&
+                viewModel.activeBallotBook.statusCode != 201) {
+              this._showDialog(viewModel.activeBallotBook.statusCodeMessage);
+            }
+          },
+          converter: (store) => IssuingStepTwoViewModel.fromStore(store),
+          builder: (context, viewModel) {
+            return new Column(
+              children: getFormWidget(viewModel),
+            );
+          }),
     );
   }
 
-  List<Widget> getFormWidget() {
-    // print('2- invoice id ' + viewModel.invoiceId.toString());
+  void _showDialog(String message) {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.redAccent,
+        content: Text(message),
+      ),
+    );
+  }
 
-    List<Widget> formWidgets = new List();
+  List<Widget> getFormWidget(IssuingStepTwoViewModel viewModel) {
+    List<Widget> widgets = new List();
+    List<Widget> children = new List<Widget>();
 
     final ballotBooksHeading = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,135 +69,69 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
           child: IconButton(
             icon: Icon(Icons.add_circle),
             tooltip: 'Add Ballot Book',
-            onPressed: () {},
+            onPressed: () {
+              this.addBallotBook(viewModel);
+            },
           ),
         )
       ],
     );
-
-    final ballotBookRow = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        new Flexible(
-          child: new SizedBox(
-            width: 140,
-            child: TextFormField(
-              keyboardType: TextInputType.text,
-              autofocus: false,
-              decoration: InputDecoration(
-                hintText: 'From',
-                contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-              ),
-            ),
-          ),
-        ),
-        new Flexible(
-          child: new SizedBox(
-            width: 140,
-            child: TextFormField(
-              keyboardType: TextInputType.text,
-              autofocus: false,
-              decoration: InputDecoration(
-                hintText: 'To',
-                contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-              ),
-            ),
-          ),
-        ),
-        // StoreConnector<int, String>(
-        // converter: (store) => store.state.toString(),
-        // builder: (context, viewModel) {
-        //  new Flexible(
-        //   child: new SizedBox(
-        //     width: 100,
-        //     child: new Text(
-        //       viewModel,
-        //       style: new TextStyle(
-        //           fontWeight: FontWeight.bold, fontSize: 20.0),
-        //       textAlign: TextAlign.center,
-        //     ),
-        //   ),
-        // ),
-        // }),
-        new Flexible(
-          child: IconButton(
-            icon: Icon(Icons.save),
-            tooltip: 'Close Ballot Book',
-            onPressed: () {},
-          ),
-        )
-      ],
-    );
-
-    // var testone = <Widget>[]
-
-
-    // final tenderBallotBooksHeading = new Row(
-    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //   crossAxisAlignment: CrossAxisAlignment.start,
-    //   mainAxisSize: MainAxisSize.max,
-    //   children: <Widget>[
-    //     new Flexible(
-    //       child: Padding(
-    //         padding: const EdgeInsets.only(
-    //             top: 0.0, right: 0.0, left: 0.0, bottom: 0.0),
-    //         child: new SizedBox(
-    //           width: 300,
-    //           child: new Text(
-    //             'Tender Ballot Books',
-    //             style:
-    //                 new TextStyle(fontWeight: FontWeight.bold, fontSize: 19.0),
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //     new Flexible(
-    //       child: new SizedBox(
-    //         width: 50,
-    //         child: IconButton(
-    //           icon: Icon(Icons.add_circle),
-    //           tooltip: 'Add Tender Ballot Book',
-    //           onPressed: () {},
-    //         ),
-    //       ),
-    //     )
-    //   ],
-    // );
 
     final ballotBoxesHeading = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        new Padding(
-          padding: const EdgeInsets.only(top: 0.0, right: 0.0, left: 0.0),
-          child: new Text(
-            'Ballot Boxes',
-            style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-          ),
-        ),
-      ],
-    );
-
-    final ballotBoxRow = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
         new Flexible(
-          child: Padding(
+          child: new Padding(
             padding: const EdgeInsets.only(top: 0.0, right: 0.0, left: 0.0),
             child: new Text(
-              'Box: b-1',
+              'Ballot Boxes',
               style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
           ),
         ),
         new Flexible(
-          child: IconButton(
-            icon: Icon(Icons.check_box_outline_blank),
-            tooltip: 'Add Ballot Book',
-            onPressed: () {},
+          child: new StoreConnector<AppState, IssuingStepTwoViewModel>(
+              converter: (store) => IssuingStepTwoViewModel.fromStore(store),
+              builder: (context, viewModel) {
+                return new IconButton(
+                  icon: Icon(Icons.add_circle),
+                  tooltip: 'Add Ballot Boxes',
+                  onPressed: () {
+                    this.selectBallotboxes(viewModel);
+                  },
+                );
+              }),
+        )
+      ],
+    );
+
+    final noBallotBooksHeading = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        new Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 0.0, right: 0.0, left: 0.0),
+            child: new Text(
+              'Add your first ballot book.',
+              style:
+                  new TextStyle(fontWeight: FontWeight.normal, fontSize: 18.0),
+            ),
+          ),
+        )
+      ],
+    );
+
+    final noBallotBoxesHeading = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        new Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 0.0, right: 0.0, left: 0.0),
+            child: new Text(
+              'Add your first ballot box.',
+              style:
+                  new TextStyle(fontWeight: FontWeight.normal, fontSize: 18.0),
+            ),
           ),
         )
       ],
@@ -230,34 +166,75 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
       ),
     );
 
-    final body = SingleChildScrollView(
-      child: Column(
+    // generate the view
+    children.add(ballotBooksHeading);
+    children.add(SizedBox(height: 15.0));
+
+    // add ballot books already created
+    viewModel.ballotBookResponseModels.forEach((ballotBook) {
+      final ballotBookRow = Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          ballotBooksHeading,
-          SizedBox(height: 15.0),
-          ballotBookRow,
-          SizedBox(height: 15.0),
-          divider,
-          // SizedBox(height: 15.0),
-          // tenderBallotBooksHeading,
-          // SizedBox(height: 15.0),
-          // ballotBookRow,
-          // SizedBox(height: 15.0),
-          // divider,
-          SizedBox(height: 15.0),
-          ballotBoxesHeading,
-          SizedBox(height: 15.0),
-          ballotBoxRow,
-          ballotBoxRow,
-          ballotBoxRow,
-          SizedBox(height: 15.0),
-          btnSubmit,
+          new Flexible(
+            child: new SizedBox(
+              child: new Text(
+                "Ballot book from " +
+                    ballotBook.fromBallotId.toString() +
+                    " to " +
+                    ballotBook.toBallotId.toString(),
+                style: new TextStyle(
+                    fontWeight: FontWeight.normal, fontSize: 18.0),
+              ),
+            ),
+          ),
         ],
-      ),
-    );
+      );
 
-    formWidgets.add(body);
+      children.add(ballotBookRow);
+      children.add(SizedBox(height: 15.0));
+    });
 
-    return formWidgets;
+    if (viewModel.isBallotBookActive) {
+      ballotBooks.forEach((ballotBook) {
+        children.add(ballotBook);
+      });
+    } else {
+      this.ballotBooks = new List<BallotBook>();
+    }
+
+    // show no ballot books header
+    if (viewModel.ballotBookResponseModels.length == 0 &&
+        this.ballotBooks.length == 0) {
+      children.add(noBallotBooksHeading);
+    }
+
+    children.add(SizedBox(height: 15.0));
+    children.add(divider);
+    children.add(SizedBox(height: 15.0));
+    children.add(ballotBoxesHeading);
+    children.add(SizedBox(height: 15.0));
+    children.add(noBallotBoxesHeading);
+    children.add(SizedBox(height: 15.0));
+    children.add(btnSubmit);
+
+    final body = SingleChildScrollView(child: Column(children: children));
+
+    widgets.add(body);
+
+    return widgets;
+  }
+
+  void addBallotBook(IssuingStepTwoViewModel viewModel) {
+    if (!viewModel.isBallotBookActive) {
+      viewModel.updateBallotBookStatus(true);
+      setState(() {
+        ballotBooks.add(BallotBook());
+      });
+    }
+  }
+
+  void selectBallotboxes(IssuingStepTwoViewModel viewModel) {
+    viewModel.getBallotBoxes(2);
+    Navigator.of(context).pushNamed("/select-ballot-boxes");
   }
 }

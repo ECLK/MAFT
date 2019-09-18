@@ -122,13 +122,14 @@ class _HomeState extends State<Home> {
                       textColor: Colors.white,
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(10.0)),
-                      color: Color.fromRGBO(72, 121, 209, 1),
+                      color: Color.fromRGBO(211, 211, 211, 1),
                       child: Text(
                         'Counting Process',
                         style: TextStyle(fontSize: 20),
                       ),
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/counting');
+                        // phase II
+                        //Navigator.of(context).pushNamed('/counting');
                       },
                     ),
                   ),
@@ -143,7 +144,7 @@ class _HomeState extends State<Home> {
                       textColor: Colors.white,
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(10.0)),
-                      color: Color.fromRGBO(72, 121, 209, 1),
+                      color: Color.fromRGBO(211, 211, 211, 1),
                       child: Text(
                         'Approval Process',
                         style: TextStyle(fontSize: 20),
