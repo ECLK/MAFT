@@ -38,3 +38,7 @@ class UpdateBallotBooks {
 
   UpdateBallotBooks(this.ballotBook);
 }
+
+class ClearBalloBooksAction {
+  ClearBalloBooksAction();
+}

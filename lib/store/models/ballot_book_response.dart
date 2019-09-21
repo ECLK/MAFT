@@ -9,6 +9,7 @@ class BallotBookResponseModel {
   int statusCode;
   bool isBallotBookActive;
   String statusCodeMessage;
+  List<BallotBookResponseModel> ballotBooks;
 
   BallotBookResponseModel(
       {this.electionId,
@@ -18,7 +19,8 @@ class BallotBookResponseModel {
       this.stationaryItemId,
       this.statusCode,
       this.statusCodeMessage,
-      this.isBallotBookActive});
+      this.isBallotBookActive,
+      this.ballotBooks});
 
   factory BallotBookResponseModel.fromJson(Map<String, dynamic> json) {
     return new BallotBookResponseModel(
@@ -37,6 +39,16 @@ class BallotBookResponseModel {
         fromBallotId: state.fromBallotId,
         toBallotId: state.toBallotId,
         stationaryItemId: state.stationaryItemId,
-        isBallotBookActive: state.isBallotBookActive);
+        isBallotBookActive: state.isBallotBookActive,
+        statusCode: state.statusCode);
+  }
+
+  factory BallotBookResponseModel.fromJsonList(List<dynamic> parsedJson) {
+    List<BallotBookResponseModel> ballotBooks =
+        new List<BallotBookResponseModel>();
+    ballotBooks =
+        parsedJson.map((i) => BallotBookResponseModel.fromJson(i)).toList();
+
+    return new BallotBookResponseModel(ballotBooks: ballotBooks);
   }
 }

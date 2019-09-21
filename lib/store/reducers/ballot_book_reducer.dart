@@ -8,6 +8,7 @@ final ballotBookReducer = combineReducers<BallotBookState>([
   TypedReducer<BallotBookState, UpdateBallotBookStatus>(
       _updateBallotBookStatus),
   TypedReducer<BallotBookState, UpdateBallotBooks>(_updateBallotBooks),
+  TypedReducer<BallotBookState, ClearBalloBooksAction>(_clearBalloBooksAction),
 ]);
 
 BallotBookState _ballotBookResponseAction(
@@ -31,5 +32,11 @@ BallotBookState _updateBallotBooks(
     BallotBookState state, UpdateBallotBooks action) {
   return state.copyWith(
       ballotBooks: List.from(state.ballotBooks)..add(action.ballotBook),
-      isBallotBookActive: false);
+      isBallotBookActive: false,
+      statusCode: action.ballotBook.statusCode);
+}
+
+BallotBookState _clearBalloBooksAction(
+    BallotBookState state, ClearBalloBooksAction action) {
+  return BallotBookState.initial();
 }

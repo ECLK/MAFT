@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/screens/widgets/ballot_book.dart';
+import 'package:tabulation/screens/widgets/ballot_box.dart';
 import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/view_models/issuingsteptwo_viewmodel.dart';
 
@@ -9,15 +10,10 @@ class IssuingStepTwoForm extends StatefulWidget {
   _IssuingStepTwoFormState createState() => new _IssuingStepTwoFormState();
 }
 
-// to do
-// POSt /ballot-book for from and to click on CHECK
-// and /invoice/{invoiceId}/stationary-item when click on SAVE
-// for ballot boxes get all using /ballot-box
-// then for each /ballot-box POST it to /invoice/{invoiceId}/stationary-item
-
 class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
   final _formKey = GlobalKey<FormState>();
   List<BallotBook> ballotBooks = new List<BallotBook>();
+  List<BallotBoxWidget> ballotBoxes = new List<BallotBoxWidget>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +21,8 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
       key: _formKey,
       child: new StoreConnector<AppState, IssuingStepTwoViewModel>(
           onDidChange: (viewModel) {
-            if (viewModel.activeBallotBook.statusCodeMessage != "" &&
+            if (viewModel.isBallotBookActive == true &&
+                viewModel.activeBallotBook.statusCodeMessage != "" &&
                 viewModel.activeBallotBook.statusCode != 0 &&
                 viewModel.activeBallotBook.statusCode != 201) {
               this._showDialog(viewModel.activeBallotBook.statusCodeMessage);
@@ -44,7 +41,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
     Scaffold.of(context).showSnackBar(
       SnackBar(
         backgroundColor: Colors.redAccent,
-        content: Text(message),
+        content: Text(message ?? ''),
       ),
     );
   }
@@ -66,14 +63,22 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
           ),
         ),
         new Flexible(
-          child: IconButton(
-            icon: Icon(Icons.add_circle),
-            tooltip: 'Add Ballot Book',
-            onPressed: () {
-              this.addBallotBook(viewModel);
-            },
-          ),
-        )
+          child: !viewModel.isBallotBookActive
+              ? IconButton(
+                  icon: Icon(Icons.add_circle),
+                  tooltip: 'Add Ballot Book',
+                  onPressed: () {
+                    this.addBallotBook(viewModel);
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.remove_circle),
+                  tooltip: 'Remove Active Ballot Book',
+                  onPressed: () {
+                    this.addBallotBook(viewModel);
+                  },
+                ),
+        ),
       ],
     );
 
@@ -90,17 +95,22 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
           ),
         ),
         new Flexible(
-          child: new StoreConnector<AppState, IssuingStepTwoViewModel>(
-              converter: (store) => IssuingStepTwoViewModel.fromStore(store),
-              builder: (context, viewModel) {
-                return new IconButton(
+          child: !viewModel.isBallotBoxActive
+              ? IconButton(
                   icon: Icon(Icons.add_circle),
                   tooltip: 'Add Ballot Boxes',
                   onPressed: () {
-                    this.selectBallotboxes(viewModel);
+                    this.addBallotBox(viewModel);
                   },
-                );
-              }),
+                )
+              : IconButton(
+                  icon: Icon(Icons.remove_circle),
+                  tooltip: 'Remove Active Ballot Boxe',
+                  onPressed: () {
+                    this.addBallotBox(viewModel);
+                  },
+                ),
+          // }),
         )
       ],
     );
@@ -159,7 +169,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
           onPressed: () {
             if (!_formKey.currentState.validate()) {
             } else {
-              Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+              viewModel.confirmInvoice();
             }
           },
         ),
@@ -213,7 +223,42 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
     children.add(SizedBox(height: 15.0));
     children.add(ballotBoxesHeading);
     children.add(SizedBox(height: 15.0));
-    children.add(noBallotBoxesHeading);
+
+    // add ballot boxes already created
+    viewModel.ballotBoxResponseModels.forEach((ballotBox) {
+      final ballotBoxRow = Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          new Flexible(
+            child: new SizedBox(
+              child: new Text(
+                ballotBox.ballotBoxId.toString(),
+                style: new TextStyle(
+                    fontWeight: FontWeight.normal, fontSize: 18.0),
+              ),
+            ),
+          ),
+        ],
+      );
+
+      children.add(ballotBoxRow);
+      children.add(SizedBox(height: 15.0));
+    });
+
+    if (viewModel.isBallotBoxActive) {
+      ballotBoxes.forEach((ballotBox) {
+        children.add(ballotBox);
+      });
+    } else {
+      this.ballotBoxes = new List<BallotBoxWidget>();
+    }
+
+    // show no ballot boxes header
+    if (viewModel.ballotBoxResponseModels.length == 0 &&
+        this.ballotBoxes.length == 0) {
+      children.add(noBallotBoxesHeading);
+    }
+
     children.add(SizedBox(height: 15.0));
     children.add(btnSubmit);
 
@@ -230,11 +275,25 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
       setState(() {
         ballotBooks.add(BallotBook());
       });
+    } else {
+      setState(() {
+        viewModel.updateBallotBookStatus(false);
+        ballotBooks.removeLast();
+      });
     }
   }
 
-  void selectBallotboxes(IssuingStepTwoViewModel viewModel) {
-    viewModel.getBallotBoxes(2);
-    Navigator.of(context).pushNamed("/select-ballot-boxes");
+  void addBallotBox(IssuingStepTwoViewModel viewModel) {
+    if (!viewModel.isBallotBoxActive) {
+      viewModel.updateBallotBoxStatus(true);
+      setState(() {
+        ballotBoxes.add(BallotBoxWidget());
+      });
+    } else {
+      setState(() {
+        viewModel.updateBallotBoxStatus(false);
+        ballotBoxes.removeLast();
+      });
+    }
   }
 }

@@ -8,6 +8,7 @@ import 'package:tabulation/store/actions/office_actions.dart';
 import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/store/models/ballot_book_response.dart';
 import 'package:tabulation/store/models/ballot_box_request.dart';
+import 'package:tabulation/store/models/ballot_box_response.dart';
 import 'package:tabulation/store/models/invoice_response.dart';
 import 'package:tabulation/store/models/office_request.dart';
 import 'package:tabulation/util/constants.dart';
@@ -28,6 +29,13 @@ class APIMiddleware extends MiddlewareClass<AppState> {
     }
     if (action is FetchBalloBoxesAction) {
       getBallotBoxes(next, action.electionId);
+    }
+    if (action is PostBallotBoxAction) {
+      postBallotBox(
+          next, action.electionId, action.invoiceId, action.ballotBoxId);
+    }
+    if (action is ConfirmInvoiceAction) {
+      confirmInvoice(next, action.invoiceId);
     }
 
     next(action);
@@ -97,9 +105,7 @@ class APIMiddleware extends MiddlewareClass<AppState> {
       next(new BallotBookResponseAction(
           ballotBook, 404, jsonResponse['detail']));
     } else {
-      if (ballotBook.available) {
-        postInvoiceStationaryItemAction(next, invoiceId, ballotBook);
-      } else {}
+      postInvoiceStationaryItemAction(next, invoiceId, ballotBook);
     }
   }
 
@@ -125,7 +131,7 @@ class APIMiddleware extends MiddlewareClass<AppState> {
   void getBallotBoxes(NextDispatcher next, int electionId) async {
     var response = await http.get(
         Uri.encodeFull(
-            "https://dev.tabulation.ecdev.opensource.lk/ballot-box?limit=20&electionId=${electionId}"),
+            "https://dev.tabulation.ecdev.opensource.lk/ballot-box?electionId=${electionId}"),
         headers: {"Accept": "application/json"});
 
     final jsonResponse = json.decode(response.body);
@@ -134,5 +140,66 @@ class APIMiddleware extends MiddlewareClass<AppState> {
     List<BallotBox> ballotBoxes = ballotBoxeModel.ballotBoxes;
 
     next(new BalloBoxesResponseAction(ballotBoxes));
+  }
+}
+
+void postBallotBox(NextDispatcher next, int electionId, int invoiceId,
+    String ballotBoxId) async {
+  Map post = {"electionId": electionId, "ballotBoxId": ballotBoxId};
+
+  var response = await http.post(
+      Uri.encodeFull("https://dev.tabulation.ecdev.opensource.lk/ballot-box"),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: utf8.encode(json.encode(post)));
+
+  final jsonResponse = json.decode(response.body);
+
+  if (response.statusCode != 404) {
+    postBallotBoxStationaryItemAction(
+        next, invoiceId, jsonResponse['stationaryItemId'], ballotBoxId);
+  }
+}
+
+void postBallotBoxStationaryItemAction(NextDispatcher next, int invoiceId,
+    int stationaryItemId, String ballotBoxId) async {
+  Map post = {"stationaryItemId": stationaryItemId};
+
+  var response = await http.post(
+      Uri.encodeFull(
+          "https://dev.tabulation.ecdev.opensource.lk/invoice/${invoiceId}/stationary-item"),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: utf8.encode(json.encode(post)));
+
+  final jsonResponse = json.decode(response.body);
+
+  if (response.statusCode == 201) {
+    BallotBoxResponseModel ballotBox =
+        BallotBoxResponseModel.fromJson(jsonResponse);
+    ballotBox.statusCode = response.statusCode;
+    ballotBox.ballotBoxId = ballotBoxId;
+
+    next(new UpdateBallotBoxes(ballotBox));
+  }
+}
+
+void confirmInvoice(NextDispatcher next, int invoiceId) async {
+  var response = await http.put(
+      Uri.encodeFull(
+          "https://dev.tabulation.ecdev.opensource.lk/invoice/${invoiceId}/confirm"),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      });
+
+  final jsonResponse = json.decode(response.body);
+
+  if (response.statusCode == 200) {
+    next(new NavigateToInvoiceSuccess());
   }
 }
