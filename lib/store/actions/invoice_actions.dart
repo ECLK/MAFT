@@ -10,6 +10,17 @@ class PostInvoiceAction {
       this.receivingOfficeId);
 }
 
+class PostInvoiceReceivingAction {
+  int electionId;
+  int issuedToId;
+  int issuingOfficeId;
+  int receivingOfficeId;
+
+  PostInvoiceReceivingAction(this.electionId, this.issuedToId, this.issuingOfficeId,
+      this.receivingOfficeId);
+      
+}
+
 class InvoiceResponseAction {
   final InvoiceModel invoice;
 
@@ -26,8 +37,6 @@ class UpdateReceivingOffice {
   UpdateReceivingOffice(this.receivingOfficeId);
 }
 
-class NavigateToIssuingStepTwoAction {}
-
 class ConfirmInvoiceAction {
   int invoiceId;
 
@@ -41,3 +50,9 @@ class ClearInvoiceAction {
 }
 
 class NavigateToHome {}
+
+class NavigateToIssuingStepTwoAction{}
+
+class NavigateToReceivingStepTwoAction{}
+
+

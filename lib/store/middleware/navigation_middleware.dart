@@ -16,6 +16,9 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
     if (action is NavigateToInvoiceSuccess) {
       Keys.navKey.currentState.pushNamed("/issuing-success");
     }
+    if (action is NavigateToReceivingStepTwoAction) {
+      Keys.navKey.currentState.pushNamed("/receiving-steptwo");
+    }
 
     next(action);
   }

@@ -23,10 +23,17 @@ class APIMiddleware extends MiddlewareClass<AppState> {
       postInvoice(next, action.electionId, action.issuedToId,
           action.issuingOfficeId, action.receivingOfficeId);
     }
+
+    if (action is PostInvoiceReceivingAction) {
+      postInvoiceReceiving(next, action.electionId, action.issuedToId,
+          action.issuingOfficeId, action.receivingOfficeId);
+    }
+    
     if (action is PostBallotBookAction) {
       postBallotBook(next, action.electionId, action.invoiceId,
           action.ballotBookFrom, action.ballotBookTo);
     }
+    
     if (action is FetchBalloBoxesAction) {
       getBallotBoxes(next, action.electionId);
     }
@@ -149,6 +156,24 @@ void postBallotBox(NextDispatcher next, int electionId, int invoiceId,
 
   var response = await http.post(
       Uri.encodeFull("https://dev.tabulation.ecdev.opensource.lk/ballot-box"),
+
+  if (response.statusCode != 404) {
+    postBallotBoxStationaryItemAction(
+        next, invoiceId, jsonResponse['stationaryItemId'], ballotBoxId);
+  }
+}
+    
+void postInvoiceReceiving(NextDispatcher next, int electionId, int officeId,
+    int issuingOfficeId, int receivingOfficeId) async {
+  Map post = {
+    "electionId": electionId,
+    "issuedTo": officeId,
+    "issuingOfficeId": issuingOfficeId,
+    "receivingOfficeId": receivingOfficeId
+  };
+
+  var response = await http.post(
+      Uri.encodeFull("https://dev.tabulation.ecdev.opensource.lk/invoice"),
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
@@ -156,11 +181,11 @@ void postBallotBox(NextDispatcher next, int electionId, int invoiceId,
       body: utf8.encode(json.encode(post)));
 
   final jsonResponse = json.decode(response.body);
+  
+  InvoiceModel invoice = InvoiceModel.fromJson(jsonResponse);
 
-  if (response.statusCode != 404) {
-    postBallotBoxStationaryItemAction(
-        next, invoiceId, jsonResponse['stationaryItemId'], ballotBoxId);
-  }
+  next(new NavigateToReceivingStepTwoAction());
+  next(new InvoiceResponseAction(invoice));
 }
 
 void postBallotBoxStationaryItemAction(NextDispatcher next, int invoiceId,
@@ -202,4 +227,5 @@ void confirmInvoice(NextDispatcher next, int invoiceId) async {
   if (response.statusCode == 200) {
     next(new NavigateToInvoiceSuccess());
   }
+
 }
