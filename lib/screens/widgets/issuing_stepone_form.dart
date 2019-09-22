@@ -57,14 +57,56 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
             Padding(
               padding: EdgeInsets.only(left: 5.0, right: 0.0),
               child: new Text(
-                'Pavan',
+                'ARO',
                 style: new TextStyle(
-                    fontWeight: FontWeight.normal, fontSize: 20.0),
+                    fontWeight: FontWeight.normal, fontSize: 18.0),
               ),
             ),
           ],
         ),
       ],
+    );
+
+    final issuedFrom = Row(
+      children: <Widget>[
+        new Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(top: 15.0),
+            child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                DropdownButton(
+                    isExpanded: true,
+                    items: [
+                      new DropdownMenuItem(child: new Text("Counting Station"))
+                    ],
+                    hint: new Text("Select Station"),
+                    onChanged: (value) {}),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+
+    final selectIssuingOffice = Padding(
+      padding: EdgeInsets.only(top: 15.0, bottom: 20.0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: countingCenters.map((office) {
+          return new DropdownMenuItem(
+              value: office.officeId, child: new Text(office.officeName));
+        }).toList(),
+        hint: new Text("Select station"),
+        onChanged: (value) => viewModel.updateIssuingOffice(value),
+        value: viewModel.invoice.issuingOfficeId,
+      ),
+    );
+
+    final divider = Divider(
+      height: 30.0,
+      color: Colors.blueGrey,
     );
 
     final issuedTo = new Row(
@@ -78,7 +120,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
         ),
         new Expanded(
           child: Padding(
-            padding: EdgeInsets.only(top: 20.0),
+            padding: EdgeInsets.only(top: 15.0),
             child: new Container(
               padding: new EdgeInsets.only(left: 8.0),
               child: new Column(
@@ -88,8 +130,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                   DropdownButton(
                     isExpanded: true,
                     items: [
-                      new DropdownMenuItem(child: new Text("User A")),
-                      new DropdownMenuItem(child: new Text("USer B")),
+                      new DropdownMenuItem(child: new Text("SPO")),
                     ],
                     hint: new Text("Select Counting Station"),
                     onChanged: (value) {},
@@ -102,82 +143,24 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       ],
     );
 
-    final issuedFrom = Row(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 20.0, right: 0.0, left: 0.0),
-          child: new Text(
-            'Issued from : ',
-            style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-          ),
-        ),
-        new Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: new Container(
-              padding: new EdgeInsets.only(left: 5.0),
-              child: new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  DropdownButton(
-                      isExpanded: true,
-                      items: [
-                        new DropdownMenuItem(
-                            child: new Text("Counting Station"))
-                      ],
-                      hint: new Text("Select Station"),
-                      onChanged: (value) {}),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-
-    final selectIssuingOffice = Padding(
-      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-      child: new DropdownButton(
-        isExpanded: true,
-        items: countingCenters.map((office) {
-          return new DropdownMenuItem(
-              value: office.officeId, child: new Text(office.officeName));
-        }).toList(),
-        hint: new Text("Select station"),
-        onChanged: (value) => viewModel.updateIssuingOffice(value),
-        value: viewModel.invoice.issuingOfficeId,
-      ),
-    );
-
     final issuedFor = Row(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 20.0, right: 0.0, left: 0.0),
-          child: Text(
-            'Issued for : ',
-            style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-          ),
-        ),
         new Expanded(
           child: Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: new Container(
-              padding: new EdgeInsets.only(left: 5.0),
-              child: new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  DropdownButton(
-                    isExpanded: true,
-                    items: [
-                      new DropdownMenuItem(child: new Text("Polling Station")),
-                    ],
-                    hint: new Text("Select issued for"),
-                    onChanged: (_) {},
-                  ),
-                ],
-              ),
+            padding: EdgeInsets.only(top: 15.0),
+            child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                DropdownButton(
+                  isExpanded: true,
+                  items: [
+                    new DropdownMenuItem(child: new Text("Polling Station")),
+                  ],
+                  hint: new Text("Select issued for"),
+                  onChanged: (_) {},
+                ),
+              ],
             ),
           ),
         ),
@@ -185,7 +168,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     );
 
     final selectReceivingOffice = Padding(
-      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      padding: EdgeInsets.only(top: 15.0, bottom: 10.0),
       child: new DropdownButton(
         isExpanded: true,
         items: pollingStations.map((office) {
@@ -220,9 +203,12 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     );
 
     formWidgets.add(issuedBy);
-    formWidgets.add(issuedTo);
     formWidgets.add(issuedFrom);
     formWidgets.add(selectIssuingOffice);
+
+    formWidgets.add(divider);
+
+    formWidgets.add(issuedTo);
     formWidgets.add(issuedFor);
     formWidgets.add(selectReceivingOffice);
     formWidgets.add(btnNext);
