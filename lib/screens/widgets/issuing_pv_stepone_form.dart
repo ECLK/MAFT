@@ -37,27 +37,33 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       }
     });
 
-
-
     final issuedBy = new Row(
       children: <Widget>[
-        new Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            new Text(
-              'Issued by :',
-              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.0, right: 0.0),
-              child: new Text(
-                'ARO PV',
-                style: new TextStyle(
-                    fontWeight: FontWeight.normal, fontSize: 20.0),
+        Padding(
+          padding: EdgeInsets.only(top: 0.0),
+          child: Text(
+            'Issued By : ',
+            style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+          ),
+        ),
+        new Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(top: 0.0),
+            child: new Container(
+              padding: new EdgeInsets.only(left: 8.0),
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  new Text(
+                    'ARO PV',
+                    style: new TextStyle(
+                        fontWeight: FontWeight.normal, fontSize: 20.0),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ],
     );
@@ -65,7 +71,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     final district = new Row(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(top: 20.0),
+          padding: EdgeInsets.only(top: 33.0),
           child: Text(
             'District : ',
             style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
@@ -73,7 +79,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
         ),
         new Expanded(
           child: Padding(
-            padding: EdgeInsets.only(top: 20.0),
+            padding: EdgeInsets.only(top: 33.0),
             child: new Container(
               padding: new EdgeInsets.only(left: 8.0),
               child: new Column(
@@ -117,8 +123,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                   DropdownButton(
                       isExpanded: true,
                       items: [
-                        new DropdownMenuItem(
-                            child: new Text("Counting Center"))
+                        new DropdownMenuItem(child: new Text("Counting Center"))
                       ],
                       hint: new Text("Select Station"),
                       onChanged: (value) {}),
@@ -129,7 +134,6 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
         ),
       ],
     );
-
 
     final organization = Row(
       children: <Widget>[
@@ -164,8 +168,6 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
         ),
       ],
     );
-
- 
 
     final btnNext = Padding(
       padding: const EdgeInsets.only(top: 20.0, right: 0.0, left: 0.0),
