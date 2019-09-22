@@ -14,7 +14,7 @@ import 'package:tabulation/screens/check_messages.dart';
 import 'package:tabulation/screens/homepv.dart';
 import 'package:tabulation/screens/issuing_pv_stepone.dart';
 import 'package:tabulation/screens/issuing_pv_steptwo.dart';
-
+import "package:tabulation/screens/receiving-success.dart";
 
 final routes = {
   '/home': (BuildContext context) => new HomeScreen(),
@@ -32,5 +32,6 @@ final routes = {
   '/camera-view': (BuildContext context) => new CameraView(),
   '/add-ballot-box': (BuildContext context) => new AddBallotBoxScreen(),
   '/issuing-success': (BuildContext context) => new IssuingSuccessScreen(),
+  '/receiving-success': (BuildContext context) => new ReceivingSuccessScreen(),
   '/check-messages': (BuildContext context)=> new CheckMessages(),
 };

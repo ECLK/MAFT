@@ -11,6 +11,14 @@ class ReceivingStepOneForm extends StatefulWidget {
 
 class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
   final _formKey = GlobalKey<FormState>();
+  void _showDialog(String message) {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.redAccent,
+        content: Text(message),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +108,7 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
         }).toList(),
         hint: new Text("Select station"),
         onChanged: (value) => viewModel.updateIssuingOffice(value),
-        value: viewModel.invoice.receivingOfficeId,
+        value: viewModel.invoice.issuingOfficeId,
       ),
     );
 
@@ -196,7 +204,11 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
             style: TextStyle(fontSize: 20),
           ),
           onPressed: () {
-            viewModel.createInvoice();
+            if (viewModel.invoice.receivingOfficeId != null &&
+                viewModel.invoice.issuingOfficeId != null)
+              viewModel.createInvoice();
+            else
+              _showDialog("Please make sure the required fields are filled.");
           },
         ),
       ),
@@ -208,7 +220,7 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
     formWidgets.add(selectReceivingOffice);
 
     formWidgets.add(divider);
-//issued by 
+//issued by
     formWidgets.add(issuedBy);
     formWidgets.add(issuedFrom);
     formWidgets.add(selectIssuingOffice);
