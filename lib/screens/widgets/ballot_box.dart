@@ -4,7 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/store/models/ballot_box_request.dart';
 import 'package:tabulation/view_models/issuingsteptwo_viewmodel.dart';
-import 'package:tabulation/util/constants.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:http/http.dart' as http;
 
@@ -83,7 +82,6 @@ class BallotBoxWidget extends StatelessWidget {
   }
 
   void addNewBallotBox(IssuingStepTwoViewModel viewModel) {
-    viewModel.postBallotBox(
-        const_election_id, _activeBallotBoxFromController.text);
+    viewModel.postBallotBox(_activeBallotBoxFromController.text);
   }
 }

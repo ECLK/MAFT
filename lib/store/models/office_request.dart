@@ -1,8 +1,10 @@
 class OfficeRequestModel {
   List<Office> photos;
+  Office election;
 
   OfficeRequestModel({
     this.photos,
+    this.election,
   });
 
   factory OfficeRequestModel.fromJson(List<dynamic> parsedJson) {
@@ -23,7 +25,7 @@ class Office {
 
   factory Office.fromJson(Map<String, dynamic> json) {
     return new Office(
-      electionId: json['id'],
+      electionId: json['electionId'],
       officeId: json['officeId'],
       officeName: json['officeName'],
       officeType: json['officeType'],

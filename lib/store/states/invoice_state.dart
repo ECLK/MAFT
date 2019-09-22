@@ -1,5 +1,4 @@
 import 'package:meta/meta.dart';
-import 'package:tabulation/util/constants.dart';
 
 @immutable
 class InvoiceState {
@@ -61,7 +60,7 @@ class InvoiceState {
   factory InvoiceState.initial() {
     return new InvoiceState(
         confirmed: false,
-        electionId: const_election_id,
+        electionId: 0,
         officeId: 0,
         officeName: "",
         officeType: "",
