@@ -9,7 +9,15 @@ class PostInvoiceAction {
   PostInvoiceAction(this.electionId, this.issuedToId, this.issuingOfficeId,
       this.receivingOfficeId);
 }
+class PostInvoiceActionPv {
+  int electionId;
+  int issuedToId;
+  int issuingOfficeId;
+  int receivingOfficeId;
 
+  PostInvoiceActionPv(this.electionId, this.issuedToId, this.issuingOfficeId,
+      this.receivingOfficeId);
+}
 class PostInvoiceReceivingAction {
   int electionId;
   int issuedToId;
@@ -54,5 +62,6 @@ class NavigateToHome {}
 class NavigateToIssuingStepTwoAction{}
 
 class NavigateToReceivingStepTwoAction{}
+class NavigateToIssuingPvStepTwoAction{}
 
 

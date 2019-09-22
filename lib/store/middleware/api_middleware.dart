@@ -22,6 +22,10 @@ class APIMiddleware extends MiddlewareClass<AppState> {
       postInvoice(next, action.electionId, action.issuedToId,
           action.issuingOfficeId, action.receivingOfficeId);
     }
+    if (action is PostInvoiceActionPv) {
+      postInvoicePv(next, action.electionId, action.issuedToId,
+          action.issuingOfficeId, action.receivingOfficeId);
+    }
     if (action is PostInvoiceReceivingAction) {
       postInvoiceReceiving(next, action.electionId, action.issuedToId,
           action.issuingOfficeId, action.receivingOfficeId);
@@ -83,6 +87,11 @@ class APIMiddleware extends MiddlewareClass<AppState> {
 
     next(new NavigateToIssuingStepTwoAction());
     next(new InvoiceResponseAction(invoice));
+  }
+
+  void postInvoicePv(NextDispatcher next, int electionId, int officeId,
+      int issuingOfficeId, int receivingOfficeId) async {
+    next(new NavigateToIssuingPvStepTwoAction());
   }
 
   void postBallotBook(NextDispatcher next, int electionId, int invoiceId,

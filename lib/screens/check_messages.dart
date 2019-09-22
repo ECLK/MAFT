@@ -5,6 +5,31 @@ import 'package:tabulation/store/models/office_request.dart';
 import 'package:tabulation/view_models/issuing_viewmodel.dart';
 import 'package:tabulation/util/strings.dart';
 
+Future<void> showAlert(BuildContext context) {
+  return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Submission successful'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Your messages have been sent successfully!'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+          ],
+        );
+      });
+}
+
+
 class CheckMessages extends StatefulWidget {
   @override
   CheckMessagesState createState() => CheckMessagesState();
@@ -13,6 +38,7 @@ class CheckMessages extends StatefulWidget {
 class CheckMessagesState extends State<CheckMessages> {
   List<bool> checks = [false, false, false, false, false];
   List<int> timeStamps = new List(5);
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, IssuingViewModel>(
@@ -163,17 +189,16 @@ class CheckMessagesState extends State<CheckMessages> {
                             width: 350,
                             height: 60.0,
                             child: new RaisedButton(
-                              textColor: Colors.white,
-                              shape: new RoundedRectangleBorder(
-                                  borderRadius:
-                                      new BorderRadius.circular(10.0)),
-                              color: Color.fromRGBO(72, 121, 209, 1),
-                              child: Text('Submit',
-                                  style: TextStyle(fontSize: 20)),
-                              onPressed: () {
-                                
-                              },
-                            )))
+                                textColor: Colors.white,
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(10.0)),
+                                color: Color.fromRGBO(72, 121, 209, 1),
+                                child: Text('Submit',
+                                    style: TextStyle(fontSize: 20)),
+                                onPressed: () {
+                                  showAlert(context);
+                                }))),
                   ],
                 ),
               ));
