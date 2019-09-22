@@ -7,7 +7,8 @@ final invoiceReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, InvoiceModel>(_invoiceAction),
   TypedReducer<InvoiceState, InvoiceResponseAction>(_invoiceResponseAction),
   TypedReducer<InvoiceState, UpdateIssuingOffice>(_updateIssuingOfficeAction),
-  TypedReducer<InvoiceState, UpdateReceivingOffice>(_updateReceivingOffice)
+  TypedReducer<InvoiceState, UpdateReceivingOffice>(_updateReceivingOffice),
+  TypedReducer<InvoiceState, ClearInvoiceAction>(_clearInvoiceAction)
 ]);
 
 InvoiceState _invoiceAction(InvoiceState state, InvoiceModel action) => state;
@@ -32,6 +33,12 @@ InvoiceState _updateIssuingOfficeAction(
   return state.copyWith(issuingOfficeId: action.issuingOfficeId);
 }
 
-InvoiceState _updateReceivingOffice(InvoiceState state, UpdateReceivingOffice action){
+InvoiceState _updateReceivingOffice(
+    InvoiceState state, UpdateReceivingOffice action) {
   return state.copyWith(receivingOfficeId: action.receivingOfficeId);
+}
+
+InvoiceState _clearInvoiceAction(
+    InvoiceState state, ClearInvoiceAction action) {
+  return InvoiceState.initial();
 }

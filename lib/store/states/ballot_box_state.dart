@@ -1,31 +1,25 @@
 import 'package:meta/meta.dart';
-import 'package:tabulation/store/models/ballot_box_request.dart';
+import 'package:tabulation/store/models/ballot_box_response.dart';
 
 @immutable
 class BallotBoxState {
-  final List<BallotBox> ballotBoxes;
+  final bool isBallotBoxActive;
+  final List<BallotBoxResponseModel> ballotBoxResponseModels;
 
-  BallotBoxState({
-    @required this.ballotBoxes,
-  });
+  BallotBoxState({this.isBallotBoxActive, this.ballotBoxResponseModels});
 
   factory BallotBoxState.initial() {
-    return new BallotBoxState(ballotBoxes: new List());
+    return new BallotBoxState(
+        isBallotBoxActive: false, ballotBoxResponseModels: new List());
   }
 
-  BallotBoxState copyWith({
-    List<BallotBoxState> ballotBoxes,
-  }) {
-    return new BallotBoxState(ballotBoxes: ballotBoxes ?? this.ballotBoxes);
+  BallotBoxState copyWith(
+      {bool isBallotBoxActive,
+      List<BallotBoxResponseModel> ballotBoxResponseModels}) {
+    return new BallotBoxState(
+      isBallotBoxActive: isBallotBoxActive ?? this.isBallotBoxActive,
+      ballotBoxResponseModels:
+          ballotBoxResponseModels ?? this.ballotBoxResponseModels,
+    );
   }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BallotBoxState &&
-          runtimeType == other.runtimeType &&
-          ballotBoxes == other.ballotBoxes;
-
-  @override
-  int get hashCode => ballotBoxes.hashCode;
 }
