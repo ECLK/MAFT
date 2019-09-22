@@ -8,11 +8,10 @@ import 'package:tabulation/store/models/ballot_box_response.dart';
 
 class IssuingStepTwoViewModel {
   final int invoiceId;
-  final Function(int electionId, String ballotBookFrom, String ballotBookTo)
-      postBallotBook;
-  final Function(int electionId, String ballotBoxId) postBallotBox;
+  final Function(String ballotBookFrom, String ballotBookTo) postBallotBook;
+  final Function(String ballotBoxId) postBallotBox;
   final BallotBookResponseModel activeBallotBook;
-  final Function(int electionId) getBallotBoxes;
+  final Function getBallotBoxes;
   final bool isBallotBookActive;
   final bool isBallotBoxActive;
   final Function(bool isBallotBookActive) updateBallotBookStatus;
@@ -37,16 +36,18 @@ class IssuingStepTwoViewModel {
 
   static IssuingStepTwoViewModel fromStore(Store<AppState> store) {
     return IssuingStepTwoViewModel(
-        postBallotBook: (electionId, ballotBookFrom, ballotBookTo) {
+        postBallotBook: (ballotBookFrom, ballotBookTo) {
           store.dispatch(new PostBallotBookAction(
-              electionId,
+              store.state.officeState.selectedElection.electionId,
               store.state.invoiceState.invoiceId,
               ballotBookFrom,
               ballotBookTo));
         },
-        postBallotBox: (electionId, ballotBoxId) {
+        postBallotBox: (ballotBoxId) {
           store.dispatch(new PostBallotBoxAction(
-              electionId, store.state.invoiceState.invoiceId, ballotBoxId));
+              store.state.officeState.selectedElection.electionId,
+              store.state.invoiceState.invoiceId,
+              ballotBoxId));
         },
         confirmInvoice: () {
           store.dispatch(
