@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/store/models/ballot_book_response.dart';
 import 'package:tabulation/view_models/issuingsteptwo_viewmodel.dart';
-import 'package:tabulation/util/constants.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:http/http.dart' as http;
 
@@ -120,9 +118,7 @@ class BallotBook extends StatelessWidget {
   }
 
   void addNewBallotBook(IssuingStepTwoViewModel viewModel) {
-    viewModel.postBallotBook(
-        const_election_id,
-        _activeBallotBookFromController.text,
+    viewModel.postBallotBook(_activeBallotBookFromController.text,
         _activeBallotBookToController.text);
   }
 }

@@ -49,7 +49,7 @@ class BallotBookState {
 
   factory BallotBookState.initial() {
     return new BallotBookState(
-        electionId: const_election_id,
+        electionId: 0,
         available: false,
         fromBallotId: "",
         toBallotId: "",
