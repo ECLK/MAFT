@@ -28,12 +28,12 @@ class APIMiddleware extends MiddlewareClass<AppState> {
       postInvoiceReceiving(next, action.electionId, action.issuedToId,
           action.issuingOfficeId, action.receivingOfficeId);
     }
-    
+
     if (action is PostBallotBookAction) {
       postBallotBook(next, action.electionId, action.invoiceId,
           action.ballotBookFrom, action.ballotBookTo);
     }
-    
+
     if (action is FetchBalloBoxesAction) {
       getBallotBoxes(next, action.electionId);
     }
@@ -156,13 +156,20 @@ void postBallotBox(NextDispatcher next, int electionId, int invoiceId,
 
   var response = await http.post(
       Uri.encodeFull("https://dev.tabulation.ecdev.opensource.lk/ballot-box"),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: utf8.encode(json.encode(post)));
+
+  final jsonResponse = json.decode(response.body);
 
   if (response.statusCode != 404) {
     postBallotBoxStationaryItemAction(
         next, invoiceId, jsonResponse['stationaryItemId'], ballotBoxId);
   }
 }
-    
+
 void postInvoiceReceiving(NextDispatcher next, int electionId, int officeId,
     int issuingOfficeId, int receivingOfficeId) async {
   Map post = {
@@ -181,7 +188,7 @@ void postInvoiceReceiving(NextDispatcher next, int electionId, int officeId,
       body: utf8.encode(json.encode(post)));
 
   final jsonResponse = json.decode(response.body);
-  
+
   InvoiceModel invoice = InvoiceModel.fromJson(jsonResponse);
 
   next(new NavigateToReceivingStepTwoAction());
@@ -227,5 +234,4 @@ void confirmInvoice(NextDispatcher next, int invoiceId) async {
   if (response.statusCode == 200) {
     next(new NavigateToInvoiceSuccess());
   }
-
 }
