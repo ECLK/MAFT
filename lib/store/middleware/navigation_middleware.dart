@@ -8,7 +8,10 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
   @override
   void call(Store<AppState> store, dynamic action, NextDispatcher next) {
     if (action is NavigateToRegistrationAction) {
-      Keys.navKey.currentState.pushNamed("/home");
+      if (store.state.authState.username == "aropv")
+        Keys.navKey.currentState.pushNamed("/homepv");
+      else
+        Keys.navKey.currentState.pushNamed("/home");
     }
 
     if (action is NavigateToIssuingStepTwoAction) {
@@ -16,6 +19,9 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
     }
     if (action is NavigateToReceivingStepTwoAction) {
       Keys.navKey.currentState.pushNamed("/receiving-steptwo");
+    }
+        if (action is NavigateToIssuingPvStepTwoAction) {
+      Keys.navKey.currentState.pushNamed("/issuing-steptwo-pv");
     }
 
     next(action);
