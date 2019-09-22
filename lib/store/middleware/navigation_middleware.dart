@@ -13,9 +13,11 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
       else
         Keys.navKey.currentState.pushNamed("/home");
     }
-
     if (action is NavigateToIssuingStepTwoAction) {
       Keys.navKey.currentState.pushNamed("/issuing-steptwo");
+    }
+    if (action is NavigateToInvoiceSuccess) {
+      Keys.navKey.currentState.pushNamed("/issuing-success");
     }
     if (action is NavigateToReceivingStepTwoAction) {
       Keys.navKey.currentState.pushNamed("/receiving-steptwo");

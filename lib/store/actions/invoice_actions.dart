@@ -1,4 +1,3 @@
-import 'package:tabulation/store/models/ballot_book_response.dart';
 import 'package:tabulation/store/models/invoice_response.dart';
 
 class PostInvoiceAction {
@@ -46,14 +45,23 @@ class UpdateReceivingOffice {
   UpdateReceivingOffice(this.receivingOfficeId);
 }
 
+class ConfirmInvoiceAction {
+  int invoiceId;
+
+  ConfirmInvoiceAction(this.invoiceId);
+}
+
+class NavigateToInvoiceSuccess {}
+
+class ClearInvoiceAction {
+  ClearInvoiceAction();
+}
+
+class NavigateToHome {}
+
 class NavigateToIssuingStepTwoAction{}
 
 class NavigateToReceivingStepTwoAction{}
 class NavigateToIssuingPvStepTwoAction{}
 
-// class PostInvoiceStationaryItemAction {
-//   int invoiceId;
-//   int stationaryItemId;
 
-//   PostInvoiceStationaryItemAction(this.invoiceId, this.stationaryItemId);
-// }
