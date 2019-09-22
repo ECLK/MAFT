@@ -42,7 +42,7 @@ class _HomePvState extends State<HomePv> {
       width: double.infinity,
       child: new StoreConnector<AppState, HomeViewModel>(
           onInit: (store) {
-            store.dispatch(new FetchOficeAllAction());
+            store.dispatch(new FetchOficeAllAction(store.state.officeState.selectedElection.electionId));
           },
           converter: (store) => HomeViewModel.fromStore(store),
           builder: (context, viewModel) {

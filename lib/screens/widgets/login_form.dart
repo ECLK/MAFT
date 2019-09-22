@@ -87,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
                         new BorderSide(color: Color.fromRGBO(72, 121, 209, 1))),
                 labelText: 'Password',
                 prefixIcon: const Icon(
-                  Icons.mail,
+                  Icons.security,
                   color: Color.fromRGBO(72, 121, 209, 1),
                 ),
               ),

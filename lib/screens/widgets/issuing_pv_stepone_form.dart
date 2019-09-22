@@ -58,7 +58,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                   new Text(
                     'ARO PV',
                     style: new TextStyle(
-                        fontWeight: FontWeight.normal, fontSize: 20.0),
+                        fontWeight: FontWeight.normal, fontSize: 18.0),
                   ),
                 ],
               ),
