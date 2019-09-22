@@ -35,11 +35,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     viewModel.offices.forEach((Office office) {
       if (office.officeType == "CountingCentre") {
         countingCenters.add(office);
-      }
-    });
-
-    viewModel.offices.forEach((Office office) {
-      if (office.officeType == "PollingStation") {
+      } else if (office.officeType == "PollingStation") {
         pollingStations.add(office);
       }
     });
@@ -50,12 +46,16 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            new Text(
-              'Issued by :',
-              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+            Padding(
+              padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 15.0),
+              child: new Text(
+                'Issued by :',
+                style:
+                    new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+              ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 5.0, right: 0.0),
+              padding: EdgeInsets.only(left: 5.0, right: 0.0, top: 15.0),
               child: new Text(
                 'ARO',
                 style: new TextStyle(
@@ -71,7 +71,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       children: <Widget>[
         new Expanded(
           child: Padding(
-            padding: EdgeInsets.only(top: 15.0),
+            padding: EdgeInsets.only(top: 20.0),
             child: new Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -79,9 +79,9 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                 DropdownButton(
                     isExpanded: true,
                     items: [
-                      new DropdownMenuItem(child: new Text("Counting Station"))
+                      new DropdownMenuItem(child: new Text("Counting Center"))
                     ],
-                    hint: new Text("Select Station"),
+                    hint: new Text("Select center"),
                     onChanged: (value) {}),
               ],
             ),
@@ -98,7 +98,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
           return new DropdownMenuItem(
               value: office.officeId, child: new Text(office.officeName));
         }).toList(),
-        hint: new Text("Select station"),
+        hint: new Text("Select center"),
         onChanged: (value) => viewModel.updateIssuingOffice(value),
         value: viewModel.invoice.issuingOfficeId,
       ),

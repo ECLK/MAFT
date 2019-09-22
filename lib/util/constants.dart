@@ -1,1 +1,1 @@
-const const_election_id = 1;
+// 
