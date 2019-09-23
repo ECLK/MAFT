@@ -6,17 +6,20 @@ import 'package:tabulation/store/actions/ballot_boxes_actions.dart';
 import 'package:tabulation/store/actions/invoice_actions.dart';
 import 'package:tabulation/store/actions/office_actions.dart';
 import 'package:tabulation/store/app/app_state.dart';
+import 'package:tabulation/store/models/area_model.dart';
+import 'package:tabulation/store/models/area_request.dart';
 import 'package:tabulation/store/models/ballot_book_response.dart';
 import 'package:tabulation/store/models/ballot_box_request.dart';
 import 'package:tabulation/store/models/ballot_box_response.dart';
+import 'package:tabulation/store/models/election_model.dart';
+import 'package:tabulation/store/models/election_request.dart';
 import 'package:tabulation/store/models/invoice_response.dart';
-import 'package:tabulation/store/models/office_request.dart';
 
 class APIMiddleware extends MiddlewareClass<AppState> {
   @override
   void call(Store<AppState> store, dynamic action, NextDispatcher next) {
     if (action is FetchOficeAllAction) {
-      getOffices(next, action.electionId);
+      getAreas(next, action.electionId);
     }
     if (action is PostInvoiceAction) {
       postInvoice(next, action.electionId, action.issuedToId,
@@ -54,18 +57,18 @@ class APIMiddleware extends MiddlewareClass<AppState> {
     next(action);
   }
 
-  void getOffices(NextDispatcher next, int electionId) async {
+  void getAreas(NextDispatcher next, int electionId) async {
     var response = await http.get(
         Uri.encodeFull(
-            "https://dev.tabulation.ecdev.opensource.lk/office?electionId=${electionId}"),
+            "https://dev.tabulation.ecdev.opensource.lk/area?electionId=${electionId}"),
         headers: {"Accept": "application/json"});
 
     final jsonResponse = json.decode(response.body);
 
-    OfficeRequestModel officesList = OfficeRequestModel.fromJson(jsonResponse);
-    List<Office> offices = officesList.photos;
+    AreaRequestModel areasList = AreaRequestModel.fromJson(jsonResponse);
+    List<Area> areas = areasList.areas;
 
-    next(new OfficeRequestAction(offices));
+    next(new OfficeRequestAction(areas));
   }
 
   void postInvoice(NextDispatcher next, int electionId, int officeId,
@@ -265,14 +268,14 @@ void confirmInvoiceReceiving(NextDispatcher next, int invoiceId) async {
 
 void getElections(NextDispatcher next) async {
   var response = await http.get(
-      Uri.encodeFull(
-          "https://dev.tabulation.ecdev.opensource.lk/office?officeType=ElectionCommission"),
+      Uri.encodeFull("https://dev.tabulation.ecdev.opensource.lk/election"),
       headers: {"Accept": "application/json"});
 
   final jsonResponse = json.decode(response.body);
 
-  OfficeRequestModel officesList = OfficeRequestModel.fromJson(jsonResponse);
-  List<Office> elections = officesList.photos;
+  ElectionRequestModel electionsList =
+      ElectionRequestModel.fromJson(jsonResponse);
+  List<Election> elections = electionsList.elections;
 
   next(new ElectionsResponseAction(elections));
 }

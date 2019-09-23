@@ -1,21 +1,14 @@
 import 'package:redux/redux.dart';
-import 'package:tabulation/store/actions/office_actions.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/store/models/office_request.dart';
+import 'package:tabulation/store/models/subelection_model.dart';
 
 class HomeViewModel {
-  final List<Office> elections;
-  final Function(Office election) updateElection;
-  final Office selectedElection;
+  final SubElection selectedSubElection;
 
-  HomeViewModel({this.elections, this.updateElection, this.selectedElection});
+  HomeViewModel({this.selectedSubElection});
 
   static HomeViewModel fromStore(Store<AppState> store) {
     return HomeViewModel(
-        updateElection: (election) {
-          store.dispatch(new UpdateElectionAction(election));
-        },
-        elections: store.state.officeState.elections,
-        selectedElection: store.state.officeState.selectedElection);
+        selectedSubElection: store.state.officeState.selectedSubElection);
   }
 }

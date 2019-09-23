@@ -45,8 +45,6 @@ class LoginViewModel {
         login: (username, password) {
           store.dispatch(new ValidateLoginFields(username, password));
         },
-        navigateToRegistration: () =>
-            store.dispatch(new NavigateToRegistrationAction()),
         fetchElections: () => store.dispatch(new FetchElectionsAction()));
   }
 }
