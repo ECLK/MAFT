@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/store/models/office_request.dart';
+import 'package:tabulation/store/models/area_model.dart';
 import 'package:tabulation/view_models/receiving_viewmodel.dart';
 
 class ReceivingStepOneForm extends StatefulWidget {
@@ -37,18 +37,18 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
 
   List<Widget> getFormWidget(ReceivingViewModel viewModel) {
     List<Widget> formWidgets = new List();
-    List<Office> countingCenters = new List();
-    List<Office> pollingStations = new List();
+    List<Area> countingCenters = new List();
+    List<Area> pollingStations = new List();
 
-    viewModel.offices.forEach((Office office) {
-      if (office.officeType == "CountingCentre") {
-        countingCenters.add(office);
+    viewModel.areas.forEach((Area area) {
+      if (area.areaType == "CountingCentre") {
+        countingCenters.add(area);
       }
     });
 
-    viewModel.offices.forEach((Office office) {
-      if (office.officeType == "PollingStation") {
-        pollingStations.add(office);
+    viewModel.areas.forEach((Area area) {
+      if (area.areaType == "PollingStation") {
+        pollingStations.add(area);
       }
     });
 
@@ -102,9 +102,9 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
       padding: EdgeInsets.only(top: 15.0, bottom: 20.0),
       child: new DropdownButton(
         isExpanded: true,
-        items: countingCenters.map((office) {
+        items: countingCenters.map((area) {
           return new DropdownMenuItem(
-              value: office.officeId, child: new Text(office.officeName));
+              value: area.areaId, child: new Text(area.areaName));
         }).toList(),
         hint: new Text("Select station"),
         onChanged: (value) => viewModel.updateIssuingOffice(value),
@@ -179,9 +179,9 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
       padding: EdgeInsets.only(top: 15.0, bottom: 10.0),
       child: new DropdownButton(
         isExpanded: true,
-        items: pollingStations.map((office) {
+        items: pollingStations.map((area) {
           return new DropdownMenuItem(
-              value: office.officeId, child: new Text(office.officeName));
+              value: area.areaId, child: new Text(area.areaName));
         }).toList(),
         hint: new Text("Select station"),
         onChanged: (value) => viewModel.updateReceivingOffice(value),

@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/store/models/office_request.dart';
+import 'package:tabulation/store/models/area_model.dart';
+// import 'package:tabulation/store/models/office_request.dart';
 import 'package:tabulation/view_models/issuing_viewmodel.dart';
 import 'package:tabulation/util/strings.dart';
 
@@ -44,11 +45,11 @@ class CheckMessagesState extends State<CheckMessages> {
     return StoreConnector<AppState, IssuingViewModel>(
         converter: (store) => IssuingViewModel.fromStore(store),
         builder: (context, viewModel) {
-          List<Office> countingCenters = new List();
+          List<Area> countingCenters = new List();
 
-          viewModel.offices.forEach((Office office) {
-            if (office.officeType == "CountingCentre") {
-              countingCenters.add(office);
+          viewModel.areas.forEach((Area area) {
+            if (area.areaType == "CountingCentre") {
+              countingCenters.add(area);
             }
           });
 
@@ -101,10 +102,10 @@ class CheckMessagesState extends State<CheckMessages> {
                       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                       child: new DropdownButton(
                         isExpanded: true,
-                        items: countingCenters.map((office) {
+                        items: countingCenters.map((area) {
                           return new DropdownMenuItem(
-                              value: office.officeId,
-                              child: new Text(office.officeName));
+                              value: area.areaId,
+                              child: new Text(area.areaName));
                         }).toList(),
                         hint: new Text("Select station"),
                         onChanged: (value) =>

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/store/models/office_request.dart';
+import 'package:tabulation/store/models/area_model.dart';
 import 'package:tabulation/view_models/issuing_viewmodel.dart';
 
 class IssuingStepOneForm extends StatefulWidget {
@@ -26,24 +26,26 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       },
     );
   }
+
   void _showDialog(String message) {
-     Scaffold.of(context).showSnackBar(
+    Scaffold.of(context).showSnackBar(
       SnackBar(
         backgroundColor: Colors.redAccent,
         content: Text(message),
       ),
     );
   }
+
   List<Widget> getFormWidget(IssuingViewModel viewModel) {
     List<Widget> formWidgets = new List();
-    List<Office> countingCenters = new List();
-    List<Office> pollingStations = new List();
+    List<Area> countingCenters = new List();
+    List<Area> pollingStations = new List();
 
-    viewModel.offices.forEach((Office office) {
-      if (office.officeType == "CountingCentre") {
-        countingCenters.add(office);
-      } else if (office.officeType == "PollingStation") {
-        pollingStations.add(office);
+    viewModel.areas.forEach((area) {
+      if (area.areaType == "CountingCentre") {
+        countingCenters.add(area);
+      } else if (area.areaType == "PollingStation") {
+        pollingStations.add(area);
       }
     });
 
@@ -101,9 +103,9 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       padding: EdgeInsets.only(top: 15.0, bottom: 20.0),
       child: new DropdownButton(
         isExpanded: true,
-        items: countingCenters.map((office) {
+        items: countingCenters.map((area) {
           return new DropdownMenuItem(
-              value: office.officeId, child: new Text(office.officeName));
+              value: area.areaId, child: new Text(area.areaName));
         }).toList(),
         hint: new Text("Select center"),
         onChanged: (value) => viewModel.updateIssuingOffice(value),
@@ -178,9 +180,9 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       padding: EdgeInsets.only(top: 15.0, bottom: 10.0),
       child: new DropdownButton(
         isExpanded: true,
-        items: pollingStations.map((office) {
+        items: pollingStations.map((area) {
           return new DropdownMenuItem(
-              value: office.officeId, child: new Text(office.officeName));
+              value: area.areaId, child: new Text(area.areaName));
         }).toList(),
         hint: new Text("Select station"),
         onChanged: (value) => viewModel.updateReceivingOffice(value),
@@ -203,7 +205,8 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
             style: TextStyle(fontSize: 20),
           ),
           onPressed: () {
-            if(viewModel.invoice.receivingOfficeId!=null && viewModel.invoice.issuingOfficeId!=null)
+            if (viewModel.invoice.receivingOfficeId != null &&
+                viewModel.invoice.issuingOfficeId != null)
               viewModel.createInvoice();
             else
               _showDialog("Please make sure the required fields are filled.");

@@ -37,7 +37,8 @@ class BallotBook extends StatelessWidget {
                         decoration:
                             InputDecoration(border: OutlineInputBorder())),
                     suggestionsCallback: (pattern) async {
-                      return await this.getBallotBookSuggestions(pattern);
+                      return await this
+                          .getBallotBookSuggestions(pattern, viewModel);
                     },
                     itemBuilder: (context, BallotBookResponseModel item) {
                       return ListTile(
@@ -55,33 +56,39 @@ class BallotBook extends StatelessWidget {
               }),
         ),
         new Flexible(
-          child: new SizedBox(
-            width: 150,
-            child: TypeAheadFormField(
-              textFieldConfiguration: TextFieldConfiguration(
-                  keyboardType: TextInputType.number,
-                  controller: this._activeBallotBookToController,
-                  autofocus: true,
-                  style: DefaultTextStyle.of(context)
-                      .style
-                      .copyWith(fontStyle: FontStyle.normal),
-                  decoration: InputDecoration(border: OutlineInputBorder())),
-              suggestionsCallback: (pattern) async {
-                return await this.getBallotBookSuggestions(pattern);
-              },
-              itemBuilder: (context, BallotBookResponseModel item) {
-                return ListTile(
-                  title: Text(item.fromBallotId.toString()),
+          child: new StoreConnector<AppState, IssuingStepTwoViewModel>(
+              converter: (store) => IssuingStepTwoViewModel.fromStore(store),
+              builder: (context, viewModel) {
+                new SizedBox(
+                  width: 150,
+                  child: TypeAheadFormField(
+                    textFieldConfiguration: TextFieldConfiguration(
+                        keyboardType: TextInputType.number,
+                        controller: this._activeBallotBookToController,
+                        autofocus: true,
+                        style: DefaultTextStyle.of(context)
+                            .style
+                            .copyWith(fontStyle: FontStyle.normal),
+                        decoration:
+                            InputDecoration(border: OutlineInputBorder())),
+                    suggestionsCallback: (pattern) async {
+                      return await this
+                          .getBallotBookSuggestions(pattern, viewModel);
+                    },
+                    itemBuilder: (context, BallotBookResponseModel item) {
+                      return ListTile(
+                        title: Text(item.fromBallotId.toString()),
+                      );
+                    },
+                    onSuggestionSelected: (BallotBookResponseModel item) {
+                      this._activeBallotBookFromController.text =
+                          item.fromBallotId.toString();
+                      this._activeBallotBookToController.text =
+                          item.toBallotId.toString();
+                    },
+                  ),
                 );
-              },
-              onSuggestionSelected: (BallotBookResponseModel item) {
-                this._activeBallotBookFromController.text =
-                    item.fromBallotId.toString();
-                this._activeBallotBookToController.text =
-                    item.toBallotId.toString();
-              },
-            ),
-          ),
+              }),
         ),
         new Flexible(
           child: new StoreConnector<AppState, IssuingStepTwoViewModel>(
@@ -101,10 +108,10 @@ class BallotBook extends StatelessWidget {
   }
 
   Future<List<BallotBookResponseModel>> getBallotBookSuggestions(
-      String pattern) async {
+      String pattern, IssuingStepTwoViewModel viewModel) async {
     var response = await http.get(
         Uri.encodeFull(
-            "https://dev.tabulation.ecdev.opensource.lk/ballot-book?electionId=1"),
+            "https://dev.tabulation.ecdev.opensource.lk/ballot-book?electionId=${viewModel.selectedSubElection.electionId}"),
         headers: {"Accept": "application/json"});
 
     final jsonResponse = json.decode(response.body);

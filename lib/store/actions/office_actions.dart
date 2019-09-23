@@ -1,4 +1,7 @@
-import 'package:tabulation/store/models/office_request.dart';
+import 'package:tabulation/store/models/area_model.dart';
+import 'package:tabulation/store/models/election_model.dart';
+// import 'package:tabulation/store/models/office_request.dart';
+import 'package:tabulation/store/models/subelection_model.dart';
 
 class FetchOficeAllAction {
   int electionId;
@@ -7,14 +10,9 @@ class FetchOficeAllAction {
 }
 
 class OfficeRequestAction {
-  final List<Office> offices;
+  final List<Area> areas;
 
-  OfficeRequestAction(this.offices);
-}
-
-class UpdateElectionAction {
-  final Office election;
-  UpdateElectionAction(this.election);
+  OfficeRequestAction(this.areas);
 }
 
 class FetchElectionsAction {
@@ -22,7 +20,7 @@ class FetchElectionsAction {
 }
 
 class ElectionsResponseAction {
-  final List<Office> elections;
+  final List<Election> elections;
 
   ElectionsResponseAction(this.elections);
 }

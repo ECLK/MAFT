@@ -2,7 +2,6 @@ import 'package:redux/redux.dart';
 import 'package:tabulation/store/actions/auth_actions.dart';
 import 'package:tabulation/store/actions/office_actions.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/store/models/office_request.dart';
 import 'package:tabulation/store/screen.dart';
 import 'package:tabulation/util/strings.dart';
 
@@ -16,11 +15,7 @@ class ValidationMiddleware extends MiddlewareClass<AppState> {
       validateEmail(Screen.SIGNIN, action.username, next);
       validatePassword(Screen.SIGNIN, action.password, next);
 
-      next(new NavigateToRegistrationAction());
-    }
-    if (action is UpdateElectionAction) {
-      validateElectionOffices(
-          next, store.state.officeState.selectedElection, action.election);
+      next(new NavigateToElectionAction());
     }
 
     next(action);
@@ -40,13 +35,6 @@ class ValidationMiddleware extends MiddlewareClass<AppState> {
       next(new UsernameErrorAction(email_error, screen));
     } else {
       next(new UsernameErrorAction("", screen));
-    }
-  }
-
-  void validateElectionOffices(
-      NextDispatcher next, Office currentElection, Office selectedElection) {
-    if (currentElection == null) {
-      next(new FetchOficeAllAction(selectedElection.electionId));
     }
   }
 }
