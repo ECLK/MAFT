@@ -183,10 +183,6 @@ void postBallotBox(NextDispatcher next, int electionId, int invoiceId,
 
 void postInvoiceReceiving(NextDispatcher next, int electionId, int officeId,
     int issuingOfficeId, int receivingOfficeId) async {
-print(electionId);
-print(officeId);
-print(issuingOfficeId);
-print(receivingOfficeId);
   Map post = {
     "electionId": electionId,
     "issuedTo": officeId,
@@ -203,9 +199,9 @@ print(receivingOfficeId);
       body: utf8.encode(json.encode(post)));
 
   final jsonResponse = json.decode(response.body);
-  print(response.statusCode);
+
   InvoiceModel invoice = InvoiceModel.fromJson(jsonResponse);
-  print(invoice.invoiceId);
+
   next(new NavigateToReceivingStepTwoAction());
   next(new InvoiceResponseAction(invoice));
 }
@@ -250,8 +246,8 @@ void confirmInvoice(NextDispatcher next, int invoiceId) async {
     next(new NavigateToInvoiceSuccess());
   }
 }
+
 void confirmInvoiceReceiving(NextDispatcher next, int invoiceId) async {
-  print(invoiceId);
   var response = await http.put(
       Uri.encodeFull(
           "https://dev.tabulation.ecdev.opensource.lk/invoice/${invoiceId}/confirm"),
@@ -261,12 +257,12 @@ void confirmInvoiceReceiving(NextDispatcher next, int invoiceId) async {
       });
 
   final jsonResponse = json.decode(response.body);
-  print(response.statusCode);
+
   if (response.statusCode == 200) {
-    print("success");
     next(new NavigateToInvoiceReceivingSuccess());
   }
 }
+
 void getElections(NextDispatcher next) async {
   var response = await http.get(
       Uri.encodeFull(

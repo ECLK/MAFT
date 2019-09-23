@@ -124,8 +124,6 @@ class CheckMessagesState extends State<CheckMessages> {
                                 timeStamps =
                                     new DateTime.now().millisecondsSinceEpoch;
                               }
-
-                              print(timeStamps);
                             });
                           }),
                     ),
@@ -141,8 +139,6 @@ class CheckMessagesState extends State<CheckMessages> {
                                 timeStamps =
                                     new DateTime.now().millisecondsSinceEpoch;
                               }
-
-                              print(timeStamps);
                             });
                           }),
                     ),
@@ -158,8 +154,6 @@ class CheckMessagesState extends State<CheckMessages> {
                                 timeStamps =
                                     new DateTime.now().millisecondsSinceEpoch;
                               }
-
-                              print(timeStamps);
                             });
                           }),
                     ),
@@ -175,8 +169,6 @@ class CheckMessagesState extends State<CheckMessages> {
                                 timeStamps =
                                     new DateTime.now().millisecondsSinceEpoch;
                               }
-
-                              print(timeStamps);
                             });
                           }),
                     ),
@@ -192,8 +184,6 @@ class CheckMessagesState extends State<CheckMessages> {
                                 timeStamps =
                                     new DateTime.now().millisecondsSinceEpoch;
                               }
-
-                              print(timeStamps);
                             });
                           }),
                     ),
@@ -207,13 +197,17 @@ class CheckMessagesState extends State<CheckMessages> {
                                 shape: new RoundedRectangleBorder(
                                     borderRadius:
                                         new BorderRadius.circular(10.0)),
-                                color: id != -1 && viewModel.invoice.issuingOfficeId !=null
+                                color: id != -1 &&
+                                        viewModel.invoice.issuingOfficeId !=
+                                            null
                                     ? Color.fromRGBO(72, 121, 209, 1)
                                     : Color.fromRGBO(211, 211, 211, 1),
                                 child: Text('Submit',
                                     style: TextStyle(fontSize: 20)),
                                 onPressed: () {
-                                  if (id != -1 && viewModel.invoice.issuingOfficeId !=null) showAlert(context);
+                                  if (id != -1 &&
+                                      viewModel.invoice.issuingOfficeId != null)
+                                    showAlert(context);
                                 }))),
                   ],
                 ),
