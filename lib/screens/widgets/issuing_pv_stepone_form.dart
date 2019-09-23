@@ -11,7 +11,14 @@ class IssuingStepOneForm extends StatefulWidget {
 
 class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
   final _formKey = GlobalKey<FormState>();
-
+  void _showDialog(String message) {
+     Scaffold.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.redAccent,
+        content: Text(message),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, IssuingPvViewModel>(

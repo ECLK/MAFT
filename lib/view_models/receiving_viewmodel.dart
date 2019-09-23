@@ -24,15 +24,18 @@ class ReceivingViewModel {
     return ReceivingViewModel(
         offices: store.state.officeState.offices,
         invoice: InvoiceModel.fromState(store.state.invoiceState),
-        createInvoice:
-            () {
+        createInvoice: () {
           store.dispatch(new PostInvoiceReceivingAction(
-              store.state.invoiceState.electionId, store.state.invoiceState.issuedToId, store.state.invoiceState.issuingOfficeId, store.state.invoiceState.receivingOfficeId));
+              store.state.officeState.selectedElection.electionId,
+              store.state.invoiceState.issuedToId,
+              store.state.invoiceState.issuingOfficeId,
+              store.state.invoiceState.receivingOfficeId));
         },
         navigateToReceivingStepTwoAction: () =>
             store.dispatch(new NavigateToReceivingStepTwoAction()),
-        updateIssuingOffice: (issuingOfficeId) => store.dispatch(new UpdateReceivingOffice(issuingOfficeId)),
-        updateReceivingOffice: (receivingOfficeId) => store.dispatch(new UpdateReceivingOffice(receivingOfficeId))
-        );
+        updateIssuingOffice: (issuingOfficeId) =>
+            store.dispatch(new UpdateIssuingOffice(issuingOfficeId)),
+        updateReceivingOffice: (receivingOfficeId) =>
+            store.dispatch(new UpdateReceivingOffice(receivingOfficeId)));
   }
 }

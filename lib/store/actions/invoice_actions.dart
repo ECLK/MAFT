@@ -50,9 +50,14 @@ class ConfirmInvoiceAction {
 
   ConfirmInvoiceAction(this.invoiceId);
 }
+class ConfirmInvoiceActionReceiving {
+  int invoiceId;
+
+  ConfirmInvoiceActionReceiving(this.invoiceId);
+}
 
 class NavigateToInvoiceSuccess {}
-
+class NavigateToInvoiceReceivingSuccess{}
 class ClearInvoiceAction {
   ClearInvoiceAction();
 }

@@ -44,6 +44,9 @@ class APIMiddleware extends MiddlewareClass<AppState> {
     if (action is ConfirmInvoiceAction) {
       confirmInvoice(next, action.invoiceId);
     }
+    if (action is ConfirmInvoiceActionReceiving) {
+      confirmInvoiceReceiving(next, action.invoiceId);
+    }
     if (action is FetchElectionsAction) {
       getElections(next);
     }
@@ -180,6 +183,10 @@ void postBallotBox(NextDispatcher next, int electionId, int invoiceId,
 
 void postInvoiceReceiving(NextDispatcher next, int electionId, int officeId,
     int issuingOfficeId, int receivingOfficeId) async {
+print(electionId);
+print(officeId);
+print(issuingOfficeId);
+print(receivingOfficeId);
   Map post = {
     "electionId": electionId,
     "issuedTo": officeId,
@@ -196,9 +203,9 @@ void postInvoiceReceiving(NextDispatcher next, int electionId, int officeId,
       body: utf8.encode(json.encode(post)));
 
   final jsonResponse = json.decode(response.body);
-
+  print(response.statusCode);
   InvoiceModel invoice = InvoiceModel.fromJson(jsonResponse);
-
+  print(invoice.invoiceId);
   next(new NavigateToReceivingStepTwoAction());
   next(new InvoiceResponseAction(invoice));
 }
@@ -243,7 +250,23 @@ void confirmInvoice(NextDispatcher next, int invoiceId) async {
     next(new NavigateToInvoiceSuccess());
   }
 }
+void confirmInvoiceReceiving(NextDispatcher next, int invoiceId) async {
+  print(invoiceId);
+  var response = await http.put(
+      Uri.encodeFull(
+          "https://dev.tabulation.ecdev.opensource.lk/invoice/${invoiceId}/confirm"),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      });
 
+  final jsonResponse = json.decode(response.body);
+  print(response.statusCode);
+  if (response.statusCode == 200) {
+    print("success");
+    next(new NavigateToInvoiceReceivingSuccess());
+  }
+}
 void getElections(NextDispatcher next) async {
   var response = await http.get(
       Uri.encodeFull(

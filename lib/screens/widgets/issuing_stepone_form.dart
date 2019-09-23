@@ -26,7 +26,14 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       },
     );
   }
-
+  void _showDialog(String message) {
+     Scaffold.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.redAccent,
+        content: Text(message),
+      ),
+    );
+  }
   List<Widget> getFormWidget(IssuingViewModel viewModel) {
     List<Widget> formWidgets = new List();
     List<Office> countingCenters = new List();
@@ -196,7 +203,10 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
             style: TextStyle(fontSize: 20),
           ),
           onPressed: () {
-            viewModel.createInvoice();
+            if(viewModel.invoice.receivingOfficeId!=null && viewModel.invoice.issuingOfficeId!=null)
+              viewModel.createInvoice();
+            else
+              _showDialog("Please make sure the required fields are filled.");
           },
         ),
       ),
