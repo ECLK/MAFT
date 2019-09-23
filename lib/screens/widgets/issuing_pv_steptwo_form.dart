@@ -9,12 +9,6 @@ class IssuingStepTwoForm extends StatefulWidget {
   _IssuingStepTwoFormState createState() => new _IssuingStepTwoFormState();
 }
 
-// to do
-// POSt /ballot-book for from and to click on CHECK
-// and /invoice/{invoiceId}/stationary-item when click on SAVE
-// for ballot boxes get all using /ballot-box
-// then for each /ballot-box POST it to /invoice/{invoiceId}/stationary-item
-
 class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
   final _formKey = GlobalKey<FormState>();
   List<BallotBook> ballotBooks = new List<BallotBook>();
@@ -136,7 +130,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
           onPressed: () {
             if (!_formKey.currentState.validate()) {
             } else {
-              Navigator.of(context).popUntil(ModalRoute.withName('/homepv'));
+              Navigator.of(context).popUntil(ModalRoute.withName('/home'));
             }
           },
         ),
@@ -149,6 +143,4 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
 
     return widgets;
   }
-
-
 }

@@ -9,6 +9,7 @@ class PostInvoiceAction {
   PostInvoiceAction(this.electionId, this.issuedToId, this.issuingOfficeId,
       this.receivingOfficeId);
 }
+
 class PostInvoiceActionPv {
   int electionId;
   int issuedToId;
@@ -18,15 +19,15 @@ class PostInvoiceActionPv {
   PostInvoiceActionPv(this.electionId, this.issuedToId, this.issuingOfficeId,
       this.receivingOfficeId);
 }
+
 class PostInvoiceReceivingAction {
   int electionId;
   int issuedToId;
   int issuingOfficeId;
   int receivingOfficeId;
 
-  PostInvoiceReceivingAction(this.electionId, this.issuedToId, this.issuingOfficeId,
-      this.receivingOfficeId);
-      
+  PostInvoiceReceivingAction(this.electionId, this.issuedToId,
+      this.issuingOfficeId, this.receivingOfficeId);
 }
 
 class InvoiceResponseAction {
@@ -50,6 +51,7 @@ class ConfirmInvoiceAction {
 
   ConfirmInvoiceAction(this.invoiceId);
 }
+
 class ConfirmInvoiceActionReceiving {
   int invoiceId;
 
@@ -57,16 +59,15 @@ class ConfirmInvoiceActionReceiving {
 }
 
 class NavigateToInvoiceSuccess {}
-class NavigateToInvoiceReceivingSuccess{}
+
+class NavigateToInvoiceReceivingSuccess {}
+
 class ClearInvoiceAction {
   ClearInvoiceAction();
 }
 
-class NavigateToHome {}
+class NavigateToIssuingStepTwoAction {}
 
-class NavigateToIssuingStepTwoAction{}
+class NavigateToReceivingStepTwoAction {}
 
-class NavigateToReceivingStepTwoAction{}
-class NavigateToIssuingPvStepTwoAction{}
-
-
+class NavigateToIssuingPvStepTwoAction {}

@@ -1,11 +1,11 @@
 import 'package:redux/redux.dart';
 import 'package:tabulation/store/actions/invoice_actions.dart';
 import 'package:tabulation/store/app/app_state.dart';
+import 'package:tabulation/store/models/area_model.dart';
 import 'package:tabulation/store/models/invoice_response.dart';
-import 'package:tabulation/store/models/office_request.dart';
 
 class ReceivingViewModel {
-  final List<Office> offices;
+  final List<Area> areas;
   final InvoiceModel invoice;
   final Function() createInvoice;
   final Function navigateToReceivingStepTwoAction;
@@ -13,7 +13,7 @@ class ReceivingViewModel {
   final Function(int receivingOfficeId) updateReceivingOffice;
 
   ReceivingViewModel(
-      {this.offices,
+      {this.areas,
       this.invoice,
       this.createInvoice,
       this.navigateToReceivingStepTwoAction,
@@ -22,11 +22,11 @@ class ReceivingViewModel {
 
   static ReceivingViewModel fromStore(Store<AppState> store) {
     return ReceivingViewModel(
-        offices: store.state.officeState.offices,
+        areas: store.state.officeState.areas,
         invoice: InvoiceModel.fromState(store.state.invoiceState),
         createInvoice: () {
           store.dispatch(new PostInvoiceReceivingAction(
-              store.state.officeState.selectedElection.electionId,
+              store.state.officeState.selectedSubElection.electionId,
               store.state.invoiceState.issuedToId,
               store.state.invoiceState.issuingOfficeId,
               store.state.invoiceState.receivingOfficeId));
