@@ -6,12 +6,13 @@ import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/store/models/ballot_book_response.dart';
 import 'package:tabulation/store/models/ballot_box_response.dart';
 
-class IssuingStepTwoViewModel {
+class ReceivingStepTwoViewModel {
   final int invoiceId;
-  final Function(String ballotBookFrom, String ballotBookTo) postBallotBook;
-  final Function(String ballotBoxId) postBallotBox;
+  final Function(int electionId, String ballotBookFrom, String ballotBookTo)
+      postBallotBook;
+  final Function(int electionId, String ballotBoxId) postBallotBox;
   final BallotBookResponseModel activeBallotBook;
-  final Function getBallotBoxes;
+  final Function(int electionId) getBallotBoxes;
   final bool isBallotBookActive;
   final bool isBallotBoxActive;
   final Function(bool isBallotBookActive) updateBallotBookStatus;
@@ -20,7 +21,7 @@ class IssuingStepTwoViewModel {
   final List<BallotBoxResponseModel> ballotBoxResponseModels;
   final Function confirmInvoice;
 
-  IssuingStepTwoViewModel(
+  ReceivingStepTwoViewModel(
       {this.invoiceId,
       this.postBallotBox,
       this.postBallotBook,
@@ -34,24 +35,22 @@ class IssuingStepTwoViewModel {
       this.ballotBoxResponseModels,
       this.confirmInvoice});
 
-  static IssuingStepTwoViewModel fromStore(Store<AppState> store) {
-    return IssuingStepTwoViewModel(
-        postBallotBook: (ballotBookFrom, ballotBookTo) {
+  static ReceivingStepTwoViewModel fromStore(Store<AppState> store) {
+    return ReceivingStepTwoViewModel(
+        postBallotBook: (electionId, ballotBookFrom, ballotBookTo) {
           store.dispatch(new PostBallotBookAction(
-              store.state.officeState.selectedElection.electionId,
+              electionId,
               store.state.invoiceState.invoiceId,
               ballotBookFrom,
               ballotBookTo));
         },
-        postBallotBox: (ballotBoxId) {
+        postBallotBox: (electionId, ballotBoxId) {
           store.dispatch(new PostBallotBoxAction(
-              store.state.officeState.selectedElection.electionId,
-              store.state.invoiceState.invoiceId,
-              ballotBoxId));
+              electionId, store.state.invoiceState.invoiceId, ballotBoxId));
         },
         confirmInvoice: () {
           store.dispatch(
-              new ConfirmInvoiceAction(store.state.invoiceState.invoiceId));
+              new ConfirmInvoiceActionReceiving(store.state.invoiceState.invoiceId));
         },
         activeBallotBook: store.state.ballotBookState.getModel(),
         invoiceId: store.state.invoiceState.invoiceId,

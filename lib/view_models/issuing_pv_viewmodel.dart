@@ -4,7 +4,7 @@ import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/store/models/invoice_response.dart';
 import 'package:tabulation/store/models/office_request.dart';
 
-class IssuingViewModel {
+class IssuingPvViewModel {
   final List<Office> offices;
   final InvoiceModel invoice;
   final Function() createInvoice;
@@ -12,7 +12,7 @@ class IssuingViewModel {
   final Function(int issuingOfficeId) updateIssuingOffice;
   final Function(int receivingOfficeId) updateReceivingOffice;
 
-  IssuingViewModel(
+  IssuingPvViewModel(
       {this.offices,
       this.invoice,
       this.createInvoice,
@@ -20,22 +20,19 @@ class IssuingViewModel {
       this.updateIssuingOffice,
       this.updateReceivingOffice});
 
-  static IssuingViewModel fromStore(Store<AppState> store) {
-    return IssuingViewModel(
+  static IssuingPvViewModel fromStore(Store<AppState> store) {
+    return IssuingPvViewModel(
         offices: store.state.officeState.offices,
         invoice: InvoiceModel.fromState(store.state.invoiceState),
-        createInvoice: () {
-          store.dispatch(new PostInvoiceAction(
-              store.state.officeState.selectedElection.electionId,
-              store.state.invoiceState.issuedToId,
-              store.state.invoiceState.issuingOfficeId,
-              store.state.invoiceState.receivingOfficeId));
+        createInvoice:
+            () {
+          store.dispatch(new PostInvoiceActionPv(
+              store.state.invoiceState.electionId, store.state.invoiceState.issuedToId, store.state.invoiceState.issuingOfficeId, store.state.invoiceState.receivingOfficeId));
         },
         navigateToIssuingStepTwoAction: () =>
-            store.dispatch(new NavigateToIssuingStepTwoAction()),
-        updateIssuingOffice: (issuingOfficeId) =>
-            store.dispatch(new UpdateIssuingOffice(issuingOfficeId)),
-        updateReceivingOffice: (receivingOfficeId) =>
-            store.dispatch(new UpdateReceivingOffice(receivingOfficeId)));
+            store.dispatch(new NavigateToIssuingPvStepTwoAction()),
+        updateIssuingOffice: (issuingOfficeId) => store.dispatch(new UpdateIssuingOffice(issuingOfficeId)),
+        updateReceivingOffice: (receivingOfficeId) => store.dispatch(new UpdateReceivingOffice(receivingOfficeId))
+        );
   }
 }

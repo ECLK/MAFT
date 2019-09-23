@@ -60,7 +60,7 @@ class InvoiceState {
   factory InvoiceState.initial() {
     return new InvoiceState(
         confirmed: false,
-        electionId: 1,
+        electionId: 0,
         officeId: 0,
         officeName: "",
         officeType: "",

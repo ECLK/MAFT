@@ -3,14 +3,14 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/screens/widgets/ballot_book.dart';
 import 'package:tabulation/screens/widgets/ballot_box.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/view_models/issuingsteptwo_viewmodel.dart';
+import 'package:tabulation/view_models/receivingsteptwo_viewmodel.dart';
 
-class IssuingStepTwoForm extends StatefulWidget {
+class ReceivingStepTwoForm extends StatefulWidget {
   @override
-  _IssuingStepTwoFormState createState() => new _IssuingStepTwoFormState();
+  _ReceivingStepTwoFormState createState() => new _ReceivingStepTwoFormState();
 }
 
-class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
+class _ReceivingStepTwoFormState extends State<ReceivingStepTwoForm> {
   final _formKey = GlobalKey<FormState>();
   List<BallotBook> ballotBooks = new List<BallotBook>();
   List<BallotBoxWidget> ballotBoxes = new List<BallotBoxWidget>();
@@ -19,7 +19,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: new StoreConnector<AppState, IssuingStepTwoViewModel>(
+      child: new StoreConnector<AppState, ReceivingStepTwoViewModel>(
           onDidChange: (viewModel) {
             if (viewModel.isBallotBookActive == true &&
                 viewModel.activeBallotBook.statusCodeMessage != "" &&
@@ -28,7 +28,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
               this._showDialog(viewModel.activeBallotBook.statusCodeMessage);
             }
           },
-          converter: (store) => IssuingStepTwoViewModel.fromStore(store),
+          converter: (store) => ReceivingStepTwoViewModel.fromStore(store),
           builder: (context, viewModel) {
             return new Column(
               children: getFormWidget(viewModel),
@@ -46,7 +46,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
     );
   }
 
-  List<Widget> getFormWidget(IssuingStepTwoViewModel viewModel) {
+  List<Widget> getFormWidget(ReceivingStepTwoViewModel viewModel) {
     List<Widget> widgets = new List();
     List<Widget> children = new List<Widget>();
 
@@ -269,7 +269,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
     return widgets;
   }
 
-  void addBallotBook(IssuingStepTwoViewModel viewModel) {
+  void addBallotBook(ReceivingStepTwoViewModel viewModel) {
     if (!viewModel.isBallotBookActive) {
       viewModel.updateBallotBookStatus(true);
       setState(() {
@@ -283,7 +283,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
     }
   }
 
-  void addBallotBox(IssuingStepTwoViewModel viewModel) {
+  void addBallotBox(ReceivingStepTwoViewModel viewModel) {
     if (!viewModel.isBallotBoxActive) {
       viewModel.updateBallotBoxStatus(true);
       setState(() {

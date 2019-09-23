@@ -4,35 +4,35 @@ import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/store/models/invoice_response.dart';
 import 'package:tabulation/store/models/office_request.dart';
 
-class IssuingViewModel {
+class ReceivingViewModel {
   final List<Office> offices;
   final InvoiceModel invoice;
   final Function() createInvoice;
-  final Function navigateToIssuingStepTwoAction;
+  final Function navigateToReceivingStepTwoAction;
   final Function(int issuingOfficeId) updateIssuingOffice;
   final Function(int receivingOfficeId) updateReceivingOffice;
 
-  IssuingViewModel(
+  ReceivingViewModel(
       {this.offices,
       this.invoice,
       this.createInvoice,
-      this.navigateToIssuingStepTwoAction,
+      this.navigateToReceivingStepTwoAction,
       this.updateIssuingOffice,
       this.updateReceivingOffice});
 
-  static IssuingViewModel fromStore(Store<AppState> store) {
-    return IssuingViewModel(
+  static ReceivingViewModel fromStore(Store<AppState> store) {
+    return ReceivingViewModel(
         offices: store.state.officeState.offices,
         invoice: InvoiceModel.fromState(store.state.invoiceState),
         createInvoice: () {
-          store.dispatch(new PostInvoiceAction(
+          store.dispatch(new PostInvoiceReceivingAction(
               store.state.officeState.selectedElection.electionId,
               store.state.invoiceState.issuedToId,
               store.state.invoiceState.issuingOfficeId,
               store.state.invoiceState.receivingOfficeId));
         },
-        navigateToIssuingStepTwoAction: () =>
-            store.dispatch(new NavigateToIssuingStepTwoAction()),
+        navigateToReceivingStepTwoAction: () =>
+            store.dispatch(new NavigateToReceivingStepTwoAction()),
         updateIssuingOffice: (issuingOfficeId) =>
             store.dispatch(new UpdateIssuingOffice(issuingOfficeId)),
         updateReceivingOffice: (receivingOfficeId) =>

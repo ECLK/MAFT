@@ -2,20 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/store/models/office_request.dart';
-import 'package:tabulation/view_models/issuing_viewmodel.dart';
+import 'package:tabulation/view_models/receiving_viewmodel.dart';
 
-class IssuingStepOneForm extends StatefulWidget {
+class ReceivingStepOneForm extends StatefulWidget {
   @override
-  _IssuingStepOneFormState createState() => new _IssuingStepOneFormState();
+  _ReceivingStepOneFormState createState() => new _ReceivingStepOneFormState();
 }
 
-class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
+class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
   final _formKey = GlobalKey<FormState>();
+  void _showDialog(String message) {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.redAccent,
+        content: Text(message),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, IssuingViewModel>(
-      converter: (store) => IssuingViewModel.fromStore(store),
+    return StoreConnector<AppState, ReceivingViewModel>(
+      converter: (store) => ReceivingViewModel.fromStore(store),
       builder: (context, viewModel) {
         return new Form(
           key: _formKey,
@@ -26,15 +34,8 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       },
     );
   }
-  void _showDialog(String message) {
-     Scaffold.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.redAccent,
-        content: Text(message),
-      ),
-    );
-  }
-  List<Widget> getFormWidget(IssuingViewModel viewModel) {
+
+  List<Widget> getFormWidget(ReceivingViewModel viewModel) {
     List<Widget> formWidgets = new List();
     List<Office> countingCenters = new List();
     List<Office> pollingStations = new List();
@@ -42,7 +43,11 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     viewModel.offices.forEach((Office office) {
       if (office.officeType == "CountingCentre") {
         countingCenters.add(office);
-      } else if (office.officeType == "PollingStation") {
+      }
+    });
+
+    viewModel.offices.forEach((Office office) {
+      if (office.officeType == "PollingStation") {
         pollingStations.add(office);
       }
     });
@@ -53,16 +58,12 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 15.0),
-              child: new Text(
-                'Issued by :',
-                style:
-                    new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-              ),
+            new Text(
+              'Issued by :',
+              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 5.0, right: 0.0, top: 15.0),
+              padding: EdgeInsets.only(left: 5.0, right: 0.0),
               child: new Text(
                 'ARO',
                 style: new TextStyle(
@@ -78,7 +79,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       children: <Widget>[
         new Expanded(
           child: Padding(
-            padding: EdgeInsets.only(top: 20.0),
+            padding: EdgeInsets.only(top: 15.0),
             child: new Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -86,9 +87,9 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                 DropdownButton(
                     isExpanded: true,
                     items: [
-                      new DropdownMenuItem(child: new Text("Counting Center"))
+                      new DropdownMenuItem(child: new Text("Counting Station"))
                     ],
-                    hint: new Text("Select center"),
+                    hint: new Text("Select Station"),
                     onChanged: (value) {}),
               ],
             ),
@@ -105,7 +106,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
           return new DropdownMenuItem(
               value: office.officeId, child: new Text(office.officeName));
         }).toList(),
-        hint: new Text("Select center"),
+        hint: new Text("Select station"),
         onChanged: (value) => viewModel.updateIssuingOffice(value),
         value: viewModel.invoice.issuingOfficeId,
       ),
@@ -121,7 +122,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
         Padding(
           padding: EdgeInsets.only(top: 20.0),
           child: Text(
-            'Issued to : ',
+            'Received by : ',
             style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
           ),
         ),
@@ -203,7 +204,8 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
             style: TextStyle(fontSize: 20),
           ),
           onPressed: () {
-            if(viewModel.invoice.receivingOfficeId!=null && viewModel.invoice.issuingOfficeId!=null)
+            if (viewModel.invoice.receivingOfficeId != null &&
+                viewModel.invoice.issuingOfficeId != null)
               viewModel.createInvoice();
             else
               _showDialog("Please make sure the required fields are filled.");
@@ -212,15 +214,17 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       ),
     );
 
+//received by
+    formWidgets.add(issuedTo);
+    formWidgets.add(issuedFor);
+    formWidgets.add(selectReceivingOffice);
+
+    formWidgets.add(divider);
+//issued by
     formWidgets.add(issuedBy);
     formWidgets.add(issuedFrom);
     formWidgets.add(selectIssuingOffice);
 
-    formWidgets.add(divider);
-
-    formWidgets.add(issuedTo);
-    formWidgets.add(issuedFor);
-    formWidgets.add(selectReceivingOffice);
     formWidgets.add(btnNext);
 
     return formWidgets;

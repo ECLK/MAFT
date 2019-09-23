@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/screens/widgets/login_form.dart';
+import 'package:tabulation/store/actions/office_actions.dart';
 import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/view_models/login_viewmodel.dart';
 
@@ -32,6 +33,11 @@ class LoginScreen extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.all(30.0),
         child: new StoreConnector<AppState, LoginViewModel>(
+            onInit: (store) {
+              if(store.state.officeState.elections.length==0){
+                store.dispatch(new FetchElectionsAction());
+              }
+            },
             converter: (store) => LoginViewModel.fromStore(store),
             builder: (context, viewModel) {
               return new Column(
