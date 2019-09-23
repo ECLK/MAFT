@@ -43,6 +43,9 @@ class _HomeState extends State<Home> {
     return new Container(
       width: double.infinity,
       child: new StoreConnector<AppState, HomeViewModel>(
+          onInit: (store) {
+            store.dispatch(new FetchOficeAllAction(store.state.officeState.selectedElection.electionId));
+          },
           converter: (store) => HomeViewModel.fromStore(store),
           builder: (context, viewModel) {
             return new Column(

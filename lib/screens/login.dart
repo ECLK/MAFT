@@ -34,7 +34,9 @@ class LoginScreen extends StatelessWidget {
         padding: EdgeInsets.all(30.0),
         child: new StoreConnector<AppState, LoginViewModel>(
             onInit: (store) {
-              store.dispatch(new FetchElectionsAction());
+              if(store.state.officeState.elections.length==0){
+                store.dispatch(new FetchElectionsAction());
+              }
             },
             converter: (store) => LoginViewModel.fromStore(store),
             builder: (context, viewModel) {
