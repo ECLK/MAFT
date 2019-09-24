@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:tabulation/store/actions/office_actions.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/store/models/office_request.dart';
 import 'package:tabulation/view_models/home_viewmodel.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -36,13 +36,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Office> elections = new List<Office>();
-
   @override
   Widget build(BuildContext context) {
     return new Container(
       width: double.infinity,
       child: new StoreConnector<AppState, HomeViewModel>(
+          onInit: (store) {
+            if (store.state.officeState.areas == null) {
+              store.dispatch(new FetchOficeAllAction(
+                  store.state.officeState.selectedSubElection.electionId));
+            }
+          },
           converter: (store) => HomeViewModel.fromStore(store),
           builder: (context, viewModel) {
             return new Column(
@@ -56,33 +60,7 @@ class _HomeState extends State<Home> {
   List<Widget> getFormWidget(HomeViewModel viewModel) {
     List<Widget> formWidgets = new List();
 
-    formWidgets.add(new Row(
-      children: <Widget>[
-        new Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0),
-            child: new DropdownButton(
-              isExpanded: true,
-              items: viewModel.elections.map((office) {
-                return new DropdownMenuItem(
-                    value: office.officeId, child: new Text(office.officeName));
-              }).toList(),
-              hint: new Text("Select election"),
-              onChanged: (officeId) {
-                viewModel.updateElection(viewModel.elections
-                    .where((i) => i.officeId == officeId)
-                    .first);
-              },
-              value: viewModel.selectedElection != null
-                  ? viewModel.selectedElection.officeId
-                  : null,
-            ),
-          ),
-        ),
-      ],
-    ));
-
-    formWidgets.add(new Padding(
+    final issuing = new Padding(
       padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
       child: new SizedBox(
         width: 350,
@@ -91,23 +69,21 @@ class _HomeState extends State<Home> {
           textColor: Colors.white,
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(10.0)),
-          color: viewModel.selectedElection != null
-              ? Color.fromRGBO(72, 121, 209, 1)
-              : Color.fromRGBO(211, 211, 211, 1),
+          color: Color.fromRGBO(72, 121, 209, 1),
           child: Text(
             'Issuing Process',
             style: TextStyle(fontSize: 20),
           ),
           onPressed: () {
-            viewModel.selectedElection != null
+            viewModel.selectedSubElection.voteType == "NonPostal"
                 ? Navigator.of(context).pushNamed('/issuing-stepone')
-                : null;
+                : Navigator.of(context).pushNamed('/issuing-stepone-pv');
           },
         ),
       ),
-    ));
+    );
 
-    formWidgets.add(new Padding(
+    final receiving = new Padding(
       padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
       child: new SizedBox(
         width: 350,
@@ -116,23 +92,19 @@ class _HomeState extends State<Home> {
           textColor: Colors.white,
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(10.0)),
-          color: viewModel.selectedElection != null
-              ? Color.fromRGBO(72, 121, 209, 1)
-              : Color.fromRGBO(211, 211, 211, 1),
+          color: Color.fromRGBO(72, 121, 209, 1),
           child: Text(
             'Receiving Process',
             style: TextStyle(fontSize: 20),
           ),
           onPressed: () {
-            viewModel.selectedElection != null
-                ? Navigator.of(context).pushNamed('/receiving-stepone')
-                : null;
+            Navigator.of(context).pushNamed('/receiving-stepone');
           },
         ),
       ),
-    ));
+    );
 
-    formWidgets.add(new Padding(
+    final checkMessages = new Padding(
         padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
         child: new SizedBox(
             width: 350,
@@ -141,18 +113,14 @@ class _HomeState extends State<Home> {
               textColor: Colors.white,
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(10.0)),
-              color: viewModel.selectedElection != null
-                  ? Color.fromRGBO(72, 121, 209, 1)
-                  : Color.fromRGBO(211, 211, 211, 1),
+              color: Color.fromRGBO(72, 121, 209, 1),
               child: Text('Check Messages', style: TextStyle(fontSize: 20)),
               onPressed: () {
-                viewModel.selectedElection != null
-                    ? Navigator.of(context).pushNamed("/check-messages")
-                    : null;
+                Navigator.of(context).pushNamed("/check-messages");
               },
-            ))));
+            )));
 
-    formWidgets.add(new Padding(
+    final counting = new Padding(
       padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
       child: new SizedBox(
         width: 350,
@@ -172,9 +140,9 @@ class _HomeState extends State<Home> {
           },
         ),
       ),
-    ));
+    );
 
-    formWidgets.add(new Padding(
+    final approval = new Padding(
       padding: const EdgeInsets.only(top: 30.0, right: 30.0, left: 30.0),
       child: new SizedBox(
         width: 350,
@@ -191,7 +159,15 @@ class _HomeState extends State<Home> {
           onPressed: () {},
         ),
       ),
-    ));
+    );
+
+    formWidgets.add(issuing);
+    if (viewModel.selectedSubElection.voteType == "NonPostal") {
+      formWidgets.add(receiving);
+      formWidgets.add(checkMessages);
+      formWidgets.add(counting);
+      formWidgets.add(approval);
+    }
 
     return formWidgets;
   }

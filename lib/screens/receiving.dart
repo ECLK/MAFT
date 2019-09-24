@@ -13,7 +13,7 @@ class ReceivingScreen extends StatefulWidget {
 class _ReceivingScreenState extends State<ReceivingScreen> {
   static String tag = 'home-page';
 
-List data;
+  List data;
 
   Future<String> getData() async {
     var response = await http.get(
@@ -24,15 +24,8 @@ List data;
       data = json.decode(response.body);
     });
 
-    print(data[1]["issuedAt"]);
     return "Success!";
   }
-
-  @override
-  void initState() {
-    // this.getData();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +33,14 @@ List data;
       padding: EdgeInsets.all(8.0),
       child: Text(
         'Receving Invoices',
-        style: TextStyle(  fontWeight: FontWeight.bold,
-        fontSize: 24.0 ,color: Color.fromRGBO(72, 121, 209, 1)),
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24.0,
+            color: Color.fromRGBO(72, 121, 209, 1)),
       ),
     );
 
-final nextButton = Padding(
+    final nextButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         shape: RoundedRectangleBorder(
@@ -63,12 +58,11 @@ final nextButton = Padding(
       ),
     );
 
-
-final row1 = Row(
+    final row1 = Row(
       children: <Widget>[
         new Text(
           'District Center   :     ',
-          style: new TextStyle( fontWeight: FontWeight.bold,fontSize: 16.0),
+          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
         ),
         new DropdownButton<String>(
           hint: Text('District Center'),
@@ -88,7 +82,7 @@ final row1 = Row(
       children: <Widget>[
         new Text(
           'Counting Center   :     ',
-          style: new TextStyle( fontWeight: FontWeight.bold,fontSize: 16.0),
+          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
         ),
         new DropdownButton<String>(
           hint: Text('Counting Center'),
@@ -108,7 +102,7 @@ final row1 = Row(
       children: <Widget>[
         new Text(
           'Polling Station   :     ',
-          style: new TextStyle( fontWeight: FontWeight.bold,fontSize: 16.0),
+          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
         ),
         new DropdownButton<String>(
           hint: Text('Polling Stations'),
@@ -129,39 +123,27 @@ final row1 = Row(
     );
 
     final list = ListView.builder(
-        itemCount: data == null ? 0 : data.length,
-        itemBuilder: (BuildContext context, int index) {
-          return new Card(
-            child: new Text(data[index]["issuedAt"]),
-          );
-        },
-      );
-    
+      itemCount: data == null ? 0 : data.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new Card(
+          child: new Text(data[index]["issuedAt"]),
+        );
+      },
+    );
+
     final body = SingleChildScrollView(
-      // width: MediaQuery.of(context).size.width,  
       padding: EdgeInsets.all(28.0),
-      // decoration: BoxDecoration(
-      //   gradient: LinearGradient(colors: [
-      //     Colors.blue,
-      //     Colors.lightBlueAccent,
-      //   ]),
-      // ),
       child: Column(
         children: <Widget>[
           SizedBox(height: 10.0),
           welcome,
-          
           SizedBox(height: 15.0),
           row1,
           row2,
           row3,
-
           SizedBox(height: 15.0),
-      nextButton,
-                 SizedBox(height: 15.0),
-         
-
-
+          nextButton,
+          SizedBox(height: 15.0),
         ],
       ),
     );

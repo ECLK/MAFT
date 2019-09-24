@@ -35,7 +35,8 @@ class BallotBoxWidget extends StatelessWidget {
                         decoration:
                             InputDecoration(border: OutlineInputBorder())),
                     suggestionsCallback: (pattern) async {
-                      return await this.getBallotBoxSuggestions(pattern);
+                      return await this
+                          .getBallotBoxSuggestions(pattern, viewModel);
                     },
                     itemBuilder: (context, BallotBox item) {
                       return ListTile(
@@ -67,10 +68,11 @@ class BallotBoxWidget extends StatelessWidget {
     );
   }
 
-  Future<List<BallotBox>> getBallotBoxSuggestions(String pattern) async {
+  Future<List<BallotBox>> getBallotBoxSuggestions(
+      String pattern, IssuingStepTwoViewModel viewModel) async {
     var response = await http.get(
         Uri.encodeFull(
-            "https://dev.tabulation.ecdev.opensource.lk/ballot-box?limit=20&electionId=1&ballotBoxId=%${pattern}%"),
+            "https://dev.tabulation.ecdev.opensource.lk/ballot-box?limit=20&electionId=${viewModel.selectedSubElection.electionId}&ballotBoxId=%${pattern}%"),
         headers: {"Accept": "application/json"});
 
     final jsonResponse = json.decode(response.body);

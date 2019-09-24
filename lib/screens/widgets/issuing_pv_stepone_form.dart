@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/store/models/office_request.dart';
+import 'package:tabulation/store/models/area_model.dart';
 import 'package:tabulation/view_models/issuing_pv_viewmodel.dart';
 
 class IssuingStepOneForm extends StatefulWidget {
@@ -11,6 +11,14 @@ class IssuingStepOneForm extends StatefulWidget {
 
 class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
   final _formKey = GlobalKey<FormState>();
+  void _showDialog(String message) {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.redAccent,
+        content: Text(message),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +37,11 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
 
   List<Widget> getFormWidget(IssuingPvViewModel viewModel) {
     List<Widget> formWidgets = new List();
-    List<Office> countingCenters = new List();
+    List<Area> countingCenters = new List();
 
-    viewModel.offices.forEach((Office office) {
-      if (office.officeType == "CountingCentre") {
-        countingCenters.add(office);
+    viewModel.areas.forEach((Area area) {
+      if (area.areaType == "CountingCentre") {
+        countingCenters.add(area);
       }
     });
 
@@ -58,7 +66,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                   new Text(
                     'ARO PV',
                     style: new TextStyle(
-                        fontWeight: FontWeight.normal, fontSize: 20.0),
+                        fontWeight: FontWeight.normal, fontSize: 18.0),
                   ),
                 ],
               ),

@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/store/models/office_request.dart';
+import 'package:tabulation/store/models/area_model.dart';
+// import 'package:tabulation/store/models/office_request.dart';
 import 'package:tabulation/view_models/issuing_viewmodel.dart';
 import 'package:tabulation/util/strings.dart';
 
@@ -29,26 +30,26 @@ Future<void> showAlert(BuildContext context) {
       });
 }
 
-
 class CheckMessages extends StatefulWidget {
   @override
   CheckMessagesState createState() => CheckMessagesState();
 }
 
 class CheckMessagesState extends State<CheckMessages> {
-  List<bool> checks = [false, false, false, false, false];
-  List<int> timeStamps = new List(5);
+  bool checks = false;
+  int timeStamps;
+  int id = -1;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, IssuingViewModel>(
         converter: (store) => IssuingViewModel.fromStore(store),
         builder: (context, viewModel) {
-          List<Office> countingCenters = new List();
+          List<Area> countingCenters = new List();
 
-          viewModel.offices.forEach((Office office) {
-            if (office.officeType == "CountingCentre") {
-              countingCenters.add(office);
+          viewModel.areas.forEach((Area area) {
+            if (area.areaType == "CountingCentre") {
+              countingCenters.add(area);
             }
           });
 
@@ -101,10 +102,10 @@ class CheckMessagesState extends State<CheckMessages> {
                       padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                       child: new DropdownButton(
                         isExpanded: true,
-                        items: countingCenters.map((office) {
+                        items: countingCenters.map((area) {
                           return new DropdownMenuItem(
-                              value: office.officeId,
-                              child: new Text(office.officeName));
+                              value: area.areaId,
+                              child: new Text(area.areaName));
                         }).toList(),
                         hint: new Text("Select station"),
                         onChanged: (value) =>
@@ -116,14 +117,14 @@ class CheckMessagesState extends State<CheckMessages> {
                       padding: new EdgeInsets.only(top: 10.0, bottom: 10.0),
                       child: new CheckboxListTile(
                           title: Text(msg1),
-                          value: checks[0],
+                          value: id == 1,
                           onChanged: (bool val) {
                             setState(() {
-                              checks[0] = val;
-                              if (val)
-                                timeStamps[0] =
+                              if (val) {
+                                id = 1;
+                                timeStamps =
                                     new DateTime.now().millisecondsSinceEpoch;
-                              print(timeStamps[0]);
+                              }
                             });
                           }),
                     ),
@@ -131,13 +132,14 @@ class CheckMessagesState extends State<CheckMessages> {
                       padding: new EdgeInsets.only(top: 10.0, bottom: 10.0),
                       child: new CheckboxListTile(
                           title: Text(msg2),
-                          value: checks[1],
+                          value: id == 2,
                           onChanged: (bool val) {
                             setState(() {
-                              checks[1] = val;
-                              if (val)
-                                timeStamps[1] =
+                              if (val) {
+                                id = 2;
+                                timeStamps =
                                     new DateTime.now().millisecondsSinceEpoch;
+                              }
                             });
                           }),
                     ),
@@ -145,13 +147,14 @@ class CheckMessagesState extends State<CheckMessages> {
                       padding: new EdgeInsets.only(top: 10.0, bottom: 10.0),
                       child: new CheckboxListTile(
                           title: Text(msg3),
-                          value: checks[2],
+                          value: id == 3,
                           onChanged: (bool val) {
                             setState(() {
-                              checks[2] = val;
-                              if (val)
-                                timeStamps[2] =
+                              if (val) {
+                                id = 3;
+                                timeStamps =
                                     new DateTime.now().millisecondsSinceEpoch;
+                              }
                             });
                           }),
                     ),
@@ -159,13 +162,14 @@ class CheckMessagesState extends State<CheckMessages> {
                       padding: new EdgeInsets.only(top: 10.0, bottom: 10.0),
                       child: new CheckboxListTile(
                           title: Text(msg4),
-                          value: checks[3],
+                          value: id == 4,
                           onChanged: (bool val) {
                             setState(() {
-                              checks[3] = val;
-                              if (val)
-                                timeStamps[3] =
+                              if (val) {
+                                id = 4;
+                                timeStamps =
                                     new DateTime.now().millisecondsSinceEpoch;
+                              }
                             });
                           }),
                     ),
@@ -173,13 +177,14 @@ class CheckMessagesState extends State<CheckMessages> {
                       padding: new EdgeInsets.only(top: 10.0, bottom: 10.0),
                       child: new CheckboxListTile(
                           title: Text(msg5),
-                          value: checks[4],
+                          value: id == 5,
                           onChanged: (bool val) {
                             setState(() {
-                              checks[4] = val;
-                              if (val)
-                                timeStamps[4] =
+                              if (val) {
+                                id = 5;
+                                timeStamps =
                                     new DateTime.now().millisecondsSinceEpoch;
+                              }
                             });
                           }),
                     ),
@@ -193,11 +198,17 @@ class CheckMessagesState extends State<CheckMessages> {
                                 shape: new RoundedRectangleBorder(
                                     borderRadius:
                                         new BorderRadius.circular(10.0)),
-                                color: Color.fromRGBO(72, 121, 209, 1),
+                                color: id != -1 &&
+                                        viewModel.invoice.issuingOfficeId !=
+                                            null
+                                    ? Color.fromRGBO(72, 121, 209, 1)
+                                    : Color.fromRGBO(211, 211, 211, 1),
                                 child: Text('Submit',
                                     style: TextStyle(fontSize: 20)),
                                 onPressed: () {
-                                  showAlert(context);
+                                  if (id != -1 &&
+                                      viewModel.invoice.issuingOfficeId != null)
+                                    showAlert(context);
                                 }))),
                   ],
                 ),

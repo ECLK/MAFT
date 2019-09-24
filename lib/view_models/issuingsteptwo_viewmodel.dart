@@ -5,6 +5,7 @@ import 'package:tabulation/store/actions/invoice_actions.dart';
 import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/store/models/ballot_book_response.dart';
 import 'package:tabulation/store/models/ballot_box_response.dart';
+import 'package:tabulation/store/models/subelection_model.dart';
 
 class IssuingStepTwoViewModel {
   final int invoiceId;
@@ -19,6 +20,7 @@ class IssuingStepTwoViewModel {
   final List<BallotBookResponseModel> ballotBookResponseModels;
   final List<BallotBoxResponseModel> ballotBoxResponseModels;
   final Function confirmInvoice;
+  final SubElection selectedSubElection;
 
   IssuingStepTwoViewModel(
       {this.invoiceId,
@@ -32,20 +34,21 @@ class IssuingStepTwoViewModel {
       this.updateBallotBoxStatus,
       this.ballotBookResponseModels,
       this.ballotBoxResponseModels,
-      this.confirmInvoice});
+      this.confirmInvoice,
+      this.selectedSubElection});
 
   static IssuingStepTwoViewModel fromStore(Store<AppState> store) {
     return IssuingStepTwoViewModel(
         postBallotBook: (ballotBookFrom, ballotBookTo) {
           store.dispatch(new PostBallotBookAction(
-              store.state.officeState.selectedElection.electionId,
+              store.state.officeState.selectedSubElection.electionId,
               store.state.invoiceState.invoiceId,
               ballotBookFrom,
               ballotBookTo));
         },
         postBallotBox: (ballotBoxId) {
           store.dispatch(new PostBallotBoxAction(
-              store.state.officeState.selectedElection.electionId,
+              store.state.officeState.selectedSubElection.electionId,
               store.state.invoiceState.invoiceId,
               ballotBoxId));
         },
@@ -68,6 +71,7 @@ class IssuingStepTwoViewModel {
         },
         ballotBoxResponseModels:
             store.state.ballotBoxState.ballotBoxResponseModels,
+        selectedSubElection: store.state.officeState.selectedSubElection,
         ballotBookResponseModels: store.state.ballotBookState.ballotBooks);
   }
 }
