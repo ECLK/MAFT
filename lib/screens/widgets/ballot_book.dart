@@ -59,7 +59,7 @@ class BallotBook extends StatelessWidget {
           child: new StoreConnector<AppState, IssuingStepTwoViewModel>(
               converter: (store) => IssuingStepTwoViewModel.fromStore(store),
               builder: (context, viewModel) {
-                new SizedBox(
+                return new SizedBox(
                   width: 150,
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
