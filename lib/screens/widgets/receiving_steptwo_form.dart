@@ -270,6 +270,7 @@ class _ReceivingStepTwoFormState extends State<ReceivingStepTwoForm> {
   }
 
   void addBallotBook(ReceivingStepTwoViewModel viewModel) {
+
     if (!viewModel.isBallotBookActive) {
       viewModel.updateBallotBookStatus(true);
       setState(() {

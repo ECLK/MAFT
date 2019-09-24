@@ -40,17 +40,15 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
     List<Area> countingCenters = new List();
     List<Area> pollingStations = new List();
 
-    viewModel.areas.forEach((Area area) {
-      if (area.areaType == "CountingCentre") {
-        countingCenters.add(area);
-      }
-    });
-
-    viewModel.areas.forEach((Area area) {
-      if (area.areaType == "PollingStation") {
-        pollingStations.add(area);
-      }
-    });
+    if (viewModel.areas != null) {
+      viewModel.areas.forEach((area) {
+        if (area.areaType == "CountingCentre") {
+          countingCenters.add(area);
+        } else if (area.areaType == "PollingStation") {
+          pollingStations.add(area);
+        }
+      });
+    }
 
     final issuedBy = new Row(
       children: <Widget>[
