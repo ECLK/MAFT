@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/store/models/area_model.dart';
-// import 'package:tabulation/store/models/office_request.dart';
 import 'package:tabulation/view_models/issuing_viewmodel.dart';
 import 'package:tabulation/util/strings.dart';
 
@@ -11,11 +10,11 @@ Future<void> showAlert(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Submission successful'),
+          title: Text('Submission successful!'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Your messages have been sent successfully!'),
+                Text('Your message has been sent successfully.'),
               ],
             ),
           ),
@@ -47,11 +46,17 @@ class CheckMessagesState extends State<CheckMessages> {
         builder: (context, viewModel) {
           List<Area> countingCenters = new List();
 
-          viewModel.areas.forEach((Area area) {
-            if (area.areaType == "CountingCentre") {
-              countingCenters.add(area);
-            }
-          });
+          if (viewModel.areas != null) {
+            viewModel.areas.forEach((area) {
+              if (area.areaType == "CountingCentre" && area.areaName != "") {
+                countingCenters.add(area);
+              }
+            });
+
+            //temp fix until Dinuka implements - sort counting centers
+            countingCenters.sort((a, b) =>
+                int.parse(a.areaName).compareTo(int.parse(b.areaName)));
+          }
 
           return Scaffold(
               appBar: AppBar(
