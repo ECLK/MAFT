@@ -43,12 +43,16 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
 
     if (viewModel.areas != null) {
       viewModel.areas.forEach((area) {
-        if (area.areaType == "CountingCentre") {
+        if (area.areaType == "CountingCentre" && area.areaName != "") {
           countingCenters.add(area);
         } else if (area.areaType == "PollingStation") {
           pollingStations.add(area);
         }
       });
+
+      //temp fix until Dinuka implements - sort counting centers
+      countingCenters.sort(
+          (a, b) => int.parse(a.areaName).compareTo(int.parse(b.areaName)));
     }
 
     final issuedBy = new Row(

@@ -14,6 +14,7 @@ import 'package:tabulation/store/models/ballot_box_response.dart';
 import 'package:tabulation/store/models/election_model.dart';
 import 'package:tabulation/store/models/election_request.dart';
 import 'package:tabulation/store/models/invoice_response.dart';
+import 'package:tabulation/util/constants.dart';
 
 class APIMiddleware extends MiddlewareClass<AppState> {
   @override
@@ -59,8 +60,7 @@ class APIMiddleware extends MiddlewareClass<AppState> {
 
   void getAreas(NextDispatcher next, int electionId) async {
     var response = await http.get(
-        Uri.encodeFull(
-            "https://dev.tabulation.ecdev.opensource.lk/area?electionId=${electionId}"),
+        Uri.encodeFull("${API_URL}/area?electionId=${electionId}"),
         headers: {"Accept": "application/json"});
 
     final jsonResponse = json.decode(response.body);
@@ -80,8 +80,7 @@ class APIMiddleware extends MiddlewareClass<AppState> {
       "receivingOfficeId": receivingOfficeId
     };
 
-    var response = await http.post(
-        Uri.encodeFull("https://dev.tabulation.ecdev.opensource.lk/invoice"),
+    var response = await http.post(Uri.encodeFull("${API_URL}/invoice"),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
@@ -108,9 +107,7 @@ class APIMiddleware extends MiddlewareClass<AppState> {
       "toBallotId": ballotBookTo
     };
 
-    var response = await http.post(
-        Uri.encodeFull(
-            "https://dev.tabulation.ecdev.opensource.lk/ballot-book"),
+    var response = await http.post(Uri.encodeFull("${API_URL}/ballot-book"),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
@@ -135,8 +132,7 @@ class APIMiddleware extends MiddlewareClass<AppState> {
     Map post = {"stationaryItemId": ballotBook.stationaryItemId};
 
     var response = await http.post(
-        Uri.encodeFull(
-            "https://dev.tabulation.ecdev.opensource.lk/invoice/${invoiceId}/stationary-item"),
+        Uri.encodeFull("${API_URL}/invoice/${invoiceId}/stationary-item"),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
@@ -151,8 +147,7 @@ class APIMiddleware extends MiddlewareClass<AppState> {
 
   void getBallotBoxes(NextDispatcher next, int electionId) async {
     var response = await http.get(
-        Uri.encodeFull(
-            "https://dev.tabulation.ecdev.opensource.lk/ballot-box?electionId=${electionId}"),
+        Uri.encodeFull("${API_URL}/ballot-box?electionId=${electionId}"),
         headers: {"Accept": "application/json"});
 
     final jsonResponse = json.decode(response.body);
@@ -168,8 +163,7 @@ void postBallotBox(NextDispatcher next, int electionId, int invoiceId,
     String ballotBoxId) async {
   Map post = {"electionId": electionId, "ballotBoxId": ballotBoxId};
 
-  var response = await http.post(
-      Uri.encodeFull("https://dev.tabulation.ecdev.opensource.lk/ballot-box"),
+  var response = await http.post(Uri.encodeFull("${API_URL}/ballot-box"),
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
@@ -193,8 +187,7 @@ void postInvoiceReceiving(NextDispatcher next, int electionId, int officeId,
     "receivingOfficeId": receivingOfficeId
   };
 
-  var response = await http.post(
-      Uri.encodeFull("https://dev.tabulation.ecdev.opensource.lk/invoice"),
+  var response = await http.post(Uri.encodeFull("${API_URL}/invoice"),
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
@@ -214,8 +207,7 @@ void postBallotBoxStationaryItemAction(NextDispatcher next, int invoiceId,
   Map post = {"stationaryItemId": stationaryItemId};
 
   var response = await http.post(
-      Uri.encodeFull(
-          "https://dev.tabulation.ecdev.opensource.lk/invoice/${invoiceId}/stationary-item"),
+      Uri.encodeFull("${API_URL}/invoice/${invoiceId}/stationary-item"),
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
@@ -235,13 +227,11 @@ void postBallotBoxStationaryItemAction(NextDispatcher next, int invoiceId,
 }
 
 void confirmInvoice(NextDispatcher next, int invoiceId) async {
-  var response = await http.put(
-      Uri.encodeFull(
-          "https://dev.tabulation.ecdev.opensource.lk/invoice/${invoiceId}/confirm"),
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      });
+  var response = await http
+      .put(Uri.encodeFull("${API_URL}/invoice/${invoiceId}/confirm"), headers: {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  });
 
   final jsonResponse = json.decode(response.body);
 
@@ -251,13 +241,11 @@ void confirmInvoice(NextDispatcher next, int invoiceId) async {
 }
 
 void confirmInvoiceReceiving(NextDispatcher next, int invoiceId) async {
-  var response = await http.put(
-      Uri.encodeFull(
-          "https://dev.tabulation.ecdev.opensource.lk/invoice/${invoiceId}/confirm"),
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      });
+  var response = await http
+      .put(Uri.encodeFull("${API_URL}/invoice/${invoiceId}/confirm"), headers: {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  });
 
   final jsonResponse = json.decode(response.body);
 
@@ -267,8 +255,7 @@ void confirmInvoiceReceiving(NextDispatcher next, int invoiceId) async {
 }
 
 void getElections(NextDispatcher next) async {
-  var response = await http.get(
-      Uri.encodeFull("https://dev.tabulation.ecdev.opensource.lk/election"),
+  var response = await http.get(Uri.encodeFull("${API_URL}/election"),
       headers: {"Accept": "application/json"});
 
   final jsonResponse = json.decode(response.body);
