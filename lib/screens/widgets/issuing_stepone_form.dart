@@ -40,6 +40,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     List<Widget> formWidgets = new List();
     List<Area> countingCenters = new List();
     List<Area> pollingStations = new List();
+    List<Area> electroralDistrict = new List();
 
     if (viewModel.areas != null) {
       viewModel.areas.forEach((area) {
@@ -47,6 +48,8 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
           countingCenters.add(area);
         } else if (area.areaType == "PollingStation") {
           pollingStations.add(area);
+        } else if (area.areaType == "ElectoralDistrcit") {
+          electroralDistrict.add(area);
         }
       });
     }
@@ -68,7 +71,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
             Padding(
               padding: EdgeInsets.only(left: 5.0, right: 0.0, top: 15.0),
               child: new Text(
-                'ARO',
+                'Issuing ARO',
                 style: new TextStyle(
                     fontWeight: FontWeight.normal, fontSize: 18.0),
               ),
@@ -76,6 +79,20 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
           ],
         ),
       ],
+    );
+
+    final selectElectoralDistrict = Padding(
+      padding: EdgeInsets.only(top: 15.0, bottom: 20.0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: electroralDistrict.map((area) {
+          return new DropdownMenuItem(
+              value: area.areaId, child: new Text(area.areaName));
+        }).toList(),
+        hint: new Text("Select a district"),
+        onChanged: (value) => viewModel.updateIssuingOffice(value),
+        value: viewModel.invoice.issuingOfficeId,
+      ),
     );
 
     final issuedFrom = Row(
@@ -90,7 +107,8 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                 DropdownButton(
                     isExpanded: true,
                     items: [
-                      new DropdownMenuItem(child: new Text("Counting Center"))
+                      new DropdownMenuItem(
+                          child: new Text("Issuing/Receiving center"))
                     ],
                     hint: new Text("Select center"),
                     onChanged: (value) {}),
@@ -218,6 +236,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     );
 
     formWidgets.add(issuedBy);
+    formWidgets.add(selectElectoralDistrict);
     formWidgets.add(issuedFrom);
     formWidgets.add(selectIssuingOffice);
 
