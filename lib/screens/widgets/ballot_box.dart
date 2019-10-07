@@ -6,6 +6,7 @@ import 'package:tabulation/store/models/ballot_box_request.dart';
 import 'package:tabulation/view_models/issuingsteptwo_viewmodel.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:http/http.dart' as http;
+import 'package:tabulation/util/constants.dart';
 
 class BallotBoxWidget extends StatelessWidget {
   bool isNewBallotBox = false;
@@ -72,7 +73,7 @@ class BallotBoxWidget extends StatelessWidget {
       String pattern, IssuingStepTwoViewModel viewModel) async {
     var response = await http.get(
         Uri.encodeFull(
-            "https://dev.tabulation.ecdev.opensource.lk/ballot-box?limit=20&electionId=${viewModel.selectedSubElection.electionId}&ballotBoxId=%${pattern}%"),
+            "${API_URL}/ballot-box?limit=20&electionId=${viewModel.selectedSubElection.electionId}&ballotBoxId=%${pattern}%"),
         headers: {"Accept": "application/json"});
 
     final jsonResponse = json.decode(response.body);
