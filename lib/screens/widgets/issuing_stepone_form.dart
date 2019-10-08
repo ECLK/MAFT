@@ -48,7 +48,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
           countingCenters.add(area);
         } else if (area.areaType == "PollingStation") {
           pollingStations.add(area);
-        } else if (area.areaType == "ElectoralDistrcit") {
+        } else if (area.areaType == "ElectoralDistrict") {
           electroralDistrict.add(area);
         }
       });
@@ -86,7 +86,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     );
 
     final selectElectoralDistrict = Padding(
-      padding: EdgeInsets.only(top: 15.0, bottom: 20.0),
+      padding: EdgeInsets.only(top: 15.0),
       child: new DropdownButton(
         isExpanded: true,
         items: electroralDistrict.map((area) {
@@ -94,8 +94,22 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
               value: area.areaId, child: new Text(area.areaName));
         }).toList(),
         hint: new Text("Select a district"),
-        onChanged: (value) => viewModel.updateIssuingOffice(value),
-        value: viewModel.invoice.issuingOfficeId,
+        onChanged: (value) => viewModel.updateIssuingDistrictId(value),
+        value: viewModel.invoice.issuingDistrictId,
+      ),
+    );
+
+    final selectreceivingDistrict = Padding(
+      padding: EdgeInsets.only(top: 15.0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: electroralDistrict.map((area) {
+          return new DropdownMenuItem(
+              value: area.areaId, child: new Text(area.areaName));
+        }).toList(),
+        hint: new Text("Select a district"),
+        onChanged: (value) => viewModel.updateReceivingDistrictId(value),
+        value: viewModel.invoice.receivingDistrictId,
       ),
     );
 
@@ -103,7 +117,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       children: <Widget>[
         new Expanded(
           child: Padding(
-            padding: EdgeInsets.only(top: 20.0),
+            padding: EdgeInsets.only(top: 15.0),
             child: new Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -124,7 +138,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     );
 
     final selectIssuingOffice = Padding(
-      padding: EdgeInsets.only(top: 15.0, bottom: 20.0),
+      padding: EdgeInsets.only(top: 15.0,bottom:20.0),
       child: new DropdownButton(
         isExpanded: true,
         items: countingCenters.map((area) {
@@ -247,6 +261,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     formWidgets.add(divider);
 
     formWidgets.add(issuedTo);
+    formWidgets.add(selectreceivingDistrict);
     formWidgets.add(issuedFor);
     formWidgets.add(selectReceivingOffice);
     formWidgets.add(btnNext);

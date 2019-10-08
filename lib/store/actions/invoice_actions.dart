@@ -5,9 +5,11 @@ class PostInvoiceAction {
   int issuedToId;
   int issuingOfficeId;
   int receivingOfficeId;
+  int receivingDistrictId;
+  int issuingDistrictId;
 
   PostInvoiceAction(this.electionId, this.issuedToId, this.issuingOfficeId,
-      this.receivingOfficeId);
+      this.receivingOfficeId, this.receivingDistrictId, this.issuingDistrictId);
 }
 
 class PostInvoiceActionPv {
@@ -19,15 +21,26 @@ class PostInvoiceActionPv {
   PostInvoiceActionPv(this.electionId, this.issuedToId, this.issuingOfficeId,
       this.receivingOfficeId);
 }
+class PostInvoiceActionPvR {
+  int electionId;
+  int issuedToId;
+  int issuingOfficeId;
+  int receivingOfficeId;
+
+  PostInvoiceActionPvR(this.electionId, this.issuedToId, this.issuingOfficeId,
+      this.receivingOfficeId);
+}
 
 class PostInvoiceReceivingAction {
   int electionId;
   int issuedToId;
   int issuingOfficeId;
   int receivingOfficeId;
+  int receivingDistrictId;
+  int issuingDistrictId;
 
   PostInvoiceReceivingAction(this.electionId, this.issuedToId,
-      this.issuingOfficeId, this.receivingOfficeId);
+      this.issuingOfficeId, this.receivingOfficeId, this.receivingDistrictId, this.issuingDistrictId);
 }
 
 class InvoiceResponseAction {
@@ -45,7 +58,14 @@ class UpdateReceivingOffice {
   final int receivingOfficeId;
   UpdateReceivingOffice(this.receivingOfficeId);
 }
-
+class UpdateIssuingDistrictId {
+  final int districtId;
+  UpdateIssuingDistrictId(this.districtId);
+}
+class UpdateReceivingDistrictId {
+  final int districtId;
+  UpdateReceivingDistrictId(this.districtId);
+}
 class ConfirmInvoiceAction {
   int invoiceId;
 
@@ -71,3 +91,5 @@ class NavigateToIssuingStepTwoAction {}
 class NavigateToReceivingStepTwoAction {}
 
 class NavigateToIssuingPvStepTwoAction {}
+
+class NavigateToReceivingPvStepTwoAction {}

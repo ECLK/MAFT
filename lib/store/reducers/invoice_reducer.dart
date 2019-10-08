@@ -8,7 +8,9 @@ final invoiceReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, InvoiceResponseAction>(_invoiceResponseAction),
   TypedReducer<InvoiceState, UpdateIssuingOffice>(_updateIssuingOfficeAction),
   TypedReducer<InvoiceState, UpdateReceivingOffice>(_updateReceivingOffice),
-  TypedReducer<InvoiceState, ClearInvoiceAction>(_clearInvoiceAction)
+  TypedReducer<InvoiceState, ClearInvoiceAction>(_clearInvoiceAction),
+  TypedReducer<InvoiceState, UpdateIssuingDistrictId>(_updateIssuingDistrict),
+  TypedReducer<InvoiceState, UpdateReceivingDistrictId>(_updateReceivingDistrict),
 ]);
 
 InvoiceState _invoiceAction(InvoiceState state, InvoiceModel action) => state;
@@ -25,7 +27,9 @@ InvoiceState _invoiceResponseAction(
       issuedBy: action.invoice.issuedBy,
       issuedTo: action.invoice.issuedTo,
       issuingOfficeId: action.invoice.issuingOfficeId,
-      receivingOfficeId: action.invoice.receivingOfficeId);
+      receivingOfficeId: action.invoice.receivingOfficeId,
+      issuingDistrictId:action.invoice.issuingDistrictId,
+      receivingDistrictId:action.invoice.receivingDistrictId);
 }
 
 InvoiceState _updateIssuingOfficeAction(
@@ -42,3 +46,12 @@ InvoiceState _clearInvoiceAction(
     InvoiceState state, ClearInvoiceAction action) {
   return InvoiceState.initial();
 }
+InvoiceState _updateIssuingDistrict(
+  InvoiceState state, UpdateIssuingDistrictId action){
+    return  state.copyWith(issuingDistrictId:action.districtId);
+  }
+  InvoiceState _updateReceivingDistrict(
+  InvoiceState state, UpdateReceivingDistrictId action){
+    return  state.copyWith(receivingDistrictId:action.districtId);
+  }
+

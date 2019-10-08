@@ -96,7 +96,9 @@ class _HomeState extends State<Home> {
             style: TextStyle(fontSize: 20),
           ),
           onPressed: () {
-            Navigator.of(context).pushNamed('/receiving-stepone');
+            viewModel.selectedSubElection.voteType == "NonPostal"
+                ? Navigator.of(context).pushNamed('/receiving-stepone')
+                : Navigator.of(context).pushNamed('/receiving-stepone-pv');
           },
         ),
       ),
@@ -160,8 +162,9 @@ class _HomeState extends State<Home> {
     );
 
     formWidgets.add(issuing);
+    formWidgets.add(receiving);
+
     if (viewModel.selectedSubElection.voteType == "NonPostal") {
-      formWidgets.add(receiving);
       formWidgets.add(checkMessages);
       formWidgets.add(counting);
       formWidgets.add(approval);

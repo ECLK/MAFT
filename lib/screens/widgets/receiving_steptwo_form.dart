@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/screens/widgets/ballot_book.dart';
 import 'package:tabulation/screens/widgets/ballot_box.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/view_models/receivingsteptwo_viewmodel.dart';
+import 'package:tabulation/view_models/receiving_steptwo_viewmodel.dart';
 
 class ReceivingStepTwoForm extends StatefulWidget {
   @override

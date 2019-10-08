@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tabulation/screens/widgets/ballot_book.dart';
 import 'package:tabulation/store/app/app_state.dart';
-import 'package:tabulation/view_models/issuing_pv_steptwo_viewmodel.dart';
+import 'package:tabulation/view_models/receiving_pv_steptwo_viewmodel.dart';
 
-class IssuingStepTwoForm extends StatefulWidget {
+class ReceivingStepTwoForm extends StatefulWidget {
   @override
-  _IssuingStepTwoFormState createState() => new _IssuingStepTwoFormState();
+  _ReceivingStepTwoFormState createState() => new _ReceivingStepTwoFormState();
 }
 
-class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
+class _ReceivingStepTwoFormState extends State<ReceivingStepTwoForm> {
   final _formKey = GlobalKey<FormState>();
   List<BallotBook> ballotBooks = new List<BallotBook>();
 
@@ -17,7 +17,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: new StoreConnector<AppState, IssuingStepTwoViewModel>(
+      child: new StoreConnector<AppState, ReceivingStepTwoViewModel>(
           onDidChange: (viewModel) {
             if (viewModel.activeBallotBook.statusCodeMessage != "" &&
                 viewModel.activeBallotBook.statusCode != 0 &&
@@ -25,7 +25,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
               this._showDialog(viewModel.activeBallotBook.statusCodeMessage);
             }
           },
-          converter: (store) => IssuingStepTwoViewModel.fromStore(store),
+          converter: (store) => ReceivingStepTwoViewModel.fromStore(store),
           builder: (context, viewModel) {
             return new Column(
               children: getFormWidget(viewModel),
@@ -43,7 +43,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
     );
   }
 
-  List<Widget> getFormWidget(IssuingStepTwoViewModel viewModel) {
+  List<Widget> getFormWidget(ReceivingStepTwoViewModel viewModel) {
     List<Widget> widgets = new List();
 
     final materialType = new Row(
@@ -51,7 +51,7 @@ class _IssuingStepTwoFormState extends State<IssuingStepTwoForm> {
         Padding(
           padding: EdgeInsets.only(top: 20.0),
           child: Text(
-            'No. of packets : ',
+            'No. of marked ballots : ',
             style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
           ),
         ),

@@ -30,6 +30,10 @@ class APIMiddleware extends MiddlewareClass<AppState> {
       postInvoicePv(next, action.electionId, action.issuedToId,
           action.issuingOfficeId, action.receivingOfficeId);
     }
+    if (action is PostInvoiceActionPvR) {
+      postInvoicePvR(next, action.electionId, action.issuedToId,
+          action.issuingOfficeId, action.receivingOfficeId);
+    }
     if (action is PostInvoiceReceivingAction) {
       postInvoiceReceiving(next, action.electionId, action.issuedToId,
           action.issuingOfficeId, action.receivingOfficeId);
@@ -61,7 +65,10 @@ class APIMiddleware extends MiddlewareClass<AppState> {
   void getAreas(NextDispatcher next, int electionId) async {
     var response = await http.get(
         Uri.encodeFull("${API_URL}/area?electionId=${electionId}"),
-        headers: {"Accept": "application/json"});
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer $TOKEN"
+        });
 
     final jsonResponse = json.decode(response.body);
 
@@ -83,7 +90,8 @@ class APIMiddleware extends MiddlewareClass<AppState> {
     var response = await http.post(Uri.encodeFull("${API_URL}/invoice"),
         headers: {
           "Accept": "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $TOKEN"
         },
         body: utf8.encode(json.encode(post)));
 
@@ -99,6 +107,11 @@ class APIMiddleware extends MiddlewareClass<AppState> {
     next(new NavigateToIssuingPvStepTwoAction());
   }
 
+  void postInvoicePvR(NextDispatcher next, int electionId, int officeId,
+      int issuingOfficeId, int receivingOfficeId) async {
+    next(new NavigateToReceivingPvStepTwoAction());
+  }
+
   void postBallotBook(NextDispatcher next, int electionId, int invoiceId,
       String ballotBookFrom, String ballotBookTo) async {
     Map post = {
@@ -110,7 +123,8 @@ class APIMiddleware extends MiddlewareClass<AppState> {
     var response = await http.post(Uri.encodeFull("${API_URL}/ballot-book"),
         headers: {
           "Accept": "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $TOKEN"
         },
         body: utf8.encode(json.encode(post)));
 
@@ -135,7 +149,8 @@ class APIMiddleware extends MiddlewareClass<AppState> {
         Uri.encodeFull("${API_URL}/invoice/${invoiceId}/stationary-item"),
         headers: {
           "Accept": "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $TOKEN"
         },
         body: utf8.encode(json.encode(post)));
 
@@ -148,7 +163,10 @@ class APIMiddleware extends MiddlewareClass<AppState> {
   void getBallotBoxes(NextDispatcher next, int electionId) async {
     var response = await http.get(
         Uri.encodeFull("${API_URL}/ballot-box?electionId=${electionId}"),
-        headers: {"Accept": "application/json"});
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer $TOKEN"
+        });
 
     final jsonResponse = json.decode(response.body);
 
@@ -166,7 +184,8 @@ void postBallotBox(NextDispatcher next, int electionId, int invoiceId,
   var response = await http.post(Uri.encodeFull("${API_URL}/ballot-box"),
       headers: {
         "Accept": "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $TOKEN"
       },
       body: utf8.encode(json.encode(post)));
 
@@ -190,7 +209,8 @@ void postInvoiceReceiving(NextDispatcher next, int electionId, int officeId,
   var response = await http.post(Uri.encodeFull("${API_URL}/invoice"),
       headers: {
         "Accept": "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $TOKEN"
       },
       body: utf8.encode(json.encode(post)));
 
@@ -210,7 +230,8 @@ void postBallotBoxStationaryItemAction(NextDispatcher next, int invoiceId,
       Uri.encodeFull("${API_URL}/invoice/${invoiceId}/stationary-item"),
       headers: {
         "Accept": "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $TOKEN"
       },
       body: utf8.encode(json.encode(post)));
 
@@ -230,7 +251,8 @@ void confirmInvoice(NextDispatcher next, int invoiceId) async {
   var response = await http
       .put(Uri.encodeFull("${API_URL}/invoice/${invoiceId}/confirm"), headers: {
     "Accept": "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Authorization": "Bearer $TOKEN"
   });
 
   final jsonResponse = json.decode(response.body);
@@ -244,7 +266,8 @@ void confirmInvoiceReceiving(NextDispatcher next, int invoiceId) async {
   var response = await http
       .put(Uri.encodeFull("${API_URL}/invoice/${invoiceId}/confirm"), headers: {
     "Accept": "application/json",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Authorization": "Bearer $TOKEN"
   });
 
   final jsonResponse = json.decode(response.body);
@@ -255,11 +278,12 @@ void confirmInvoiceReceiving(NextDispatcher next, int invoiceId) async {
 }
 
 void getElections(NextDispatcher next) async {
-  var response = await http.get(Uri.encodeFull("${API_URL}/election"),
-      headers: {"Accept": "application/json"});
+  var response = await http.get(Uri.encodeFull("$API_URL/election"), headers: {
+    "Accept": "application/json",
+    "Authorization": "Bearer $TOKEN"
+  });
 
   final jsonResponse = json.decode(response.body);
-
   ElectionRequestModel electionsList =
       ElectionRequestModel.fromJson(jsonResponse);
   List<Election> elections = electionsList.elections;

@@ -11,6 +11,8 @@ class IssuingViewModel {
   final Function navigateToIssuingStepTwoAction;
   final Function(int issuingOfficeId) updateIssuingOffice;
   final Function(int receivingOfficeId) updateReceivingOffice;
+  final Function(int issuingDistrictId) updateIssuingDistrictId;
+  final Function(int receivingDistrictId) updateReceivingDistrictId;
 
   IssuingViewModel(
       {this.areas,
@@ -18,7 +20,9 @@ class IssuingViewModel {
       this.createInvoice,
       this.navigateToIssuingStepTwoAction,
       this.updateIssuingOffice,
-      this.updateReceivingOffice});
+      this.updateReceivingOffice,
+      this.updateIssuingDistrictId,
+      this.updateReceivingDistrictId});
 
   static IssuingViewModel fromStore(Store<AppState> store) {
     return IssuingViewModel(
@@ -29,13 +33,19 @@ class IssuingViewModel {
               store.state.officeState.selectedSubElection.electionId,
               store.state.invoiceState.issuedToId,
               store.state.invoiceState.issuingOfficeId,
-              store.state.invoiceState.receivingOfficeId));
+              store.state.invoiceState.receivingOfficeId,
+              store.state.invoiceState.issuingDistrictId,
+              store.state.invoiceState.receivingDistrictId));
         },
         navigateToIssuingStepTwoAction: () =>
             store.dispatch(new NavigateToIssuingStepTwoAction()),
         updateIssuingOffice: (issuingOfficeId) =>
             store.dispatch(new UpdateIssuingOffice(issuingOfficeId)),
         updateReceivingOffice: (receivingOfficeId) =>
-            store.dispatch(new UpdateReceivingOffice(receivingOfficeId)));
+            store.dispatch(new UpdateReceivingOffice(receivingOfficeId)),
+        updateIssuingDistrictId: (districtId) =>
+            store.dispatch(new UpdateIssuingDistrictId(districtId)),
+        updateReceivingDistrictId: (districtId) =>
+            store.dispatch(new UpdateReceivingDistrictId(districtId)));
   }
 }
