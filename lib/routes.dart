@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tabulation/screens/add_ballot_box.dart';
 import 'package:tabulation/screens/ballot_boxes.dart';
+import 'package:tabulation/screens/check_messages_step_three.dart';
+import 'package:tabulation/screens/check_messages_step_two.dart';
 import 'package:tabulation/screens/election.dart';
 import 'package:tabulation/screens/home.dart';
 import 'package:tabulation/screens/issuing-stepone.dart';
@@ -38,6 +40,8 @@ final routes = {
   '/issuing-success': (BuildContext context) => new IssuingSuccessScreen(),
   '/receiving-success': (BuildContext context) => new ReceivingSuccessScreen(),
   '/check-messages': (BuildContext context) => new CheckMessages(),
+  '/check-messages-2': (BuildContext context) => new CheckMessagesStepTwo(),
+  '/check-messages-3': (BuildContext context) => new CheckMessagesStepThree(),
   '/election': (BuildContext context) => new ElectionScreen(),
   '/sub-election': (BuildContext context) => new SubElectionScreen(),
 };
