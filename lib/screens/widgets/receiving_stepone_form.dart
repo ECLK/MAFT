@@ -40,6 +40,7 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
     List<Area> countingCenters = new List();
     List<Area> pollingStations = new List();
     List<Area> electroralDistrict = new List();
+    List<Area> pollingDivision=new List();
 
     if (viewModel.areas != null) {
       viewModel.areas.forEach((area) {
@@ -49,6 +50,8 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
           pollingStations.add(area);
         } else if (area.areaType == "ElectoralDistrict") {
           electroralDistrict.add(area);
+        } else if (area.areaType=="PollingDivision"){
+          pollingDivision.add(area);
         }
       });
 
@@ -93,14 +96,17 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
       ),
     );
 
-    final selectPollingDivision = Padding(
+     final selectPollingDivision = Padding(
       padding: EdgeInsets.only(top: 15.0),
       child: new DropdownButton(
         isExpanded: true,
-        items: [],
-        hint: new Text("Select Polling Division"),
-        // onChanged: (value) => viewModel.updateIssuingDistrictId(value),
-        // value: viewModel.invoice.issuingDistrictId,
+        items: pollingDivision.map((area) {
+          return new DropdownMenuItem(
+              value: area.areaId, child: new Text(area.areaName));
+        }).toList(),
+        hint: new Text("Select a Polling Division"),
+        onChanged: (value) => viewModel.updateReceivingPollingDivisionId(value),
+        value: viewModel.invoice.receivingPollingDivisionId,
       ),
     );
 

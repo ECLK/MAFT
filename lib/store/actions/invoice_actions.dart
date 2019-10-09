@@ -66,6 +66,14 @@ class UpdateReceivingDistrictId {
   final int districtId;
   UpdateReceivingDistrictId(this.districtId);
 }
+class UpdateIssuingPollingDivisionId{
+  final int id;
+  UpdateIssuingPollingDivisionId(this.id);
+}
+class UpdateReceivingPollingDivisionId{
+  final int id;
+  UpdateReceivingPollingDivisionId(this.id);
+}
 class ConfirmInvoiceAction {
   int invoiceId;
 

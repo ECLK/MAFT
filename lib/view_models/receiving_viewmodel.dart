@@ -13,7 +13,8 @@ class ReceivingViewModel {
   final Function(int receivingOfficeId) updateReceivingOffice;
   final Function(int issuingDistrictId) updateIssuingDistrictId;
   final Function(int receivingDistrictId) updateReceivingDistrictId;
-
+  final Function(int receivingPollingDivisionId)
+      updateReceivingPollingDivisionId;
   ReceivingViewModel(
       {this.areas,
       this.invoice,
@@ -22,7 +23,8 @@ class ReceivingViewModel {
       this.updateIssuingOffice,
       this.updateReceivingOffice,
       this.updateIssuingDistrictId,
-      this.updateReceivingDistrictId});
+      this.updateReceivingDistrictId,
+      this.updateReceivingPollingDivisionId});
 
   static ReceivingViewModel fromStore(Store<AppState> store) {
     return ReceivingViewModel(
@@ -43,10 +45,11 @@ class ReceivingViewModel {
             store.dispatch(new UpdateIssuingOffice(issuingOfficeId)),
         updateReceivingOffice: (receivingOfficeId) =>
             store.dispatch(new UpdateReceivingOffice(receivingOfficeId)),
-              updateIssuingDistrictId: (districtId) =>
+        updateIssuingDistrictId: (districtId) =>
             store.dispatch(new UpdateIssuingDistrictId(districtId)),
         updateReceivingDistrictId: (districtId) =>
-            store.dispatch(new UpdateReceivingDistrictId(districtId)));
- 
+            store.dispatch(new UpdateReceivingDistrictId(districtId)),
+        updateReceivingPollingDivisionId: (id) =>
+            {store.dispatch(new UpdateReceivingPollingDivisionId(id))});
   }
 }

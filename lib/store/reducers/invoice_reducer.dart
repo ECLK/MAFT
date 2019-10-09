@@ -11,6 +11,9 @@ final invoiceReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, ClearInvoiceAction>(_clearInvoiceAction),
   TypedReducer<InvoiceState, UpdateIssuingDistrictId>(_updateIssuingDistrict),
   TypedReducer<InvoiceState, UpdateReceivingDistrictId>(_updateReceivingDistrict),
+  TypedReducer<InvoiceState, UpdateIssuingPollingDivisionId>(_updateIssuingPollingDivisionId),
+  TypedReducer<InvoiceState, UpdateReceivingPollingDivisionId>(_updateReceivingPollingDivisionId),
+
 ]);
 
 InvoiceState _invoiceAction(InvoiceState state, InvoiceModel action) => state;
@@ -53,5 +56,13 @@ InvoiceState _updateIssuingDistrict(
   InvoiceState _updateReceivingDistrict(
   InvoiceState state, UpdateReceivingDistrictId action){
     return  state.copyWith(receivingDistrictId:action.districtId);
+  }
+    InvoiceState _updateReceivingPollingDivisionId(
+  InvoiceState state, UpdateReceivingPollingDivisionId action){
+    return  state.copyWith(receivingPollingDivisionId:action.id);
+  }
+    InvoiceState _updateIssuingPollingDivisionId(
+  InvoiceState state, UpdateIssuingPollingDivisionId action){
+    return  state.copyWith(issuingPollingDivisionId:action.id);
   }
 

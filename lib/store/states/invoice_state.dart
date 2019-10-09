@@ -16,6 +16,9 @@ class InvoiceState {
   final int receivingOfficeId;
   final int issuingDistrictId;
   final int receivingDistrictId;
+  final int issuingPollingDivisionId;
+  final int receivingPollingDivisionId;
+
   InvoiceState(
       {this.confirmed,
       this.electionId,
@@ -30,7 +33,9 @@ class InvoiceState {
       this.issuingOfficeId,
       this.receivingOfficeId,
       this.issuingDistrictId,
-      this.receivingDistrictId});
+      this.receivingDistrictId,
+      this.issuingPollingDivisionId,
+      this.receivingPollingDivisionId});
 
   InvoiceState copyWith(
       {bool confirmed,
@@ -46,7 +51,9 @@ class InvoiceState {
       int issuingOfficeId,
       int receivingOfficeId,
       int issuingDistrictId,
-      int receivingDistrictId}) {
+      int receivingDistrictId,
+      int issuingPollingDivisionId,
+      int receivingPollingDivisionId}) {
     return new InvoiceState(
         confirmed: confirmed ?? this.confirmed,
         electionId: electionId ?? this.electionId,
@@ -61,7 +68,9 @@ class InvoiceState {
         issuingOfficeId: issuingOfficeId ?? this.issuingOfficeId,
         receivingOfficeId: receivingOfficeId ?? this.receivingOfficeId,
         issuingDistrictId: issuingDistrictId ?? this.issuingDistrictId,
-        receivingDistrictId: receivingDistrictId ?? this.receivingDistrictId);
+        receivingDistrictId: receivingDistrictId ?? this.receivingDistrictId,
+        issuingPollingDivisionId:issuingPollingDivisionId ?? this.issuingPollingDivisionId,
+        receivingPollingDivisionId: receivingPollingDivisionId?? this.receivingPollingDivisionId);
   }
 
   factory InvoiceState.initial() {
@@ -79,6 +88,8 @@ class InvoiceState {
         issuingOfficeId: null,
         receivingOfficeId: null,
         issuingDistrictId: null,
-        receivingDistrictId: null);
+        receivingDistrictId: null,
+        issuingPollingDivisionId: null,
+        receivingPollingDivisionId: null);
   }
 }

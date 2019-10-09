@@ -11,6 +11,8 @@ class InvoiceModel {
   int issuingOfficeId;
   int receivingOfficeId;
   int issuingDistrictId;
+  int issuingPollingDivisionId;
+  int receivingPollingDivisionId;
   int receivingDistrictId;
   
   InvoiceModel(
@@ -24,7 +26,9 @@ class InvoiceModel {
       this.issuingOfficeId,
       this.receivingOfficeId,
       this.issuingDistrictId,
-      this.receivingDistrictId});
+      this.receivingDistrictId,
+      this.issuingPollingDivisionId,
+      this.receivingPollingDivisionId});
 
   factory InvoiceModel.fromJson(Map<String, dynamic> json) {
     return new InvoiceModel(
@@ -53,7 +57,9 @@ class InvoiceModel {
       issuingOfficeId: state.issuingOfficeId,
       receivingOfficeId: state.receivingOfficeId,
       issuingDistrictId: state.issuingDistrictId,
-      receivingDistrictId:state.receivingDistrictId
+      receivingDistrictId:state.receivingDistrictId,
+      receivingPollingDivisionId: state.receivingPollingDivisionId,
+      issuingPollingDivisionId:state.issuingPollingDivisionId
     );
   }
 }

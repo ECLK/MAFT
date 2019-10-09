@@ -30,7 +30,9 @@ class CheckMessagesStepThreeState extends State<CheckMessagesStepThree> {
               FlatButton(
                   child: Text('Ok'),
                   onPressed: () {
-                    Navigator.of(context).pushNamed("/check-messages");
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   }),
             ],
           );
