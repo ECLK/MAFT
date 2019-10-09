@@ -99,6 +99,17 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       ),
     );
 
+    final selectPollingDivision = Padding(
+      padding: EdgeInsets.only(top: 15.0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: [],
+        hint: new Text("Select Polling Division"),
+        // onChanged: (value) => viewModel.updateIssuingDistrictId(value),
+        // value: viewModel.invoice.issuingDistrictId,
+      ),
+    );
+
     final selectreceivingDistrict = Padding(
       padding: EdgeInsets.only(top: 15.0),
       child: new DropdownButton(
@@ -255,6 +266,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
 
     formWidgets.add(issuedBy);
     formWidgets.add(selectElectoralDistrict);
+    formWidgets.add(selectPollingDivision);
     formWidgets.add(issuedFrom);
     formWidgets.add(selectIssuingOffice);
 
