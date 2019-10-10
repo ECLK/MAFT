@@ -1,5 +1,6 @@
 import 'package:redux/redux.dart';
 import 'package:tabulation/store/actions/auth_actions.dart';
+import 'package:tabulation/store/actions/check_messages_actions.dart';
 import 'package:tabulation/store/actions/invoice_actions.dart';
 import 'package:tabulation/store/app/app_state.dart';
 import 'package:tabulation/store/keys.dart';
@@ -33,6 +34,12 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
     }
     if (action is NavigateToSubElectionAction) {
       Keys.navKey.currentState.pushNamed("/sub-election");
+    }
+    if (action is NavigateToCheckMessagesPageTwo) {
+      Keys.navKey.currentState.pushNamed("/check-messages-2");
+    }
+    if (action is NavigateToCheckMessagesPageThree) {
+      Keys.navKey.currentState.pushNamed("/check-messages-3");
     }
 
     next(action);

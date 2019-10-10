@@ -41,6 +41,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     List<Area> countingCenters = new List();
     List<Area> pollingStations = new List();
     List<Area> electroralDistrict = new List();
+    List<Area> pollingDivision = new List();
 
     if (viewModel.areas != null) {
       viewModel.areas.forEach((area) {
@@ -50,6 +51,8 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
           pollingStations.add(area);
         } else if (area.areaType == "ElectoralDistrict") {
           electroralDistrict.add(area);
+        } else if (area.areaType == "PollingDivision") {
+          pollingDivision.add(area);
         }
       });
 
@@ -99,6 +102,20 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       ),
     );
 
+     final selectPollingDivision = Padding(
+      padding: EdgeInsets.only(top: 15.0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: pollingDivision.map((area) {
+          return new DropdownMenuItem(
+              value: area.areaId, child: new Text(area.areaName));
+        }).toList(),
+        hint: new Text("Select a Polling Division"),
+        onChanged: (value) => viewModel.updateIssuingPollingDivisionId(value),
+        value: viewModel.invoice.issuingPollingDivisionId,
+      ),
+    );
+
     final selectreceivingDistrict = Padding(
       padding: EdgeInsets.only(top: 15.0),
       child: new DropdownButton(
@@ -138,7 +155,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     );
 
     final selectIssuingOffice = Padding(
-      padding: EdgeInsets.only(top: 15.0,bottom:20.0),
+      padding: EdgeInsets.only(top: 15.0, bottom: 20.0),
       child: new DropdownButton(
         isExpanded: true,
         items: countingCenters.map((area) {
@@ -255,6 +272,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
 
     formWidgets.add(issuedBy);
     formWidgets.add(selectElectoralDistrict);
+    formWidgets.add(selectPollingDivision);
     formWidgets.add(issuedFrom);
     formWidgets.add(selectIssuingOffice);
 

@@ -40,6 +40,7 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
     List<Area> countingCenters = new List();
     List<Area> pollingStations = new List();
     List<Area> electroralDistrict = new List();
+    List<Area> pollingDivision=new List();
 
     if (viewModel.areas != null) {
       viewModel.areas.forEach((area) {
@@ -49,6 +50,8 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
           pollingStations.add(area);
         } else if (area.areaType == "ElectoralDistrict") {
           electroralDistrict.add(area);
+        } else if (area.areaType=="PollingDivision"){
+          pollingDivision.add(area);
         }
       });
 
@@ -64,13 +67,13 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             new Text(
-              'Issued by :',
+              'Received from :',
               style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             Padding(
               padding: EdgeInsets.only(left: 5.0, right: 0.0),
               child: new Text(
-                'ARO',
+                'SPO',
                 style: new TextStyle(
                     fontWeight: FontWeight.normal, fontSize: 18.0),
               ),
@@ -90,6 +93,20 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
         hint: new Text("Select a district"),
         onChanged: (value) => viewModel.updateIssuingDistrictId(value),
         value: viewModel.invoice.issuingDistrictId,
+      ),
+    );
+
+     final selectPollingDivision = Padding(
+      padding: EdgeInsets.only(top: 15.0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: pollingDivision.map((area) {
+          return new DropdownMenuItem(
+              value: area.areaId, child: new Text(area.areaName));
+        }).toList(),
+        hint: new Text("Select a Polling Division"),
+        onChanged: (value) => viewModel.updateReceivingPollingDivisionId(value),
+        value: viewModel.invoice.receivingPollingDivisionId,
       ),
     );
 
@@ -171,7 +188,7 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
                   DropdownButton(
                     isExpanded: true,
                     items: [
-                      new DropdownMenuItem(child: new Text("SPO")),
+                      new DropdownMenuItem(child: new Text("Receiving ARO")),
                     ],
                     hint: new Text("Select Counting Station"),
                     onChanged: (value) {},
@@ -258,6 +275,8 @@ class _ReceivingStepOneFormState extends State<ReceivingStepOneForm> {
 //issued by
     formWidgets.add(issuedBy);
     formWidgets.add(selectElectoralDistrict);
+
+    formWidgets.add(selectPollingDivision);
 
     formWidgets.add(issuedFrom);
     formWidgets.add(selectIssuingOffice);

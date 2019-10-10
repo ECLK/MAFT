@@ -93,10 +93,14 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  new Text(
-                    'PV issuing ARO',
-                    style: new TextStyle(
-                        fontWeight: FontWeight.normal, fontSize: 18.0),
+                  DropdownButton(
+                    isExpanded: true,
+                    items: [
+                      new DropdownMenuItem(child: new Text("Certified Officer")),
+                      new DropdownMenuItem(child: new Text("Returning Officer"))
+                    ],
+                    hint: new Text("Select a user"),
+                    onChanged: (value) {},
                   ),
                 ],
               ),
