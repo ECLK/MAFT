@@ -38,10 +38,13 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
   List<Widget> getFormWidget(IssuingPvViewModel viewModel) {
     List<Widget> formWidgets = new List();
     List<Area> countingCenters = new List();
+    List<Area> electoralDistrict = new List();
 
     viewModel.areas.forEach((Area area) {
       if (area.areaType == "CountingCentre") {
         countingCenters.add(area);
+      } else if (area.areaType == "ElectoralDistrict") {
+        electoralDistrict.add(area);
       }
     });
 
@@ -96,7 +99,8 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                   DropdownButton(
                     isExpanded: true,
                     items: [
-                      new DropdownMenuItem(child: new Text("Certified Officer")),
+                      new DropdownMenuItem(
+                          child: new Text("Certified Officer")),
                       new DropdownMenuItem(child: new Text("Returning Officer"))
                     ],
                     hint: new Text("Select a user"),
@@ -130,11 +134,15 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                 children: <Widget>[
                   DropdownButton(
                     isExpanded: true,
-                    items: [
-                      new DropdownMenuItem(child: new Text("Puttalam")),
-                    ],
+                    items: electoralDistrict
+                        .map((area) => new DropdownMenuItem(
+                            value: area.areaId, child: new Text(area.areaName)))
+                        .toList(),
                     hint: new Text("Select a district"),
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      viewModel.updateIssuingDistrictId(value);
+                    },
+                    value:viewModel.invoice.issuingDistrictId
                   ),
                 ],
               ),
@@ -147,7 +155,8 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     final countingCenter = Row(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 20.0, right: 0.0, left: 0.0,bottom:20.0),
+          padding: const EdgeInsets.only(
+              top: 20.0, right: 0.0, left: 0.0, bottom: 20.0),
           child: new Text(
             'PV I/R Center : ',
             style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
@@ -155,7 +164,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
         ),
         new Expanded(
           child: Padding(
-            padding: EdgeInsets.only(top: 20.0,bottom:20.0),
+            padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
             child: new Container(
               padding: new EdgeInsets.only(left: 5.0),
               child: new Column(
@@ -197,11 +206,15 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                 children: <Widget>[
                   DropdownButton(
                     isExpanded: true,
-                    items: [
-                      new DropdownMenuItem(child: new Text("Puttalam")),
-                    ],
+                    items: electoralDistrict
+                        .map((area) => new DropdownMenuItem(
+                            value: area.areaId, child: new Text(area.areaName)))
+                        .toList(),
                     hint: new Text("Select a district"),
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      viewModel.updateReceivingDistrictId(value);
+                    },
+                    value:viewModel.invoice.receivingDistrictId
                   ),
                 ],
               ),
@@ -275,7 +288,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     formWidgets.add(countingCenter);
 
     formWidgets.add(divider);
-    
+
     formWidgets.add(receivedBy);
     formWidgets.add(districtR);
     formWidgets.add(countingCenterR);

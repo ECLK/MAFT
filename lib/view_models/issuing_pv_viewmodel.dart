@@ -7,10 +7,14 @@ import 'package:tabulation/store/models/invoice_response.dart';
 class IssuingPvViewModel {
   final List<Area> areas;
   final InvoiceModel invoice;
+
+
   final Function() createInvoice;
   final Function navigateToIssuingStepTwoAction;
   final Function(int issuingOfficeId) updateIssuingOffice;
   final Function(int receivingOfficeId) updateReceivingOffice;
+  final Function(int issuingDistrictId) updateIssuingDistrictId;
+  final Function(int receivignDistrictId) updateReceivingDistrictId;
 
   IssuingPvViewModel(
       {this.areas,
@@ -18,7 +22,9 @@ class IssuingPvViewModel {
       this.createInvoice,
       this.navigateToIssuingStepTwoAction,
       this.updateIssuingOffice,
-      this.updateReceivingOffice});
+      this.updateReceivingOffice,
+      this.updateIssuingDistrictId,
+      this.updateReceivingDistrictId});
 
   static IssuingPvViewModel fromStore(Store<AppState> store) {
     return IssuingPvViewModel(
@@ -36,6 +42,10 @@ class IssuingPvViewModel {
         updateIssuingOffice: (issuingOfficeId) =>
             store.dispatch(new UpdateIssuingOffice(issuingOfficeId)),
         updateReceivingOffice: (receivingOfficeId) =>
-            store.dispatch(new UpdateReceivingOffice(receivingOfficeId)));
+            store.dispatch(new UpdateReceivingOffice(receivingOfficeId)),
+        updateIssuingDistrictId: (id) =>
+            store.dispatch(new UpdateIssuingDistrictId(id)),
+        updateReceivingDistrictId: (id) =>
+            store.dispatch(new UpdateReceivingDistrictId(id)));
   }
 }
