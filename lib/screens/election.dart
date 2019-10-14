@@ -51,7 +51,7 @@ final GlobalKey _menuKey = new GlobalKey();
 
     viewModel.elections.forEach((election){
          widgets.add(ListTile(
-           key: _menuKey,
+              
               leading: Icon(Icons.people),
               title: Text(election.electionName),
               trailing: Icon(Icons.arrow_forward),
