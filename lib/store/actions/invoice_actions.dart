@@ -21,6 +21,7 @@ class PostInvoiceActionPv {
   PostInvoiceActionPv(this.electionId, this.issuedToId, this.issuingOfficeId,
       this.receivingOfficeId);
 }
+
 class PostInvoiceActionPvR {
   int electionId;
   int issuedToId;
@@ -39,8 +40,13 @@ class PostInvoiceReceivingAction {
   int receivingDistrictId;
   int issuingDistrictId;
 
-  PostInvoiceReceivingAction(this.electionId, this.issuedToId,
-      this.issuingOfficeId, this.receivingOfficeId, this.receivingDistrictId, this.issuingDistrictId);
+  PostInvoiceReceivingAction(
+      this.electionId,
+      this.issuedToId,
+      this.issuingOfficeId,
+      this.receivingOfficeId,
+      this.receivingDistrictId,
+      this.issuingDistrictId);
 }
 
 class InvoiceResponseAction {
@@ -58,22 +64,37 @@ class UpdateReceivingOffice {
   final int receivingOfficeId;
   UpdateReceivingOffice(this.receivingOfficeId);
 }
+
 class UpdateIssuingDistrictId {
   final int districtId;
   UpdateIssuingDistrictId(this.districtId);
 }
+
 class UpdateReceivingDistrictId {
   final int districtId;
   UpdateReceivingDistrictId(this.districtId);
 }
-class UpdateIssuingPollingDivisionId{
+
+class UpdateIssuingPollingStationId {
+  final int id;
+  UpdateIssuingPollingStationId(this.id);
+}
+
+class UpdateReceivingPollingStationId {
+  final int receivingPollingStationId;
+  UpdateReceivingPollingStationId(this.receivingPollingStationId);
+}
+
+class UpdateIssuingPollingDivisionId {
   final int id;
   UpdateIssuingPollingDivisionId(this.id);
 }
-class UpdateReceivingPollingDivisionId{
+
+class UpdateReceivingPollingDivisionId {
   final int id;
   UpdateReceivingPollingDivisionId(this.id);
 }
+
 class ConfirmInvoiceAction {
   int invoiceId;
 

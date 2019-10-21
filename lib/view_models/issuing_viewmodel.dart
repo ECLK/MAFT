@@ -14,7 +14,9 @@ class IssuingViewModel {
   final Function(int issuingDistrictId) updateIssuingDistrictId;
   final Function(int receivingDistrictId) updateReceivingDistrictId;
   final Function(int issuingPollingDivisionId) updateIssuingPollingDivisionId;
-
+  final Function(int receivingPollingStationId) updateReceivingPollingStationId;
+  final Function(int receivingPollingDivisionId)
+      updateReceivingPollingDivisionId;
   IssuingViewModel(
       {this.areas,
       this.invoice,
@@ -24,7 +26,9 @@ class IssuingViewModel {
       this.updateReceivingOffice,
       this.updateIssuingDistrictId,
       this.updateReceivingDistrictId,
-      this.updateIssuingPollingDivisionId});
+      this.updateIssuingPollingDivisionId,
+      this.updateReceivingPollingStationId,
+      this.updateReceivingPollingDivisionId});
 
   static IssuingViewModel fromStore(Store<AppState> store) {
     return IssuingViewModel(
@@ -49,7 +53,11 @@ class IssuingViewModel {
             store.dispatch(new UpdateIssuingDistrictId(districtId)),
         updateReceivingDistrictId: (districtId) =>
             store.dispatch(new UpdateReceivingDistrictId(districtId)),
-        updateIssuingPollingDivisionId:(id)=>
-            store.dispatch(new UpdateIssuingPollingDivisionId(id)));
+        updateIssuingPollingDivisionId: (id) =>
+            store.dispatch(new UpdateIssuingPollingDivisionId(id)),
+        updateReceivingPollingStationId: (id) =>
+            store.dispatch(new UpdateReceivingPollingStationId(id)),
+        updateReceivingPollingDivisionId: (id) =>
+            store.dispatch(new UpdateReceivingPollingDivisionId(id)));
   }
 }

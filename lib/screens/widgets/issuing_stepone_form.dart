@@ -102,17 +102,19 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       ),
     );
 
-     final selectPollingDivision = Padding(
+    final selectPollingDivision = Padding(
       padding: EdgeInsets.only(top: 15.0),
       child: new DropdownButton(
         isExpanded: true,
         items: pollingDivision.map((area) {
           return new DropdownMenuItem(
-              value: area.areaId, child: new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:[
-                  Text(area.areaId.toString()),
-                  Text(area.areaName)]));
+              value: area.areaId,
+              child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(area.areaId.toString()),
+                    Text(area.areaName)
+                  ]));
         }).toList(),
         hint: new Text("Select a Polling Division"),
         onChanged: (value) => viewModel.updateIssuingPollingDivisionId(value),
@@ -133,8 +135,6 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
         value: viewModel.invoice.receivingDistrictId,
       ),
     );
-
-
 
     final selectIssuingOffice = Padding(
       padding: EdgeInsets.only(top: 15.0, bottom: 20.0),
@@ -188,21 +188,59 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
         ),
       ],
     );
-
-    final selectReceivingOffice = Padding(
+    final selectReceivingPollingDivision = Padding(
+      padding: EdgeInsets.only(top: 15.0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: pollingDivision.map((area) {
+          return new DropdownMenuItem(
+              value: area.areaId,
+              child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(area.areaId.toString()),
+                    Text(area.areaName)
+                  ]));
+        }).toList(),
+        hint: new Text("Select a Polling Division"),
+        onChanged: (value) => viewModel.updateReceivingPollingDivisionId(value),
+        value: viewModel.invoice.receivingPollingDivisionId,
+      ),
+    );
+    final selectReceivingPollingStation = Padding(
       padding: EdgeInsets.only(top: 15.0, bottom: 10.0),
       child: new DropdownButton(
         isExpanded: true,
         items: pollingStations.map((area) {
           return new DropdownMenuItem(
-              value: area.areaId, child: new Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:[
-                  Text(area.areaId.toString()),
-                  Text(area.areaName)]));
+              value: area.areaId,
+              child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(area.areaId.toString()),
+                    Text(
+                      area.areaName,
+                      style: new TextStyle(fontSize: 12.0),
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  ]));
         }).toList(),
         hint: new Text("Select a polling station"),
+        onChanged: (value) => viewModel.updateReceivingPollingStationId(value),
+        value: viewModel.invoice.receivingPollingStationId,
+      ),
+    );
+
+    final selectReceivingOffice = Padding(
+      padding: EdgeInsets.only(top: 15.0, bottom: 10.0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: countingCenters.map((area) {
+          return new DropdownMenuItem(
+              value: area.areaId, child: new Text(area.areaName));
+        }).toList(),
+        hint: new Text("Select an I/R Center"),
         onChanged: (value) => viewModel.updateReceivingOffice(value),
         value: viewModel.invoice.receivingOfficeId,
       ),
@@ -242,8 +280,10 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
 
     formWidgets.add(issuedTo);
     formWidgets.add(selectreceivingDistrict);
+    formWidgets.add(selectReceivingPollingDivision);
     formWidgets.add(selectReceivingOffice);
-    
+    formWidgets.add(selectReceivingPollingStation);
+
     formWidgets.add(btnNext);
 
     return formWidgets;

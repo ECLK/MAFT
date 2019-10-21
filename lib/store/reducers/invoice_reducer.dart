@@ -10,10 +10,15 @@ final invoiceReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, UpdateReceivingOffice>(_updateReceivingOffice),
   TypedReducer<InvoiceState, ClearInvoiceAction>(_clearInvoiceAction),
   TypedReducer<InvoiceState, UpdateIssuingDistrictId>(_updateIssuingDistrict),
-  TypedReducer<InvoiceState, UpdateReceivingDistrictId>(_updateReceivingDistrict),
-  TypedReducer<InvoiceState, UpdateIssuingPollingDivisionId>(_updateIssuingPollingDivisionId),
-  TypedReducer<InvoiceState, UpdateReceivingPollingDivisionId>(_updateReceivingPollingDivisionId),
-
+  TypedReducer<InvoiceState, UpdateReceivingDistrictId>(
+      _updateReceivingDistrict),
+  TypedReducer<InvoiceState, UpdateIssuingPollingDivisionId>(
+      _updateIssuingPollingDivisionId),
+  TypedReducer<InvoiceState, UpdateReceivingPollingDivisionId>(
+      _updateReceivingPollingDivisionId),
+  TypedReducer<InvoiceState, UpdateReceivingPollingStationId>(
+      _updateReceivingPollingStationId),
+      TypedReducer<InvoiceState, UpdateIssuingPollingStationId>(_updateIssuingPollingStationId)
 ]);
 
 InvoiceState _invoiceAction(InvoiceState state, InvoiceModel action) => state;
@@ -31,8 +36,8 @@ InvoiceState _invoiceResponseAction(
       issuedTo: action.invoice.issuedTo,
       issuingOfficeId: action.invoice.issuingOfficeId,
       receivingOfficeId: action.invoice.receivingOfficeId,
-      issuingDistrictId:action.invoice.issuingDistrictId,
-      receivingDistrictId:action.invoice.receivingDistrictId);
+      issuingDistrictId: action.invoice.issuingDistrictId,
+      receivingDistrictId: action.invoice.receivingDistrictId);
 }
 
 InvoiceState _updateIssuingOfficeAction(
@@ -49,20 +54,36 @@ InvoiceState _clearInvoiceAction(
     InvoiceState state, ClearInvoiceAction action) {
   return InvoiceState.initial();
 }
-InvoiceState _updateIssuingDistrict(
-  InvoiceState state, UpdateIssuingDistrictId action){
-    return  state.copyWith(issuingDistrictId:action.districtId);
-  }
-  InvoiceState _updateReceivingDistrict(
-  InvoiceState state, UpdateReceivingDistrictId action){
-    return  state.copyWith(receivingDistrictId:action.districtId);
-  }
-    InvoiceState _updateReceivingPollingDivisionId(
-  InvoiceState state, UpdateReceivingPollingDivisionId action){
-    return  state.copyWith(receivingPollingDivisionId:action.id);
-  }
-    InvoiceState _updateIssuingPollingDivisionId(
-  InvoiceState state, UpdateIssuingPollingDivisionId action){
-    return  state.copyWith(issuingPollingDivisionId:action.id);
-  }
 
+InvoiceState _updateIssuingDistrict(
+    InvoiceState state, UpdateIssuingDistrictId action) {
+  return state.copyWith(issuingDistrictId: action.districtId);
+}
+
+InvoiceState _updateReceivingDistrict(
+    InvoiceState state, UpdateReceivingDistrictId action) {
+  return state.copyWith(receivingDistrictId: action.districtId);
+}
+
+InvoiceState _updateReceivingPollingDivisionId(
+    InvoiceState state, UpdateReceivingPollingDivisionId action) {
+  return state.copyWith(receivingPollingDivisionId: action.id);
+}
+
+InvoiceState _updateIssuingPollingDivisionId(
+    InvoiceState state, UpdateIssuingPollingDivisionId action) {
+  return state.copyWith(issuingPollingDivisionId: action.id);
+}
+
+InvoiceState _updateReceivingPollingStationId(
+    InvoiceState state, UpdateReceivingPollingStationId action) {
+  return state.copyWith(
+      receivingPollingStationId: action.receivingPollingStationId);
+}
+
+InvoiceState _updateIssuingPollingStationId(
+  InvoiceState state, UpdateIssuingPollingStationId action){
+    return state.copyWith(
+      issuingPollingStationId:action.id);
+    
+  }
