@@ -102,13 +102,19 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       ),
     );
 
-     final selectPollingDivision = Padding(
+    final selectPollingDivision = Padding(
       padding: EdgeInsets.only(top: 15.0),
       child: new DropdownButton(
         isExpanded: true,
         items: pollingDivision.map((area) {
           return new DropdownMenuItem(
-              value: area.areaId, child: new Text(area.areaName));
+              value: area.areaId,
+              child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(area.areaId.toString()),
+                    Text(area.areaName)
+                  ]));
         }).toList(),
         hint: new Text("Select a Polling Division"),
         onChanged: (value) => viewModel.updateIssuingPollingDivisionId(value),
@@ -130,30 +136,6 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
       ),
     );
 
-    final issuedFrom = Row(
-      children: <Widget>[
-        new Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(top: 15.0),
-            child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                DropdownButton(
-                    isExpanded: true,
-                    items: [
-                      new DropdownMenuItem(
-                          child: new Text("Issuing/Receiving center"))
-                    ],
-                    hint: new Text("Select center"),
-                    onChanged: (value) {}),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-
     final selectIssuingOffice = Padding(
       padding: EdgeInsets.only(top: 15.0, bottom: 20.0),
       child: new DropdownButton(
@@ -162,7 +144,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
           return new DropdownMenuItem(
               value: area.areaId, child: new Text(area.areaName));
         }).toList(),
-        hint: new Text("Select center"),
+        hint: new Text("Select an I/R Center"),
         onChanged: (value) => viewModel.updateIssuingOffice(value),
         value: viewModel.invoice.issuingOfficeId,
       ),
@@ -196,7 +178,7 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
                     items: [
                       new DropdownMenuItem(child: new Text("SPO")),
                     ],
-                    hint: new Text("Select Counting Station"),
+                    hint: new Text("Select issuer"),
                     onChanged: (value) {},
                   ),
                 ],
@@ -206,40 +188,59 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
         ),
       ],
     );
-
-    final issuedFor = Row(
-      children: <Widget>[
-        new Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(top: 15.0),
-            child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                DropdownButton(
-                  isExpanded: true,
-                  items: [
-                    new DropdownMenuItem(child: new Text("Polling Station")),
-                  ],
-                  hint: new Text("Select issued for"),
-                  onChanged: (_) {},
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
+    final selectReceivingPollingDivision = Padding(
+      padding: EdgeInsets.only(top: 15.0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: pollingDivision.map((area) {
+          return new DropdownMenuItem(
+              value: area.areaId,
+              child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(area.areaId.toString()),
+                    Text(area.areaName)
+                  ]));
+        }).toList(),
+        hint: new Text("Select a Polling Division"),
+        onChanged: (value) => viewModel.updateReceivingPollingDivisionId(value),
+        value: viewModel.invoice.receivingPollingDivisionId,
+      ),
+    );
+    final selectReceivingPollingStation = Padding(
+      padding: EdgeInsets.only(top: 15.0, bottom: 10.0),
+      child: new DropdownButton(
+        isExpanded: true,
+        items: pollingStations.map((area) {
+          return new DropdownMenuItem(
+              value: area.areaId,
+              child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(area.areaId.toString()),
+                    Text(
+                      area.areaName,
+                      style: new TextStyle(fontSize: 12.0),
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  ]));
+        }).toList(),
+        hint: new Text("Select a polling station"),
+        onChanged: (value) => viewModel.updateReceivingPollingStationId(value),
+        value: viewModel.invoice.receivingPollingStationId,
+      ),
     );
 
     final selectReceivingOffice = Padding(
       padding: EdgeInsets.only(top: 15.0, bottom: 10.0),
       child: new DropdownButton(
         isExpanded: true,
-        items: pollingStations.map((area) {
+        items: countingCenters.map((area) {
           return new DropdownMenuItem(
               value: area.areaId, child: new Text(area.areaName));
         }).toList(),
-        hint: new Text("Select station"),
+        hint: new Text("Select an I/R Center"),
         onChanged: (value) => viewModel.updateReceivingOffice(value),
         value: viewModel.invoice.receivingOfficeId,
       ),
@@ -273,15 +274,16 @@ class _IssuingStepOneFormState extends State<IssuingStepOneForm> {
     formWidgets.add(issuedBy);
     formWidgets.add(selectElectoralDistrict);
     formWidgets.add(selectPollingDivision);
-    formWidgets.add(issuedFrom);
     formWidgets.add(selectIssuingOffice);
 
     formWidgets.add(divider);
 
     formWidgets.add(issuedTo);
     formWidgets.add(selectreceivingDistrict);
-    formWidgets.add(issuedFor);
+    formWidgets.add(selectReceivingPollingDivision);
     formWidgets.add(selectReceivingOffice);
+    formWidgets.add(selectReceivingPollingStation);
+
     formWidgets.add(btnNext);
 
     return formWidgets;

@@ -14,7 +14,9 @@ class InvoiceModel {
   int issuingPollingDivisionId;
   int receivingPollingDivisionId;
   int receivingDistrictId;
-  
+  int receivingPollingStationId;
+  int issuingPollingStationId;
+
   InvoiceModel(
       {this.confirmed,
       this.delete,
@@ -28,7 +30,9 @@ class InvoiceModel {
       this.issuingDistrictId,
       this.receivingDistrictId,
       this.issuingPollingDivisionId,
-      this.receivingPollingDivisionId});
+      this.receivingPollingDivisionId,
+      this.receivingPollingStationId,
+      this.issuingPollingStationId});
 
   factory InvoiceModel.fromJson(Map<String, dynamic> json) {
     return new InvoiceModel(
@@ -41,25 +45,25 @@ class InvoiceModel {
       issuedTo: json['issuedTo'],
       issuingOfficeId: json['issuingOfficeId:'],
       receivingOfficeId: json['receivingOfficeId'],
-
     );
   }
 
   factory InvoiceModel.fromState(InvoiceState state) {
     return new InvoiceModel(
-      confirmed: state.confirmed,
-      delete: state.delete,
-      electionId: state.electionId,
-      invoiceId: state.invoiceId,
-      issuedAt: state.issuedAt,
-      issuedBy: state.issuedBy,
-      issuedTo: state.issuedToId,
-      issuingOfficeId: state.issuingOfficeId,
-      receivingOfficeId: state.receivingOfficeId,
-      issuingDistrictId: state.issuingDistrictId,
-      receivingDistrictId:state.receivingDistrictId,
-      receivingPollingDivisionId: state.receivingPollingDivisionId,
-      issuingPollingDivisionId:state.issuingPollingDivisionId
-    );
+        confirmed: state.confirmed,
+        delete: state.delete,
+        electionId: state.electionId,
+        invoiceId: state.invoiceId,
+        issuedAt: state.issuedAt,
+        issuedBy: state.issuedBy,
+        issuedTo: state.issuedToId,
+        issuingOfficeId: state.issuingOfficeId,
+        receivingOfficeId: state.receivingOfficeId,
+        issuingDistrictId: state.issuingDistrictId,
+        receivingDistrictId: state.receivingDistrictId,
+        receivingPollingDivisionId: state.receivingPollingDivisionId,
+        issuingPollingDivisionId: state.issuingPollingDivisionId,
+        receivingPollingStationId: state.receivingPollingStationId,
+        issuingPollingStationId:state.issuingPollingStationId);
   }
 }

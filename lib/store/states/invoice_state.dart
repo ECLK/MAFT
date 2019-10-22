@@ -18,6 +18,8 @@ class InvoiceState {
   final int receivingDistrictId;
   final int issuingPollingDivisionId;
   final int receivingPollingDivisionId;
+  final int receivingPollingStationId;
+  final int issuingPollingStationId;
 
   InvoiceState(
       {this.confirmed,
@@ -35,7 +37,9 @@ class InvoiceState {
       this.issuingDistrictId,
       this.receivingDistrictId,
       this.issuingPollingDivisionId,
-      this.receivingPollingDivisionId});
+      this.receivingPollingDivisionId,
+      this.receivingPollingStationId,
+      this.issuingPollingStationId});
 
   InvoiceState copyWith(
       {bool confirmed,
@@ -53,7 +57,9 @@ class InvoiceState {
       int issuingDistrictId,
       int receivingDistrictId,
       int issuingPollingDivisionId,
-      int receivingPollingDivisionId}) {
+      int receivingPollingDivisionId,
+      int receivingPollingStationId,
+      int issuingPollingStationId}) {
     return new InvoiceState(
         confirmed: confirmed ?? this.confirmed,
         electionId: electionId ?? this.electionId,
@@ -69,8 +75,14 @@ class InvoiceState {
         receivingOfficeId: receivingOfficeId ?? this.receivingOfficeId,
         issuingDistrictId: issuingDistrictId ?? this.issuingDistrictId,
         receivingDistrictId: receivingDistrictId ?? this.receivingDistrictId,
-        issuingPollingDivisionId:issuingPollingDivisionId ?? this.issuingPollingDivisionId,
-        receivingPollingDivisionId: receivingPollingDivisionId?? this.receivingPollingDivisionId);
+        issuingPollingDivisionId:
+            issuingPollingDivisionId ?? this.issuingPollingDivisionId,
+        receivingPollingDivisionId:
+            receivingPollingDivisionId ?? this.receivingPollingDivisionId,
+        receivingPollingStationId:
+            receivingPollingStationId ?? this.receivingPollingStationId,
+        issuingPollingStationId:
+            issuingPollingStationId ?? this.issuingPollingStationId);
   }
 
   factory InvoiceState.initial() {
@@ -90,6 +102,8 @@ class InvoiceState {
         issuingDistrictId: null,
         receivingDistrictId: null,
         issuingPollingDivisionId: null,
-        receivingPollingDivisionId: null);
+        receivingPollingDivisionId: null,
+        receivingPollingStationId: null,
+        issuingPollingStationId:null);
   }
 }
